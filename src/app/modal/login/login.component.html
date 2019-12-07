@@ -5,8 +5,8 @@
             <form #loginForm="ngForm">
                 <div ngModelGroup="login">
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Login" required name="login" ngModel></p>
-                        <mat-error>Login is Mandatory</mat-error>
+                        <p><input matInput type="text" placeholder="Email" required name="email" ngModel></p>
+                        <mat-error>Email is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
                         <p><input matInput type="password" placeholder="Password" required name="password" ngModel></p>
@@ -14,6 +14,8 @@
                     </mat-form-field>
                 </div>
             </form>
+            <p>If you want to reset the password, enter your email and click the password reset button</p>
+            <button mat-stroked-button color="primary" (click)="resetPassword(loginForm.value.login.email)">Reset password</button>
         </div>
     </div>
     <div mat-dialog-actions>
