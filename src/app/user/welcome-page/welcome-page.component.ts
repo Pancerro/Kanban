@@ -5,6 +5,7 @@ import { User } from 'src/app/class/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoginComponent } from 'src/app/modal/login/login.component';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-welcome-page',
@@ -15,7 +16,8 @@ export class WelcomePageComponent {
   constructor(public dialog: MatDialog,
     private router: Router,
     public user:User,
-    public auth:AuthService) { }
+    public auth:AuthService,
+    public db:DataService) { }
  
   captcha:boolean=false;
   numberOfTests:number=0;
@@ -30,8 +32,9 @@ export class WelcomePageComponent {
       this.user.email=result.email;
       this.user.name=result.name;
       this.user.surname=result.surname;
-      this.user.address=result.address;
       this.auth.register(this.user.email,this.user.password)
+      .then(() => 'You failed to register')
+      .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.user.name,this.user.surname,this.user.email))
     });
   }
   loginUser(): void {
@@ -40,11 +43,10 @@ export class WelcomePageComponent {
         });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.user.email = result.login;
+      this.user.email = result.email;
       this.user.password=result.password;
       this.auth.login(this.user.email,this.user.password).then(() => this.router.navigate(['/dashboard']))
       .catch(err => this.numberOfTests++);
-      console.log(this.numberOfTests);
     });
   }
   viewCaptcha():boolean{
