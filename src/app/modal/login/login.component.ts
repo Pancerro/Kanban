@@ -13,11 +13,8 @@ export class LoginComponent {
     public dialogRef: MatDialogRef<WelcomePageComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
    private auth:AuthService) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
   resetPassword(email){
-    this.auth.resetPassword(email);
+   this.auth.resetPassword(email);
   }
+  
 }

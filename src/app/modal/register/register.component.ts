@@ -12,10 +12,6 @@ export class RegisterComponent  {
   constructor(
     public dialogRef: MatDialogRef<WelcomePageComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
   resolved(captchaResponse):void {
     this.captcha=captchaResponse;
 } 

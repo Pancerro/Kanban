@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LoginComponent } from 'src/app/modal/login/login.component';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/database.service';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-welcome-page',
@@ -28,6 +29,7 @@ export class WelcomePageComponent {
         });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result==true){
       this.user.password=result.password;
       this.user.email=result.email;
       this.user.name=result.name;
@@ -35,7 +37,7 @@ export class WelcomePageComponent {
       this.auth.register(this.user.email,this.user.password)
       .then(() => 'You failed to register')
       .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.user.name,this.user.surname,this.user.email))
-    });
+    }});
   }
   loginUser(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
@@ -43,11 +45,14 @@ export class WelcomePageComponent {
         });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result==true)
+      {
       this.user.email = result.email;
       this.user.password=result.password;
       this.auth.login(this.user.email,this.user.password).then(() => this.router.navigate(['/dashboard']))
       .catch(err => this.numberOfTests++);
-    });
+    }else this.numberOfTests++;});
+  
   }
   viewCaptcha():boolean{
     if(this.numberOfTests>=3) return true;

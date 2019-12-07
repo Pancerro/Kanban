@@ -33,6 +33,6 @@
 
     <div mat-dialog-actions>
         <button mat-button [mat-dialog-close]="false">Cancel</button>
-        <button mat-button *ngIf="captcha" [mat-dialog-close]="registerForm.value.register" cdkFocusInitial>Register!</button>
+        <button mat-button [disabled]="!captcha" [mat-dialog-close]="registerForm.value.register" cdkFocusInitial>Register!</button>
     </div>
 </div>

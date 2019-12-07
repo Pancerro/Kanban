@@ -13,7 +13,6 @@ export class DataService {
      return this.db.list('/users/'+userId+'/userInfo').valueChanges()
    }
    writeUserData(userId,name,surname,email){
-     console.log(name);
     firebase.database().ref('users/'+ userId+'/userInfo/info').set({
       username:name,
       usersurname:surname,
