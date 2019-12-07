@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { RegisterComponent } from 'src/app/modal/register/register.component';
 import { User } from 'src/app/class/user';
@@ -11,13 +11,14 @@ import { Router } from '@angular/router';
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.css']
 })
-export class WelcomePageComponent implements OnInit {
+export class WelcomePageComponent {
   constructor(public dialog: MatDialog,
     private router: Router,
     public user:User,
     public auth:AuthService) { }
-  ngOnInit() {
-  }
+ 
+  captcha:boolean=false;
+  numberOfTests:number=0;
 
   registerUser(): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
@@ -42,7 +43,16 @@ export class WelcomePageComponent implements OnInit {
       this.user.email = result.login;
       this.user.password=result.password;
       this.auth.login(this.user.email,this.user.password).then(() => this.router.navigate(['/dashboard']))
-      .catch(err =>  'WRONG EMAIL OR PASSWORDS');
+      .catch(err => this.numberOfTests++);
+      console.log(this.numberOfTests);
     });
   }
+  viewCaptcha():boolean{
+    if(this.numberOfTests>=3) return true;
+    else return false;
+  }
+  resolved(captchaResponse):void {
+    this.captcha=captchaResponse;
+    this.numberOfTests=0;
+} 
 }
