@@ -8,7 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent  {
-  captcha:boolean;
+  captcha:boolean=false;
   constructor(
     public dialogRef: MatDialogRef<WelcomePageComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {}

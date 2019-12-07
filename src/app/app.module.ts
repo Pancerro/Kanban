@@ -14,12 +14,16 @@ import { WelcomePageComponent } from './user/welcome-page/welcome-page.component
 import { RegisterComponent } from './modal/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { User } from './class/user';
+import { DashboardsComponent } from './dashboards/dashboards/dashboards.component';
+import { LoginComponent } from './modal/login/login.component';
 @NgModule({
-  entryComponents: [RegisterComponent],
+  entryComponents: [RegisterComponent,LoginComponent],
   declarations: [
     AppComponent,
     WelcomePageComponent,
-    RegisterComponent
+    RegisterComponent,
+    DashboardsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

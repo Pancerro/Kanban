@@ -17,10 +17,11 @@ constructor(
     return this.authService.authState$.pipe(map(state => {
         if (state !== null) { return true; }
 
-        this.router.navigate(['/login']); 
+        this.router.navigate(['/welcome-page']); 
         return false;
         }
       )
     );
   
+}
 }

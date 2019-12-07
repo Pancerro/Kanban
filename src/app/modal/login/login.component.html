@@ -1,0 +1,23 @@
+<div class="center">
+    <h1 mat-dialog-title>Login</h1>
+    <div mat-dialog-content>
+        <div class="Login">
+            <form #loginForm="ngForm">
+                <div ngModelGroup="login">
+                    <mat-form-field>
+                        <p><input matInput type="text" placeholder="Login" required name="login" ngModel></p>
+                        <mat-error>Login is Mandatory</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <p><input matInput type="password" placeholder="Password" required name="password" ngModel></p>
+                        <mat-error>Password is Mandatory</mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="false">Cancel</button>
+        <button mat-button [mat-dialog-close]="loginForm.value.login" cdkFocusInitial>Login</button>
+    </div>
+</div>
