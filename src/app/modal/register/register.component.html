@@ -24,7 +24,11 @@
                 </div>
             </form>
         </div>
+        <p>
+            <re-captcha (resolved)="resolved($event)" siteKey="6LfOQ8QUAAAAAE310YWvEdGYeXWAIlq_frghVmRe"></re-captcha>
+        </p>
     </div>
+
     <div mat-dialog-actions>
         <button mat-button [mat-dialog-close]="false">Cancel</button>
         <button mat-button [mat-dialog-close]="registerForm.value.register" cdkFocusInitial>Register!</button>

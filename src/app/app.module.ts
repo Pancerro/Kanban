@@ -13,7 +13,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { WelcomePageComponent } from './user/welcome-page/welcome-page.component';
 import { RegisterComponent } from './modal/register/register.component';
 import { FormsModule } from '@angular/forms';
+import { User } from './class/user';
 @NgModule({
+  entryComponents: [RegisterComponent],
   declarations: [
     AppComponent,
     WelcomePageComponent,
@@ -34,7 +36,7 @@ import { FormsModule } from '@angular/forms';
     MatGridListModule,
     FormsModule
   ],
-  providers: [],
+  providers: [User],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
