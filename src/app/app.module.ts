@@ -12,7 +12,7 @@ import { MatFormFieldModule,  MatDialogModule,MatInputModule, MatButtonModule} f
 import {MatGridListModule} from '@angular/material/grid-list';
 import { WelcomePageComponent } from './user/welcome-page/welcome-page.component';
 import { RegisterComponent } from './modal/register/register.component';
-
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +31,8 @@ import { RegisterComponent } from './modal/register/register.component';
     MatFormFieldModule,
     MatDialogModule,
     MatInputModule,
-    MatGridListModule
+    MatGridListModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

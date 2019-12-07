@@ -1,1 +1,32 @@
-<p>register works!</p>
+<div class="center">
+    <h1 mat-dialog-title>Register</h1>
+    <div mat-dialog-content>
+        <div class="Register">
+            <form #registerForm="ngForm">
+                <div ngModelGroup="register">
+                    <mat-form-field>
+                        <p><input matInput type="text" placeholder="Login" required name="login" ngModel></p>
+                        <mat-error>Login is Mandatory</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <p><input matInput type="password" placeholder="Password" required name="password" ngModel></p>
+                        <mat-error>Password is Mandatory</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <p><input matInput type="text" placeholder="Email" required name="email" ngModel></p>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <p><input matInput type="text" placeholder="Name" required name="name" ngModel></p>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <p><input matInput type="text" placeholder="Surname" required name="surname" ngModel></p>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="false">Cancel</button>
+        <button mat-button [mat-dialog-close]="registerForm.value.register" cdkFocusInitial>Register</button>
+    </div>
+</div>
