@@ -9,10 +9,8 @@
                         <mat-error>Email is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" required title="Password must contain at least 6 characters, including UPPER/lowercase and numbers" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                ngModel></p>
-
-                        <mat-error>Password is Wrong</mat-error>
+                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" #password="ngModel" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="password" ngModel></p>
+                        <mat-error>Wrong Password</mat-error>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
@@ -23,13 +21,7 @@
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <p><input matInput type="text" placeholder="Name" name="name" ngModel></p>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <p><input matInput type="text" placeholder="Surname" name="surname" ngModel></p>
-                    </mat-form-field>
+                    </mat-form-field>"
                 </div>
             </form>
         </div>
@@ -41,6 +33,6 @@
 
     <div mat-dialog-actions>
         <button mat-button [mat-dialog-close]="false">Cancel</button>
-        <button mat-button [disabled]="!captcha" [mat-dialog-close]="registerForm.value.register" cdkFocusInitial>Register!</button>
+        <button mat-button [disabled]="!captcha" [mat-dialog-close]="registerForm" cdkFocusInitial>Register!</button>
     </div>
 </div>

@@ -22,24 +22,26 @@ export class WelcomePageComponent  {
   captcha:boolean=false;
   numberOfTests:number=0;
   info:string;
-  pattern:string="(?=.*/d)(?=.*[a-z])(?=.*[A-Z]).{8,}";
   registerUser(): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
     width: '350px',   
 });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.user.password=result.password;
-      this.user.repeatpassword=result.repeatPassword;
-      this.user.email=result.email;
-      this.user.name=result.name;
-      this.user.surname=result.surname;
+      if(result.invalid){
+        this.info="Please correct all errors and resubmit the form register";
+      }
+      else{
+        this.info="Registration complete. You can login! ";
+      this.user.password=result.value.register.password;
+      this.user.repeatpassword=result.value.register.repeatPassword;
+      this.user.email=result.value.register.email;
       if(this.matchingPasswords(this.user.repeatpassword,this.user.password)==true)
       {
       this.auth.register(this.user.email,this.user.password)
       .then(() => 'You failed to register')
-      .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.user.name,this.user.surname,this.user.email)).catch(err=>console.log());
-    }});
+      .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.user.email)).catch(err=>console.log());
+    }}});
   }
   loginUser(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
@@ -54,7 +56,7 @@ export class WelcomePageComponent  {
       this.auth.login(this.user.email,this.user.password).then(() => this.router.navigate(['/dashboard'])).catch(err => this.loginError());
     }});
   }
-  loginError(){
+  loginError():void{
     this.numberOfTests++;
     this.info="Login Failed.Try Again";
   }

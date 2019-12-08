@@ -12,10 +12,8 @@ export class DataService {
    getDateUser(userId){
      return this.db.list('/users/'+userId+'/userInfo').valueChanges()
    }
-   writeUserData(userId,name,surname,email){
+   writeUserData(userId,email){
     firebase.database().ref('users/'+ userId+'/userInfo/info').set({
-      username:name,
-      usersurname:surname,
       email:email
     });}
 }
