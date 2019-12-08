@@ -5,22 +5,30 @@
             <form #registerForm="ngForm">
                 <div ngModelGroup="register">
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Email" required name="email" ngModel></p>
+                        <p><input matInput type="text" placeholder="Email" name="email" required ngModel></p>
                         <mat-error>Email is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput type="password" placeholder="Password" required name="password" ngModel></p>
-                        <mat-error>Password is Mandatory</mat-error>
+                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" name="password" required title="Password must contain at least 6 characters, including UPPER/lowercase and numbers" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                ngModel></p>
+
+                        <mat-error>Password is Wrong</mat-error>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput type="password" placeholder="repeatPassword" required name="repeatPassword" ngModel></p>
+                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="repeatPassword" required name="repeatPassword" ngModel></p>
                         <mat-error>Repeat Password is Mandatory</mat-error>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Name" required name="name" ngModel></p>
+                        <p><input matInput type="text" placeholder="Name" name="name" ngModel></p>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Surname" required name="surname" ngModel></p>
+                        <p><input matInput type="text" placeholder="Surname" name="surname" ngModel></p>
                     </mat-form-field>
                 </div>
             </form>

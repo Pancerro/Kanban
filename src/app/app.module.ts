@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { User } from './class/user';
 import { DashboardsComponent } from './dashboards/dashboards/dashboards.component';
 import { LoginComponent } from './modal/login/login.component';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   entryComponents: [RegisterComponent,LoginComponent],
   declarations: [
@@ -38,7 +39,9 @@ import { LoginComponent } from './modal/login/login.component';
     MatDialogModule,
     MatInputModule,
     MatGridListModule,
-    FormsModule
+    FormsModule,
+    MatIconModule,
+
   ],
   providers: [User],
   bootstrap: [AppComponent]

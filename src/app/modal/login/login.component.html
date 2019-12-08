@@ -9,8 +9,11 @@
                         <mat-error>Email is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput type="password" placeholder="Password" required name="password" ngModel></p>
+                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" required name="password" ngModel></p>
                         <mat-error>Password is Mandatory</mat-error>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
                     </mat-form-field>
                 </div>
             </form>
