@@ -21,7 +21,7 @@ export class DashboardsComponent  {
       this.user=db.getDateUser(this.auth.getUser().uid);
     }
  
-  logout(){
+  logout():void{
     this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
   }
 

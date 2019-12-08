@@ -9,11 +9,12 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  hide = true;
+  hide:boolean = true;
   constructor(
     public dialogRef: MatDialogRef<WelcomePageComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-   private auth:AuthService) {}
+    private auth:AuthService) {}
+    
   resetPassword(email){
    this.auth.resetPassword(email);
   }
