@@ -20,7 +20,6 @@ export class AuthService {
     return this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
     .then(() => {
       this.SendVerificationMail();
-      window.alert('You can now log in!');
     }).catch((error) => {
       window.alert(error.message);
     })

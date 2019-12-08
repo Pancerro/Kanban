@@ -9,7 +9,8 @@
                         <mat-error>Email is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" #password="ngModel" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="password" ngModel></p>
+                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" #password="ngModel" name="password" required title="Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers " pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                ngModel></p>
                         <mat-error>Wrong Password</mat-error>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -27,7 +28,7 @@
         </div>
         <p>
             <re-captcha (resolved)="resolved($event)" siteKey="6LfOQ8QUAAAAAE310YWvEdGYeXWAIlq_frghVmRe" required></re-captcha>
-            <mat-error>Select your captcha!</mat-error>
+            <mat-error *ngIf="!captcha">Select your captcha!</mat-error>
         </p>
     </div>
 

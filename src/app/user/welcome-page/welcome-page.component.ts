@@ -32,15 +32,14 @@ export class WelcomePageComponent  {
         this.info="Please correct all errors and resubmit the form register";
       }
       else{
-        this.info="Registration complete. You can login! ";
       this.user.password=result.value.register.password;
       this.user.repeatpassword=result.value.register.repeatPassword;
       this.user.email=result.value.register.email;
       if(this.matchingPasswords(this.user.repeatpassword,this.user.password)==true)
       {
       this.auth.register(this.user.email,this.user.password)
-      .then(() => 'You failed to register')
-      .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.user.email)).catch(err=>console.log());
+      .then(()=>this.info="Registration complete. You can login! ")
+      .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.user.email)).catch(err=>console.log("Register failed"));
     }}});
   }
   loginUser(): void {
