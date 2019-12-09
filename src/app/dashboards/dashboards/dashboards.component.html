@@ -7,7 +7,7 @@
         <div class="example-container">
             <h2>To </h2>
             <button mat-stroked-button color="primary" (click)="addTo()">add To</button>
-            <div cdkDropList [cdkDropListData]="to" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div cdkDropList [cdkDropListData]="toTable" class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box" *ngFor="let item of toTable" cdkDrag>
                     <h1>{{item.title}}</h1>
                 </div>
@@ -17,11 +17,9 @@
         <div class="example-container">
             <h2>Do</h2>
             <button mat-stroked-button color="primary" (click)="addDo()">add Do</button>
-            <div cdkDropList [cdkDropListData]="do" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div cdkDropList [cdkDropListData]="doTable" class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box" *ngFor="let item of doTable" cdkDrag>
                     <h1>{{item.title}}</h1>
-                    <br>
-                    <p>{{item.priority}}</p>
                 </div>
             </div>
         </div>
@@ -29,11 +27,9 @@
         <div class="example-container">
             <h2>Done</h2>
             <button mat-stroked-button color="primary" (click)="addDone()">add Done</button>
-            <div cdkDropList [cdkDropListData]="done" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div cdkDropList [cdkDropListData]="doneTable" class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box" *ngFor="let item of doneTable" cdkDrag>
                     <h1>{{item.title}}</h1>
-                    <br>
-                    <p>{{item.priority}}</p>
                 </div>
             </div>
         </div>
