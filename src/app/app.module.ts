@@ -13,18 +13,21 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { WelcomePageComponent } from './user/welcome-page/welcome-page.component';
 import { RegisterComponent } from './modal/register/register.component';
 import { FormsModule } from '@angular/forms';
-import { User } from './class/user';
 import { DashboardsComponent } from './dashboards/dashboards/dashboards.component';
 import { LoginComponent } from './modal/login/login.component';
 import {MatIconModule} from '@angular/material/icon';
+import { AddTaskComponent } from './modal/add-task/add-task.component';
+import {MatSelectModule} from '@angular/material/select';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 @NgModule({
-  entryComponents: [RegisterComponent,LoginComponent],
+  entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent],
   declarations: [
     AppComponent,
     WelcomePageComponent,
     RegisterComponent,
     DashboardsComponent,
-    LoginComponent
+    LoginComponent,
+    AddTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -41,9 +44,11 @@ import {MatIconModule} from '@angular/material/icon';
     MatGridListModule,
     FormsModule,
     MatIconModule,
+    MatSelectModule,
+    DragDropModule
 
   ],
-  providers: [User],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

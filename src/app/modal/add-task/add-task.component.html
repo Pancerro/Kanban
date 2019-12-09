@@ -1,0 +1,31 @@
+<div class="center">
+    <h1 mat-dialog-title>Add/Update your task</h1>
+    <div mat-dialog-content>
+        <div class="addTask">
+            <form #taskForm="ngForm">
+                <div ngModelGroup="task">
+                    <mat-form-field>
+                        <p><input matInput type="text" placeholder="Title" required name="title" ngModel></p>
+                        <mat-error>Title is Mandatory</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <textarea matInput placeholder="Description" name="description" ngModel cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"></textarea>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Priority: </mat-label>
+                        <mat-select name="priority" ngModel required>
+                            <mat-option value="brak">Brak</mat-option>
+                            <mat-option value="niski">Niski</mat-option>
+                            <mat-option value="sredni">Sredni</mat-option>
+                            <mat-option value="wysoki">Wysoki</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="false">Cancel</button>
+        <button mat-button [mat-dialog-close]="taskForm.value.task" cdkFocusInitial>Add Task</button>
+    </div>
+</div>
