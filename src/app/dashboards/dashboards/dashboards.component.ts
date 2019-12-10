@@ -133,13 +133,15 @@ export class DashboardsComponent implements OnInit {
           window.alert("Please correct all errors and resubmit add task");
         }
         else{
+          if(result)
+          {
         this.db.removeTask(this.userId,"to",title);
         this.title=result.value.task.title;
         this.description=result.value.task.description;
         this.priority=result.value.task.priority;
         this.color=result.value.task.color;
         this.db.writeUserTable(this.userId,"to",this.title,this.title,this.description,this.priority,this.color);
-       }});
+       }}});
     }
     editDoTask(title,description,priority,color): void {
       const dialogRef = this.dialog.open(EditTaskComponent, {
@@ -152,13 +154,15 @@ export class DashboardsComponent implements OnInit {
           window.alert("Please correct all errors and resubmit add task");
         }
         else{
+          if(result)
+          {
         this.db.removeTask(this.userId,"to",title);
         this.title=result.value.task.title;
         this.description=result.value.task.description;
         this.priority=result.value.task.priority;
         this.color=result.value.task.color;
         this.db.writeUserTable(this.userId,"to",this.title,this.title,this.description,this.priority,this.color);
-       }});
+       }}});
     }
     editDoneTask(title,description,priority,color): void {
       const dialogRef = this.dialog.open(EditTaskComponent, {
@@ -171,13 +175,15 @@ export class DashboardsComponent implements OnInit {
           window.alert("Please correct all errors and resubmit add task");
         }
         else{
+          if(result)
+          {
         this.db.removeTask(this.userId,"to",title);
         this.title=result.value.task.title;
         this.description=result.value.task.description;
         this.priority=result.value.task.priority;
         this.color=result.value.task.color;
         this.db.writeUserTable(this.userId,"to",this.title,this.title,this.description,this.priority,this.color);
-       }});
+       }}});
     }
     removeToTask(removeTask){
       this.saveChanges();
