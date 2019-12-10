@@ -26,7 +26,10 @@ export class DataService {
         description:description,
         priority:priority
       });}
-      removeData(userId,tableparent,removeItem){
+      removeTask(userId,tableparent,removeItem){
         return this.db.list('/users/'+userId+'/'+tableparent).remove(removeItem)
+      }
+      removeTable(userId,removeItem){
+        return this.db.object('/users/'+userId+"/"+removeItem).remove()
       }
 }

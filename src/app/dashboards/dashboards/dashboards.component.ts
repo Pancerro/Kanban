@@ -34,6 +34,7 @@ export class DashboardsComponent implements OnInit {
   doneTable=[];
   done:Observable<any[]>;
   userId:string;
+  x;
   constructor(
     private auth:AuthService,
     private db:DataService,
@@ -46,7 +47,14 @@ export class DashboardsComponent implements OnInit {
       this.do=this.db.getTask(this.userId,"do");
       this.done=this.db.getTask(this.userId,"done");
     }
-
+    saveChanges():void{
+      for(let d of this.doTable){
+        this.db.writeUserTable(this.userId,"do",d.title,d.title,d.description,d.priority);
+      }
+    }
+    cancelChanges():void{
+      window.location.reload();
+    }
     addTo(): void {
       const dialogRef = this.dialog.open(AddTaskComponent, {
         width: '250px',
