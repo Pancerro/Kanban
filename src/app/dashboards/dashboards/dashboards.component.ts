@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { AddTaskComponent } from 'src/app/modal/add-task/add-task.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { EditTaskComponent } from 'src/app/modal/edit-task/edit-task.component';
 
 
 @Component({
@@ -14,6 +15,19 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
   styleUrls: ['./dashboards.component.css']
 })
 export class DashboardsComponent implements OnInit {
+  verifyEmail=this.auth.getUser().emailVerified;
+  userId:string;
+  title:string;
+  description:string;
+  priority:string;
+  color:string;
+  user:Observable<any[]>;
+  to:Observable<any[]>
+  do:Observable<any[]>;
+  done:Observable<any[]>;
+  toTable=[];
+  doTable=[];
+  doneTable=[];
   ngOnInit(){
     this.db.getTask(this.userId,"to").subscribe(res => {
       this.toTable = res;
@@ -25,16 +39,6 @@ export class DashboardsComponent implements OnInit {
       this.doneTable = res;
     });
   }
-  verifyEmail=this.auth.getUser().emailVerified;
-  user:Observable<any[]>;
-  to:Observable<any[]>
-  do:Observable<any[]>;
-  toTable=[];
-  doTable=[];
-  doneTable=[];
-  done:Observable<any[]>;
-  userId:string;
-  x;
   constructor(
     private auth:AuthService,
     private db:DataService,
@@ -47,13 +51,43 @@ export class DashboardsComponent implements OnInit {
       this.do=this.db.getTask(this.userId,"do");
       this.done=this.db.getTask(this.userId,"done");
     }
+    logout():void{
+      this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
+    }
     saveChanges():void{
+      this.db.removeTable(this.auth.getUser().uid,"to");
+      this.db.removeTable(this.auth.getUser().uid,"do");
+      this.db.removeTable(this.auth.getUser().uid,"done");
+      for(let d of this.toTable){
+        this.db.writeUserTable(this.userId,"to",d.title,d.title,d.description,d.priority,d.color);
+      }
       for(let d of this.doTable){
-        this.db.writeUserTable(this.userId,"do",d.title,d.title,d.description,d.priority);
+        this.db.writeUserTable(this.userId,"do",d.title,d.title,d.description,d.priority,d.color);
+      }
+      for(let d of this.doneTable){
+        this.db.writeUserTable(this.userId,"done",d.title,d.title,d.description,d.priority,d.color);
       }
     }
     cancelChanges():void{
       window.location.reload();
+    }
+    editTask(title,description,priority,color): void {
+      const dialogRef = this.dialog.open(EditTaskComponent, {
+        width: '250px',
+        data: {title: title, description: description}
+          });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if(result.invalid){
+          window.alert("Please correct all errors and resubmit add task");
+        }
+        else{
+        this.title=result.value.task.title;
+        this.description=result.value.task.description;
+        this.priority=result.value.task.priority;
+        this.color=result.value.task.color;
+        this.db.writeUserTable(this.userId,"to",this.title,this.title,this.description,this.priority,this.color);
+       }});
     }
     addTo(): void {
       const dialogRef = this.dialog.open(AddTaskComponent, {
@@ -61,8 +95,16 @@ export class DashboardsComponent implements OnInit {
           });
   
       dialogRef.afterClosed().subscribe(result => {
-        this.db.writeUserTable(this.userId,"to",result.title,result.title,result.description,result.priority);
-      });
+        if(result.invalid){
+          window.alert("Please correct all errors and resubmit add task");
+        }
+        else{
+        this.title=result.value.task.title;
+        this.description=result.value.task.description;
+        this.priority=result.value.task.priority;
+        this.color=result.value.task.color;
+        this.db.writeUserTable(this.userId,"to",this.title,this.title,this.description,this.priority,this.color);
+       }});
     }
     addDo(): void {
       const dialogRef = this.dialog.open(AddTaskComponent, {
@@ -70,8 +112,16 @@ export class DashboardsComponent implements OnInit {
           });
   
       dialogRef.afterClosed().subscribe(result => {
-        this.db.writeUserTable(this.userId,"do",result.title,result.title,result.description,result.priority);
-      });
+        if(result.invalid){
+          window.alert("Please correct all errors and resubmit add task");
+        }
+        else{
+        this.title=result.value.task.title;
+        this.description=result.value.task.description;
+        this.priority=result.value.task.priority;
+        this.color=result.value.task.color;
+        this.db.writeUserTable(this.userId,"do",this.title,this.title,this.description,this.priority,this.color);
+      }});
     }
     addDone(): void {
       const dialogRef = this.dialog.open(AddTaskComponent, {
@@ -79,12 +129,17 @@ export class DashboardsComponent implements OnInit {
           });
   
       dialogRef.afterClosed().subscribe(result => {
-        this.db.writeUserTable(this.userId,"done",result.title,result.title,result.description,result.priority);
-      });
+        if(result.invalid){
+          window.alert("Please correct all errors and resubmit add task");
+        }
+        else{
+        this.title=result.value.task.title;
+        this.description=result.value.task.description;
+        this.priority=result.value.task.priority;
+        this.color=result.value.task.color;
+        this.db.writeUserTable(this.userId,"done",this.title,this.title,this.description,this.priority,this.color);
+      }});
     }
-  logout():void{
-    this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
-  }
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

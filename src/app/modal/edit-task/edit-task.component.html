@@ -1,19 +1,20 @@
 <div class="center">
-    <h1 mat-dialog-title>Add your task</h1>
+    <button mat-stroked-button color="primary" (click)="editTask()">Edit task</button><br>
+    <h1 mat-dialog-title>Update your task</h1>
     <div mat-dialog-content>
-        <div class="addTask">
-            <form #taskForm="ngForm">
+        <div class="updateTask">
+            <form #updateTaskForm="ngForm">
                 <div ngModelGroup="task">
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Title" required name="title" ngModel></p>
+                        <p><input matInput type="text" placeholder="Title" [disabled]="edit" required name="title" [(ngModel)]="data.title" ngModel></p>
                         <mat-error>Title is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <textarea matInput placeholder="Description" name="description" ngModel cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"></textarea>
+                        <textarea matInput placeholder="Description" name="description" [disabled]="edit" [(ngModel)]="data.description" ngModel cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"></textarea>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Priority: </mat-label>
-                        <mat-select name="priority" ngModel>
+                        <mat-select name="priority" [disabled]="edit" ngModel>
                             <mat-option value="-">-</mat-option>
                             <mat-option value="Low">Low</mat-option>
                             <mat-option value="Medium">Medium</mat-option>
@@ -22,7 +23,7 @@
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Category: </mat-label>
-                        <mat-select name="color" ngModel>
+                        <mat-select name="color" [disabled]="edit" ngModel>
                             <mat-option value="green">Easy</mat-option>
                             <mat-option value="white">Normal</mat-option>
                             <mat-option value="blue">Not Easy</mat-option>
@@ -35,6 +36,6 @@
     </div>
     <div mat-dialog-actions>
         <button mat-button [mat-dialog-close]="false">Cancel</button>
-        <button mat-button [mat-dialog-close]="taskForm" cdkFocusInitial>Add Task</button>
+        <button mat-button [mat-dialog-close]="updateTaskForm" cdkFocusInitial>Update Task</button>
     </div>
 </div>

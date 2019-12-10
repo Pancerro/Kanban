@@ -20,11 +20,12 @@ export class DataService {
     firebase.database().ref('users/'+ userId+'/userInfo/info').set({
       email:email
     });}
-    writeUserTable(userId,tableparent,tablechild,title,description,priority){
+    writeUserTable(userId,tableparent,tablechild,title,description,priority,color){
       firebase.database().ref('users/'+ userId+'/'+tableparent+'/'+tablechild).set({
         title:title,
         description:description,
-        priority:priority
+        priority:priority,
+        color:color
       });}
       removeTask(userId,tableparent,removeItem){
         return this.db.list('/users/'+userId+'/'+tableparent).remove(removeItem)

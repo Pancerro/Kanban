@@ -1,17 +1,17 @@
 <button mat-stroked-button color="primary" (click)="logout()">LOGOUT</button>
-<button mat-stroked-button color="primary" (click)="saveChanges()">SAVE</button>
-<button mat-stroked-button color="primary" (click)="cancelChanges()">CANCEL</button>
 <div *ngFor="let user of user| async">
     <h1> Welcome</h1>
     <h3> Your email: {{user.email}}</h3>
     <p *ngIf="!verifyEmail">please verify your email</p>
+    <button mat-stroked-button color="primary" (click)="saveChanges()">SAVE</button>
+    <button mat-stroked-button color="primary" (click)="cancelChanges()">CANCEL</button>
     <div cdkDropListGroup>
         <div class="example-container">
             <h2>To </h2>
             <button mat-stroked-button color="primary" (click)="addTo()">add To</button>
             <div cdkDropList [cdkDropListData]="toTable" class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of toTable" cdkDrag>
-                    <h1>{{item.title}}</h1>
+                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of toTable" cdkDrag>
+                    <button mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color)">Task title: {{item.title}}</button>
                 </div>
             </div>
         </div>
@@ -20,8 +20,8 @@
             <h2>Do</h2>
             <button mat-stroked-button color="primary" (click)="addDo()">add Do</button>
             <div cdkDropList [cdkDropListData]="doTable" class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of doTable" cdkDrag>
-                    <h1>{{item.title}}</h1>
+                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of doTable" cdkDrag>
+                    <button mat-stroked-button color="primary" (click)="editTask()">Task title: {{item.title}}</button>
                 </div>
             </div>
         </div>
@@ -30,8 +30,8 @@
             <h2>Done</h2>
             <button mat-stroked-button color="primary" (click)="addDone()">add Done</button>
             <div cdkDropList [cdkDropListData]="doneTable" class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of doneTable" cdkDrag>
-                    <h1>{{item.title}}</h1>
+                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of doneTable" cdkDrag>
+                    <button mat-stroked-button color="primary" (click)="editTask()">Task title: {{item.title}}</button>
                 </div>
             </div>
         </div>

@@ -33,7 +33,7 @@ export class WelcomePageComponent  {
       else{
       if(this.matchingPasswords(result.value.register.repeatPassword,result.value.register.password)==true)
       {
-        this.email=result.value.register.email;
+      this.email=result.value.register.email;
       this.auth.register(result.value.register.email,result.value.register.password)
       .then(()=>this.info="Registration complete. You can login! ")
       .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.email));

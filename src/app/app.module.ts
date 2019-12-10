@@ -19,15 +19,17 @@ import {MatIconModule} from '@angular/material/icon';
 import { AddTaskComponent } from './modal/add-task/add-task.component';
 import {MatSelectModule} from '@angular/material/select';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { EditTaskComponent } from './modal/edit-task/edit-task.component';
 @NgModule({
-  entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent],
+  entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent],
   declarations: [
     AppComponent,
     WelcomePageComponent,
     RegisterComponent,
     DashboardsComponent,
     LoginComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    EditTaskComponent
   ],
   imports: [
     BrowserModule,
