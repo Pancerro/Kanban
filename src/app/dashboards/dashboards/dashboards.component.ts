@@ -71,24 +71,6 @@ export class DashboardsComponent implements OnInit {
     cancelChanges():void{
       window.location.reload();
     }
-    editTask(title,description,priority,color): void {
-      const dialogRef = this.dialog.open(EditTaskComponent, {
-        width: '250px',
-        data: {title: title, description: description, priority:priority,color:color}
-          });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if(result.invalid){
-          window.alert("Please correct all errors and resubmit add task");
-        }
-        else{
-        this.title=result.value.task.title;
-        this.description=result.value.task.description;
-        this.priority=result.value.task.priority;
-        this.color=result.value.task.color;
-        this.db.writeUserTable(this.userId,"to",this.title,this.title,this.description,this.priority,this.color);
-       }});
-    }
     addTo(): void {
       const dialogRef = this.dialog.open(AddTaskComponent, {
         width: '250px',
@@ -139,6 +121,87 @@ export class DashboardsComponent implements OnInit {
         this.color=result.value.task.color;
         this.db.writeUserTable(this.userId,"done",this.title,this.title,this.description,this.priority,this.color);
       }});
+    }
+    editToTask(title,description,priority,color): void {
+      const dialogRef = this.dialog.open(EditTaskComponent, {
+        width: '250px',
+        data: {title: title, description: description, priority:priority,color:color}
+          });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if(result.invalid){
+          window.alert("Please correct all errors and resubmit add task");
+        }
+        else{
+        this.db.removeTask(this.userId,"to",title);
+        this.title=result.value.task.title;
+        this.description=result.value.task.description;
+        this.priority=result.value.task.priority;
+        this.color=result.value.task.color;
+        this.db.writeUserTable(this.userId,"to",this.title,this.title,this.description,this.priority,this.color);
+       }});
+    }
+    editDoTask(title,description,priority,color): void {
+      const dialogRef = this.dialog.open(EditTaskComponent, {
+        width: '250px',
+        data: {title: title, description: description, priority:priority,color:color}
+          });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if(result.invalid){
+          window.alert("Please correct all errors and resubmit add task");
+        }
+        else{
+        this.db.removeTask(this.userId,"to",title);
+        this.title=result.value.task.title;
+        this.description=result.value.task.description;
+        this.priority=result.value.task.priority;
+        this.color=result.value.task.color;
+        this.db.writeUserTable(this.userId,"to",this.title,this.title,this.description,this.priority,this.color);
+       }});
+    }
+    editDoneTask(title,description,priority,color): void {
+      const dialogRef = this.dialog.open(EditTaskComponent, {
+        width: '250px',
+        data: {title: title, description: description, priority:priority,color:color}
+          });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if(result.invalid){
+          window.alert("Please correct all errors and resubmit add task");
+        }
+        else{
+        this.db.removeTask(this.userId,"to",title);
+        this.title=result.value.task.title;
+        this.description=result.value.task.description;
+        this.priority=result.value.task.priority;
+        this.color=result.value.task.color;
+        this.db.writeUserTable(this.userId,"to",this.title,this.title,this.description,this.priority,this.color);
+       }});
+    }
+    removeToTask(removeTask){
+      this.saveChanges();
+      this.db.removeTask(this.userId,"to",removeTask);
+    }
+    removeDoTask(removeTask){
+      this.saveChanges();
+      this.db.removeTask(this.userId,"do",removeTask);
+    }
+    removeDoneTask(removeTask){
+      this.saveChanges();
+      this.db.removeTask(this.userId,"done",removeTask);
+    }
+    removeAllToTask(){
+      this.saveChanges();
+      this.db.removeTable(this.userId,"to");
+    }
+    removeAllDoTask(){
+      this.saveChanges();
+      this.db.removeTable(this.userId,"do");
+    }
+    removeAllDoneTask(){
+      this.saveChanges();
+      this.db.removeTable(this.userId,"done");
     }
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {

@@ -9,9 +9,11 @@
         <div class="example-container">
             <h2>To </h2>
             <button mat-stroked-button color="primary" (click)="addTo()">add To</button>
+            <button mat-stroked-button color="primary" (click)="removeAllToTask()">Remove all To Task </button>
             <div cdkDropList [cdkDropListData]="toTable" class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of toTable" cdkDrag>
-                    <button mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color)">Task title: {{item.title}}</button>
+                    <button class="buttonList" mat-stroked-button color="primary" (click)="editToTask(item.title,item.description,item.priority,item.color)">Task title: {{item.title}}</button>
+                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeToTask(item.title)">X</button><br>
                 </div>
             </div>
         </div>
@@ -19,9 +21,11 @@
         <div class="example-container">
             <h2>Do</h2>
             <button mat-stroked-button color="primary" (click)="addDo()">add Do</button>
+            <button mat-stroked-button color="primary" (click)="removeAllDoTask()">Remove all Do Task </button>
             <div cdkDropList [cdkDropListData]="doTable" class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of doTable" cdkDrag>
-                    <button mat-stroked-button color="primary" (click)="editTask()">Task title: {{item.title}}</button>
+                    <button class="buttonList" mat-stroked-button color="primary" (click)="editDoTask(item.title,item.description,item.priority,item.color)">Task title: {{item.title}}</button>
+                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeDoTask(item.title)">X</button><br>
                 </div>
             </div>
         </div>
@@ -29,9 +33,11 @@
         <div class="example-container">
             <h2>Done</h2>
             <button mat-stroked-button color="primary" (click)="addDone()">add Done</button>
+            <button mat-stroked-button color="primary" (click)="removeAllDoneTask()">Remove all Done Task </button>
             <div cdkDropList [cdkDropListData]="doneTable" class="example-list" (cdkDropListDropped)="drop($event)">
                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of doneTable" cdkDrag>
-                    <button mat-stroked-button color="primary" (click)="editTask()">Task title: {{item.title}}</button>
+                    <button class="buttonList" mat-stroked-button color="primary" (click)="editDoneTask(item.title,item.description,item.priority,item.color)">Task title: {{item.title}}</button>
+                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeDoneTask(item.title)">X</button><br>
                 </div>
             </div>
         </div>
