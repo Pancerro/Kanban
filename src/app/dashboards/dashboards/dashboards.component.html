@@ -4,7 +4,7 @@
 <div *ngFor="let user of user| async">
     <h1> Welcome</h1>
     <h3> Your email: {{user.email}}</h3>
-    <p>please verify your email</p>
+    <p *ngIf="!verifyEmail">please verify your email</p>
     <div cdkDropListGroup>
         <div class="example-container">
             <h2>To </h2>

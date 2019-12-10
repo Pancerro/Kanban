@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { User } from 'firebase';
+import { User, auth } from 'firebase';
 import { Observable } from 'rxjs/index';
 
 @Injectable({providedIn: 'root'})
@@ -32,5 +32,16 @@ export class AuthService {
   }
   resetPassword(email){
     return this.fireAuth.auth.sendPasswordResetEmail(email);
+  }
+  googleAuth() {
+    return this.AuthLogin(new auth.GoogleAuthProvider());
+  }  
+  AuthLogin(provider) {
+    return this.fireAuth.auth.signInWithPopup(provider)
+    .then((result) => {
+        console.log('You have been successfully logged in!');
+    }).catch((error) => {
+        console.log(error);
+    })
   }
 }

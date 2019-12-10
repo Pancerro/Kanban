@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { WelcomePageComponent } from 'src/app/user/welcome-page/welcome-page.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +13,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent {
   hide:boolean = true;
   constructor(
+    private router: Router,
+    private db:DataService,
     public dialogRef: MatDialogRef<WelcomePageComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private auth:AuthService) {}
@@ -18,5 +22,12 @@ export class LoginComponent {
   resetPassword(email){
    this.auth.resetPassword(email);
   }
-  
+  googleAuth():void{
+    this.auth.googleAuth()
+    .then(() => this.router.navigate(['/dashboard'])
+    .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.auth.getUser().email))
+    .then(()=>this.auth.SendVerificationMail))
+      .catch(err => console.log(err.message));
+    this.dialogRef.close();
+  }
 }
