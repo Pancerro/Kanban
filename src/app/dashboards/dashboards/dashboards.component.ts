@@ -74,7 +74,7 @@ export class DashboardsComponent implements OnInit {
     editTask(title,description,priority,color): void {
       const dialogRef = this.dialog.open(EditTaskComponent, {
         width: '250px',
-        data: {title: title, description: description}
+        data: {title: title, description: description, priority:priority,color:color}
           });
   
       dialogRef.afterClosed().subscribe(result => {
