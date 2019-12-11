@@ -18,7 +18,7 @@ export class LoginComponent {
     public dialogRef: MatDialogRef<WelcomePageComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private auth:AuthService) {}
-    
+     
   resetPassword(email){
    this.auth.resetPassword(email);
   }

@@ -10,16 +10,23 @@ import { Observable } from 'rxjs';
 export class DataService {
   constructor(public db:AngularFireDatabase) {
    }
-   getDateUser(userId){
-     return this.db.list('/users/'+userId+'/userInfo').valueChanges()
+   getDateUser(userId):Observable<any[]>{
+     return this.db.list('/users/'+userId+'/userInfo').valueChanges();
    }
+   getUserNumber(userId):Observable<any[]>{
+    return this.db.list('/users/'+userId+'/viewTables').valueChanges();
+  }
    getTask(userId,tableparent):Observable<any[]>{
-    return this.db.list('/users/'+userId+'/'+tableparent).valueChanges()
+    return this.db.list('/users/'+userId+'/'+tableparent).valueChanges();
   }
    writeUserData(userId,email){
     firebase.database().ref('users/'+ userId+'/userInfo/info').set({
       email:email
     });}
+    writeUserNumber(userId,number){
+      firebase.database().ref('users/'+ userId+'/viewTables/numbers').set({
+        number:number
+      });}
     writeUserTable(userId,tableparent,tablechild,title,description,priority,color){
       firebase.database().ref('users/'+ userId+'/'+tableparent+'/'+tablechild).set({
         title:title,
@@ -33,4 +40,10 @@ export class DataService {
       removeTable(userId,removeItem){
         return this.db.object('/users/'+userId+"/"+removeItem).remove()
       }
+      writeTitleTable(userId,tablechild,title){
+        firebase.database().ref('users/'+ userId+'/table/'+tablechild).set({
+          title:title
+        });}
+
+      
 }

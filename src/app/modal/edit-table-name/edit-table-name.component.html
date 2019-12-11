@@ -1,0 +1,19 @@
+<div class="center">
+    <h1 mat-dialog-title>Update your table title!</h1>
+    <div mat-dialog-content>
+        <div class="updateTitle">
+            <form #updateTitleForm="ngForm">
+                <div ngModelGroup="titleTable">
+                    <mat-form-field>
+                        <p><input matInput type="text" placeholder="Title" required name="title" ngModel></p>
+                        <mat-error>Title is Mandatory</mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="false">Cancel</button>
+        <button mat-button [mat-dialog-close]="updateTitleForm" cdkFocusInitial>Add/Update Table Title</button>
+    </div>
+</div>

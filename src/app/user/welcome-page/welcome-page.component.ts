@@ -15,10 +15,12 @@ export class WelcomePageComponent  {
   constructor(public dialog: MatDialog,
     private router: Router,
     public auth:AuthService,
-    public db:DataService) { }
+    public db:DataService) { 
+    }
  
   captcha:boolean=false;
   numberOfTests:number=0;
+  userId:string;
   info:string;
   email:string;
   registerUser(): void {
@@ -36,7 +38,19 @@ export class WelcomePageComponent  {
       this.email=result.value.register.email;
       this.auth.register(result.value.register.email,result.value.register.password)
       .then(()=>this.info="Registration complete. You can login! ")
-      .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.email));
+      .then(()=>this.userId=this.auth.getUser().uid)
+      .then(()=>this.db.writeTitleTable(this.userId,"table0","table0"))
+      .then(()=>this.db.writeTitleTable(this.userId,"table1","table1"))
+      .then(()=>this.db.writeTitleTable(this.userId,"table2","table2"))
+      .then(()=>this.db.writeTitleTable(this.userId,"table3","table3"))
+      .then(()=>this.db.writeTitleTable(this.userId,"table4","table4"))
+      .then(()=>this.db.writeTitleTable(this.userId,"table5","table5"))
+      .then(()=>this.db.writeTitleTable(this.userId,"table6","table6"))
+      .then(()=>this.db.writeTitleTable(this.userId,"table7","table7"))
+      .then(()=>this.db.writeTitleTable(this.userId,"table8","table8"))
+      .then(()=>this.db.writeTitleTable(this.userId,"table9","table9"))
+      .then(()=>this.db.writeUserNumber(this.userId,0))
+      .then(()=>this.db.writeUserData(this.userId,this.email));
     }}});
   }
   loginUser(): void {

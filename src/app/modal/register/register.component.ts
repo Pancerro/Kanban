@@ -9,9 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class RegisterComponent  {
   hide:boolean = true;
   captcha:boolean=false;
-  constructor(
-    public dialogRef: MatDialogRef<WelcomePageComponent>,
-    @Inject(MAT_DIALOG_DATA) public data) {}
+  constructor() {}
 
   resolved(captchaResponse):void {
     this.captcha=captchaResponse;

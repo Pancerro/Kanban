@@ -20,8 +20,9 @@ import { AddTaskComponent } from './modal/add-task/add-task.component';
 import {MatSelectModule} from '@angular/material/select';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { EditTaskComponent } from './modal/edit-task/edit-task.component';
+import { EditTableNameComponent } from './modal/edit-table-name/edit-table-name.component';
 @NgModule({
-  entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent],
+  entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent],
   declarations: [
     AppComponent,
     WelcomePageComponent,
@@ -29,7 +30,8 @@ import { EditTaskComponent } from './modal/edit-task/edit-task.component';
     DashboardsComponent,
     LoginComponent,
     AddTaskComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    EditTableNameComponent
   ],
   imports: [
     BrowserModule,
