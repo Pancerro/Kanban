@@ -38,7 +38,9 @@ export class DashboardsComponent implements OnInit {
   endDate:Date;
   endData:string;
   endDataString:string;
-  zero:Date=null;
+  fontColor:string;
+  background:string;
+  pokaz:boolean=false;
   user:Observable<any[]>;
   tableZero=[];
   tableOne=[];
@@ -53,6 +55,7 @@ export class DashboardsComponent implements OnInit {
   tableTitle=[];
   numbers=[];
   tabEndDate=[];
+  userInfo=[];
   ngOnInit(){
     this.db.getTask(this.userId,this.table0).subscribe(res => {
       this.tableZero = res;
@@ -90,6 +93,9 @@ export class DashboardsComponent implements OnInit {
     this.db.getUserNumber(this.userId).subscribe(res => {
       this.numbers = res;
     });
+    this.db.getDateUser(this.userId).subscribe(res => {
+      this.userInfo = res;
+    });
   }
   constructor(
     private auth:AuthService,
@@ -99,6 +105,27 @@ export class DashboardsComponent implements OnInit {
     ) {
       this.userId=auth.getUser().uid;
       this.user=db.getDateUser(this.userId);
+    }
+    changeFont():string
+    {
+      if(this.userInfo[0].thema=="green"){
+      this.fontColor="white";
+      return this.fontColor;
+      }
+      if(this.userInfo[0].thema=="black"){
+      this.fontColor="white";
+      return this.fontColor;
+      }
+    }
+    changeBackground(){
+      if(this.userInfo[0].thema=="green"){
+        this.background="green";
+        return this.background;
+        }
+        if(this.userInfo[0].thema=="black"){
+        this.background="black";
+        return this.background;
+        }
     }
     addNewTable():void{
       this.random=Math.random().toString();
@@ -136,66 +163,6 @@ export class DashboardsComponent implements OnInit {
        this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table9,"","","",""); break;
      }
       this.db.writeUserNumber(this.userId,this.numbers[0].number)
-    }
-    logout():void{
-      this.random=Math.random().toString();
-      this.random=this.random.replace("0.","logOut");
-      this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"log out","log out","","","","");
-      this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
-    }
-    logs():void{
-      this.router.navigate(['/logi']);
-    }
-    sendRepeatVerificationEmail():void{
-      this.auth.SendVerificationMail();
-    }
-    saveChanges():void{
-      this.random=Math.random().toString();
-      this.random=this.random.replace("0.","logSaveChanges");
-      this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"save changes","save changes","","","","");
-      this.db.removeTable(this.auth.getUser().uid,this.table0);
-      this.db.removeTable(this.auth.getUser().uid,this.table1);
-      this.db.removeTable(this.auth.getUser().uid,this.table2);
-      this.db.removeTable(this.auth.getUser().uid,this.table3);
-      this.db.removeTable(this.auth.getUser().uid,this.table4);
-      this.db.removeTable(this.auth.getUser().uid,this.table5);
-      this.db.removeTable(this.auth.getUser().uid,this.table6);
-      this.db.removeTable(this.auth.getUser().uid,this.table7);
-      this.db.removeTable(this.auth.getUser().uid,this.table8);
-      this.db.removeTable(this.auth.getUser().uid,this.table9);
-      for(let d of this.tableZero){
-        this.db.writeUserTable(this.userId,this.table0,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
-      }
-      for(let d of this.tableOne){
-        this.db.writeUserTable(this.userId,this.table1,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
-      }
-      for(let d of this.tableTwo){
-        this.db.writeUserTable(this.userId,this.table2,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
-      }
-      for(let d of this.tableThree){
-        this.db.writeUserTable(this.userId,this.table3,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
-      }
-      for(let d of this.tableFour){
-        this.db.writeUserTable(this.userId,this.table4,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
-      }
-      for(let d of this.tableFive){
-        this.db.writeUserTable(this.userId,this.table5,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
-      }
-      for(let d of this.tableSix){
-        this.db.writeUserTable(this.userId,this.table6,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
-      }
-      for(let d of this.tableSeven){
-        this.db.writeUserTable(this.userId,this.table7,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
-      }
-      for(let d of this.tableEight){
-        this.db.writeUserTable(this.userId,this.table8,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
-      }
-      for(let d of this.tableNine){
-        this.db.writeUserTable(this.userId,this.table9,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
-      }
-      
     }
     addTask(tableName): void {
       const dialogRef = this.dialog.open(AddTaskComponent, {
@@ -322,8 +289,72 @@ export class DashboardsComponent implements OnInit {
                         this.saveChanges();
     }
   }
+
   bestRegards(){
     window.alert("BEST REGARDS, SUKO!");
-   this.logout();
-  }
+    this.pokaz=!this.pokaz;
+  }  
+   logout():void{
+      this.random=Math.random().toString();
+      this.random=this.random.replace("0.","logOut");
+      this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"log out","log out","","","","");
+      this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
+    }
+    logs():void{
+      this.router.navigate(['/logi']);
+    }
+    settings():void{
+      this.router.navigate(['/settings']);
+    }
+    sendRepeatVerificationEmail():void{
+      this.auth.sendVerificationMail();
+    }
+    saveChanges():void{
+      this.random=Math.random().toString();
+      this.random=this.random.replace("0.","logSaveChanges");
+      this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"save changes","save changes","","","","");
+      this.db.removeTable(this.auth.getUser().uid,this.table0);
+      this.db.removeTable(this.auth.getUser().uid,this.table1);
+      this.db.removeTable(this.auth.getUser().uid,this.table2);
+      this.db.removeTable(this.auth.getUser().uid,this.table3);
+      this.db.removeTable(this.auth.getUser().uid,this.table4);
+      this.db.removeTable(this.auth.getUser().uid,this.table5);
+      this.db.removeTable(this.auth.getUser().uid,this.table6);
+      this.db.removeTable(this.auth.getUser().uid,this.table7);
+      this.db.removeTable(this.auth.getUser().uid,this.table8);
+      this.db.removeTable(this.auth.getUser().uid,this.table9);
+      for(let d of this.tableZero){
+        this.db.writeUserTable(this.userId,this.table0,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+      }
+      for(let d of this.tableOne){
+        this.db.writeUserTable(this.userId,this.table1,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+      }
+      for(let d of this.tableTwo){
+        this.db.writeUserTable(this.userId,this.table2,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+      }
+      for(let d of this.tableThree){
+        this.db.writeUserTable(this.userId,this.table3,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+      }
+      for(let d of this.tableFour){
+        this.db.writeUserTable(this.userId,this.table4,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+      }
+      for(let d of this.tableFive){
+        this.db.writeUserTable(this.userId,this.table5,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+      }
+      for(let d of this.tableSix){
+        this.db.writeUserTable(this.userId,this.table6,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+      }
+      for(let d of this.tableSeven){
+        this.db.writeUserTable(this.userId,this.table7,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+      }
+      for(let d of this.tableEight){
+        this.db.writeUserTable(this.userId,this.table8,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+      }
+      for(let d of this.tableNine){
+        this.db.writeUserTable(this.userId,this.table9,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+      }
+      
+    }
 }

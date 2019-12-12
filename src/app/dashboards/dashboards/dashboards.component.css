@@ -107,7 +107,13 @@
 }
 
 .best {
-    width: 100%;
+    width: 99.9%;
     height: 5%;
     border: none;
+}
+
+.mainContent {
+    width: 100%;
+    min-height: 100%;
+    height: auto;
 }

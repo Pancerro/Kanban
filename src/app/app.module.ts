@@ -22,7 +22,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { EditTaskComponent } from './modal/edit-task/edit-task.component';
 import { EditTableNameComponent } from './modal/edit-table-name/edit-table-name.component';
 import { LogiComponent } from './dashboards/logi/logi.component';
-import {MatDatepickerModule} from '@angular/material/datepicker'
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { SettingsComponent } from './dashboards/settings/settings.component'
 @NgModule({
   entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent],
   declarations: [
@@ -34,7 +35,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker'
     AddTaskComponent,
     EditTaskComponent,
     EditTableNameComponent,
-    LogiComponent
+    LogiComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

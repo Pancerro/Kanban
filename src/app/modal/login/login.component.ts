@@ -25,8 +25,8 @@ export class LoginComponent {
   googleAuth():void{
     this.auth.googleAuth()
     .then(() => this.router.navigate(['/dashboard'])
-    .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.auth.getUser().email))
-    .then(()=>this.auth.SendVerificationMail))
+    .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.auth.getUser().email,""))
+    .then(()=>this.auth.sendVerificationMail))
       .catch(err => console.log(err.message));
     this.dialogRef.close();
   }

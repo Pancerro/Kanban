@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,9 +19,10 @@ export class DataService {
   getTask(userId,tableparent):Observable<any[]>{
     return this.db.list('/users/'+userId+'/'+tableparent).valueChanges();
   }
-  writeUserData(userId,email){
+  writeUserData(userId,email,thema){
     firebase.database().ref('users/'+ userId+'/userInfo/info').set({
-    email:email
+    email:email,
+    thema:thema
   });}
   writeUserNumber(userId,number){
     firebase.database().ref('users/'+ userId+'/viewTables/numbers').set({

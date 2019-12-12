@@ -19,12 +19,12 @@ export class AuthService {
   register(email, password) {
     return this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
     .then(() => {
-      this.SendVerificationMail();
+      this.sendVerificationMail();
     }).catch((error) => {
       window.alert(error.message);
     })
   }
-  SendVerificationMail() {
+  sendVerificationMail() {
     return this.fireAuth.auth.currentUser.sendEmailVerification();
   }
   logout() {
@@ -43,5 +43,11 @@ export class AuthService {
     }).catch((error) => {
         console.log(error);
     })
+  }
+  updateEmail(newEmail){
+    return this.fireAuth.auth.currentUser.updateEmail(newEmail);
+  }
+  updatePassowrd(newPassword){
+    return this.fireAuth.auth.currentUser.updatePassword(newPassword);
   }
 }

@@ -1,0 +1,31 @@
+<div class="mainContent" *ngFor="let item of userInfo" [style.background]="changeBackground()" [style.color]="changeFont()">
+    <button mat-stroked-button color="primary" (click)="logout()">LOGOUT</button>
+    <button mat-stroked-button color="primary" (click)="return()">Return to previous page</button>
+    <h1>Welcome to settings!</h1>
+    <p>Your email: {{item.email}}</p>
+    <p>Your thema: {{item.thema}}</p>
+    <p>Update your email: </p>
+    <input placeholder="New Email">
+
+
+
+    <div class="center">
+        <h1 mat-dialog-title>Update your email!</h1>
+        <div mat-dialog-content>
+            <div class="newEmail">
+                <form #newEmailForm="ngForm">
+                    <div ngModelGroup="Email">
+                        <mat-form-field>
+                            <p><input matInput type="text" placeholder="New Email" required name="newEmail" ngModel></p>
+                            <mat-error>New Email is Mandatory</mat-error>
+                        </mat-form-field>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+            <button mat-button [mat-dialog-close]="newEmailForm" cdkFocusInitial>Update Email</button>
+        </div>
+    </div>
+</div>

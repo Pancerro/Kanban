@@ -1,4 +1,7 @@
-<button mat-stroked-button color="primary" (click)="logout()">LOGOUT</button>
-<button mat-stroked-button color="primary" (click)="return()">Return to previous page</button>
-<h1>LOGS</h1>
-<div *ngFor="let log of logs">{{log.operation}} {{log.data}} {{log.title}} {{log.description}} {{log.priority}} {{log.color}}</div>
+<div class="mainContent" *ngFor="let item of userInfo" [style.background]="changeBackground()" [style.color]="changeFont()">
+    <button mat-stroked-button color="primary" (click)="logout()">LOGOUT</button>
+    <button mat-stroked-button color="primary" (click)="return()">Return to previous page</button>
+    <h1>Welcome to logs!</h1>
+    <h1>LOGS</h1>
+    <div *ngFor="let log of logs">{{log.operation}} {{log.data}} {{log.title}} {{log.description}} {{log.priority}} {{log.color}}</div>
+</div>

@@ -23,6 +23,7 @@ export class WelcomePageComponent  {
   userId:string;
   info:string;
   email:string;
+  thema:string;
   date:Date= new Date();
   currentDate:string;
   registerUser(): void {
@@ -42,6 +43,7 @@ export class WelcomePageComponent  {
       if(this.matchingPasswords(result.value.register.repeatPassword,result.value.register.password)==true)
       {
       this.email=result.value.register.email;
+      this.thema=result.value.register.thema;
       this.auth.register(result.value.register.email,result.value.register.password)
       .then(()=>this.info="Registration complete. You can login! ")
       .then(()=>this.userId=this.auth.getUser().uid)
@@ -57,7 +59,7 @@ export class WelcomePageComponent  {
       .then(()=>this.db.writeTitleTable(this.userId,"table9","table9"))
       .then(()=>this.db.writeUserNumber(this.userId,0))
       .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"Create Account","","","","",""))
-      .then(()=>this.db.writeUserData(this.userId,this.email));
+      .then(()=>this.db.writeUserData(this.userId,this.email,this.thema));
     }}}});
   }
   loginUser(): void {
@@ -67,9 +69,13 @@ export class WelcomePageComponent  {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result!=undefined){
+        this.random=Math.random().toString();
+        this.random=this.random.replace("0.","logIn");
+        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
       if(result==false) this.numberOfTests++;
       else{
-      this.auth.login(result.email,result.password).then(() => this.router.navigate(['/dashboard'])).catch(err => this.loginError());
+      this.auth.login(result.email,result.password).then(() => this.router.navigate(['/dashboard'])).catch(err => this.loginError())
+      .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"Log in","","","","",""));
     }}else this.numberOfTests++;
   });
   }

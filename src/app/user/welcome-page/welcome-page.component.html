@@ -1,7 +1,14 @@
-<button mat-stroked-button color="primary" (click)="registerUser()">Register User</button>
-<button mat-stroked-button color="primary" [disabled]="viewCaptcha()" (click)="loginUser()">Login User</button>
-<div *ngIf="viewCaptcha()">
-    <h1>If you see this message, there were too many failed login attempts, you must select the captche and try again </h1>
-    <re-captcha (resolved)="resolved($event)" siteKey="6LfOQ8QUAAAAAE310YWvEdGYeXWAIlq_frghVmRe" required></re-captcha>
+<div class="center">
+    <img src="https://telegraph2.tk/index.php/apps/theming/image/logo?useSvg=1&v=3" alt="logo" height="30%" width="30%">
+    <br>
+
+    <button mat-stroked-button color="primary" (click)="registerUser()">Register User</button>
+    <button mat-stroked-button color="primary" [disabled]="viewCaptcha()" (click)="loginUser()">Login User</button>
+    <div *ngIf="viewCaptcha()">
+        <h1>If you see this message, there were too many failed login attempts, you must select the captche and try again </h1>
+        <div class="captcha">
+            <re-captcha (resolved)="resolved($event)" siteKey="6LfOQ8QUAAAAAE310YWvEdGYeXWAIlq_frghVmRe" required></re-captcha>
+        </div>
+    </div>
+    <h1>{{info}}</h1>
 </div>
-<h1>{{info}}</h1>

@@ -1,34 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { DataService } from 'src/app/services/database.service';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/database.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-logi',
-  templateUrl: './logi.component.html',
-  styleUrls: ['./logi.component.css']
+  selector: 'app-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.css']
 })
-export class LogiComponent implements OnInit {
-  userId:string;
-  logs=[];
-  random:string;
-  date:Date;
-  currentDate:string;
+export class SettingsComponent implements OnInit {
   userInfo=[];
   fontColor;
   background;
+  userId:string;
+  random:string;
+  date:Date;
+  currentDate:string;
   constructor(
     private auth:AuthService,
     private db:DataService,
     private router: Router) { 
       this.userId=auth.getUser().uid;
     }
+
   ngOnInit() {
-    this.db.getLogs(this.userId).subscribe(res => {
-      this.logs = res;
-      this.db.getDateUser(this.userId).subscribe(res => {
-        this.userInfo = res;
-      });
+    this.db.getDateUser(this.userId).subscribe(res => {
+      this.userInfo = res;
     });
   }
   changeFont():string
