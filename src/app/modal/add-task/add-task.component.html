@@ -25,16 +25,21 @@
                         <mat-select name="color" ngModel>
                             <mat-option style="background-color:green" value="green">Easy</mat-option>
                             <mat-option style="background-color:white" value="white">Normal</mat-option>
-                            <mat-option style="background-color:blue" value="blue">Not Easy</mat-option>
+                            <mat-option style="background-color:orange" value="orange">Not Easy</mat-option>
                             <mat-option style="background-color:red" value="red">Critical</mat-option>
                         </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="End date" name="endDate" ngModel [matDatepickerFilter]="myFilter" [matDatepicker]="picker1">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
                 </div>
             </form>
         </div>
     </div>
     <div mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="false">Cancel</button>
+        <button mat-button [mat-dialog-close]="undefined">Cancel</button>
         <button mat-button [mat-dialog-close]="taskForm" cdkFocusInitial>Add Task</button>
     </div>
 </div>

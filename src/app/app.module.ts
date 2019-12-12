@@ -8,7 +8,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from 'src/environments/environment';
 import { RecaptchaModule } from 'ng-recaptcha';
-import { MatFormFieldModule,  MatDialogModule,MatInputModule, MatButtonModule} from '@angular/material';
+import { MatFormFieldModule,  MatDialogModule,MatInputModule, MatButtonModule, MatNativeDateModule} from '@angular/material';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { WelcomePageComponent } from './user/welcome-page/welcome-page.component';
 import { RegisterComponent } from './modal/register/register.component';
@@ -21,6 +21,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { EditTaskComponent } from './modal/edit-task/edit-task.component';
 import { EditTableNameComponent } from './modal/edit-table-name/edit-table-name.component';
+import { LogiComponent } from './dashboards/logi/logi.component';
+import {MatDatepickerModule} from '@angular/material/datepicker'
 @NgModule({
   entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent],
   declarations: [
@@ -31,7 +33,8 @@ import { EditTableNameComponent } from './modal/edit-table-name/edit-table-name.
     LoginComponent,
     AddTaskComponent,
     EditTaskComponent,
-    EditTableNameComponent
+    EditTableNameComponent,
+    LogiComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,9 @@ import { EditTableNameComponent } from './modal/edit-table-name/edit-table-name.
     FormsModule,
     MatIconModule,
     MatSelectModule,
-    DragDropModule
+    DragDropModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 
   ],
   providers: [],

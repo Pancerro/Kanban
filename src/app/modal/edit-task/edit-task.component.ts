@@ -15,4 +15,11 @@ export class EditTaskComponent {
     editTask(){
       this.edit=!this.edit;
     }
+    date:Date=new Date;
+    myFilter = (d: Date): boolean => {
+    const day = d.getDate();
+    const month=d.getMonth();
+    const year=d.getFullYear()
+    return day>=this.date.getDate() && month>=this.date.getMonth() &&year>=this.date.getFullYear();
+  }
 }

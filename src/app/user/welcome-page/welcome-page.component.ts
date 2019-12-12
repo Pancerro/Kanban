@@ -17,18 +17,24 @@ export class WelcomePageComponent  {
     public auth:AuthService,
     public db:DataService) { 
     }
- 
+  random:string;
   captcha:boolean=false;
   numberOfTests:number=0;
   userId:string;
   info:string;
   email:string;
+  date:Date= new Date();
+  currentDate:string;
   registerUser(): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
     width: '350px',   
 });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result!=undefined){
+      this.random=Math.random().toString();
+      this.random=this.random.replace("0.","logRegister");
+      this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
       if(result.invalid){
         this.info="Please correct all errors and resubmit the form register";
       }
@@ -50,8 +56,9 @@ export class WelcomePageComponent  {
       .then(()=>this.db.writeTitleTable(this.userId,"table8","table8"))
       .then(()=>this.db.writeTitleTable(this.userId,"table9","table9"))
       .then(()=>this.db.writeUserNumber(this.userId,0))
+      .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"Create Account","","","","",""))
       .then(()=>this.db.writeUserData(this.userId,this.email));
-    }}});
+    }}}});
   }
   loginUser(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
@@ -59,10 +66,12 @@ export class WelcomePageComponent  {
         });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result!=undefined){
       if(result==false) this.numberOfTests++;
       else{
       this.auth.login(result.email,result.password).then(() => this.router.navigate(['/dashboard'])).catch(err => this.loginError());
-    }});
+    }}else this.numberOfTests++;
+  });
   }
   loginError():void{
     this.numberOfTests++;

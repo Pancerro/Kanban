@@ -1,6 +1,6 @@
 <div class="center">
     <button mat-stroked-button color="primary" (click)="editTask()">Edit task</button><br>
-    <h1 mat-dialog-title>Update your task</h1>
+    <h1 mat-dialog-title *ngIf="!edit">Update your task</h1>
     <div mat-dialog-content>
         <div class="updateTask">
             <form #updateTaskForm="ngForm">
@@ -26,16 +26,22 @@
                         <mat-select name="color" [disabled]="edit" [(ngModel)]="data.color" ngModel>
                             <mat-option style="background-color:green" value="green">Easy</mat-option>
                             <mat-option style="background-color:white" value="white">Normal</mat-option>
-                            <mat-option style="background-color:blue" value="blue">Not Easy</mat-option>
+                            <mat-option style="background-color:orange" value="orange">Not Easy</mat-option>
                             <mat-option style="background-color:red" value="red">Critical</mat-option>
                         </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="End date" name="endDate" [disabled]="edit" [(ngModel)]="data.endDate">
+                        <input matInput placeholder="End date" name="endDate" [disabled]="edit" [matDatepickerFilter]="myFilter" [(ngModel)]="data.endDate" [matDatepicker]="picker1">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
                 </div>
             </form>
         </div>
     </div>
     <div mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="false">Cancel</button>
+        <button mat-button [mat-dialog-close]="undefined">Cancel</button>
         <button mat-button [mat-dialog-close]="updateTaskForm" cdkFocusInitial>Update Task</button>
     </div>
 </div>
