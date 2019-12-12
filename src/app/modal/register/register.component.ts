@@ -10,8 +10,7 @@ export class RegisterComponent  {
   hide:boolean = true;
   captcha:boolean=false;
   constructor() {}
-
   resolved(captchaResponse):void {
     this.captcha=captchaResponse;
-} 
+  } 
 }

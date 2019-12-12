@@ -10,8 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SettingsComponent implements OnInit {
   userInfo=[];
-  fontColor;
-  background;
+  fontColor:string;
+  background:string;
   info:string;
   userId:string;
   random:string;
@@ -22,8 +22,7 @@ export class SettingsComponent implements OnInit {
     private db:DataService,
     private router: Router) { 
     this.userId=auth.getUser().uid;
-    }
-
+  }
   ngOnInit() {
     this.db.getDateUser(this.userId).subscribe(res => {
       this.userInfo = res;
@@ -32,23 +31,23 @@ export class SettingsComponent implements OnInit {
   changeFont():string
   {
     if(this.userInfo[0].thema=="green"){
-    this.fontColor="white";
-    return this.fontColor;
+      this.fontColor="white";
+      return this.fontColor;
     }
     if(this.userInfo[0].thema=="black"){
-    this.fontColor="white";
-    return this.fontColor;
+      this.fontColor="white";
+      return this.fontColor;
     }
   }
   changeBackground(){
     if(this.userInfo[0].thema=="green"){
       this.background="green";
       return this.background;
-      }
-      if(this.userInfo[0].thema=="black"){
+    }
+    if(this.userInfo[0].thema=="black"){
       this.background="black";
       return this.background;
-      }
+    }
   }
   logout():void{
     this.random=Math.random().toString();
@@ -60,15 +59,13 @@ export class SettingsComponent implements OnInit {
   return():void{
     this.router.navigate(['/dashboard']);
   }
-
   updateEmail(updateEmail){
     if(updateEmail.invalid) window.alert("Please try again");
     else{
-    this.auth.updateEmail(updateEmail.value.newEmail);
-    this.db.updateEmail(this.userId,updateEmail.value.newEmail);
+      this.auth.updateEmail(updateEmail.value.newEmail);
+      this.db.updateEmail(this.userId,updateEmail.value.newEmail);
     }
   }
-  
   updatePassword(updatePassword){
     if(updatePassword.invalid) window.alert("Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers")
     else

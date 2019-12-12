@@ -23,7 +23,8 @@ import { EditTaskComponent } from './modal/edit-task/edit-task.component';
 import { EditTableNameComponent } from './modal/edit-table-name/edit-table-name.component';
 import { LogiComponent } from './dashboards/logi/logi.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { SettingsComponent } from './dashboards/settings/settings.component'
+import { SettingsComponent } from './dashboards/settings/settings.component';
+import {MatTableModule} from '@angular/material/table';
 @NgModule({
   entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent],
   declarations: [
@@ -56,7 +57,8 @@ import { SettingsComponent } from './dashboards/settings/settings.component'
     MatSelectModule,
     DragDropModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTableModule
 
   ],
   providers: [],

@@ -2,20 +2,17 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { User, auth } from 'firebase';
 import { Observable } from 'rxjs/index';
-
 @Injectable({providedIn: 'root'})
 export class AuthService {
   readonly authState$: Observable<User | null> = this.fireAuth.authState;
   this: any;
-  constructor(
-    private fireAuth: AngularFireAuth) {}
+  constructor(private fireAuth: AngularFireAuth) {}
   getUser(): User | null {
     return this.fireAuth.auth.currentUser;
   }
   login(email, password) {
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password);
   }
-
   register(email, password) {
     return this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
     .then(() => {

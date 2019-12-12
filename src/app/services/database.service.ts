@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
-import { MatGridTileHeaderCssMatStyler } from '@angular/material';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +11,7 @@ export class DataService {
    }
   getDateUser(userId):Observable<any[]>{
     return this.db.list('/users/'+userId+'/userInfo').valueChanges();
-   }
+  }
   getUserNumber(userId):Observable<any[]>{
     return this.db.list('/users/'+userId+'/viewTables').valueChanges();
   }
@@ -23,11 +22,15 @@ export class DataService {
     firebase.database().ref('users/'+ userId+'/userInfo/info').set({
     email:email,
     thema:thema
-  });}
+    }
+    );
+  }
   writeUserNumber(userId,number){
     firebase.database().ref('users/'+ userId+'/viewTables/numbers').set({
     number:number
-  });}
+    }
+    );
+  }
   writeUserTable(userId,tableparent,tablechild,title,description,priority,color,endDate){
     firebase.database().ref('users/'+ userId+'/'+tableparent+'/'+tablechild).set({
     title:title,
@@ -60,11 +63,9 @@ export class DataService {
     return this.db.list('/users/'+userId+'/logs').valueChanges();
   }
   updateEmail(userId,newEmail){
-    
     return this.db.object('/users/'+userId+'/userInfo/info').update({email:newEmail})
   }
   updateThema(userId,newThema){
     return this.db.object('/users/'+userId+'/userInfo/info').update({thema:newThema})
-  }
-  
+  } 
 }

@@ -17,17 +17,16 @@ export class LoginComponent {
     private db:DataService,
     public dialogRef: MatDialogRef<WelcomePageComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    private auth:AuthService) {}
-     
+    private auth:AuthService) {} 
   resetPassword(email){
-   this.auth.resetPassword(email);
+    this.auth.resetPassword(email);
   }
   googleAuth():void{
     this.auth.googleAuth()
     .then(() => this.router.navigate(['/dashboard'])
     .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.auth.getUser().email,""))
     .then(()=>this.auth.sendVerificationMail))
-      .catch(err => console.log(err.message));
+    .catch(err => console.log(err.message));
     this.dialogRef.close();
   }
 }

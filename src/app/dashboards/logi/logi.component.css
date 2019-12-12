@@ -4,3 +4,22 @@
     min-height: 100%;
     text-align: center;
 }
+
+.backgroundInput {
+    background-color: white;
+    color: black;
+}
+
+.tableClass {
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+}

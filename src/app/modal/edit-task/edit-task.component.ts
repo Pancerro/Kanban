@@ -9,14 +9,14 @@ import { DashboardsComponent } from 'src/app/dashboards/dashboards/dashboards.co
 })
 export class EditTaskComponent {
   edit:boolean=true;
+  date:Date=new Date;
   constructor(
     public dialogRef: MatDialogRef<DashboardsComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {}
-    editTask(){
-      this.edit=!this.edit;
-    }
-    date:Date=new Date;
-    myFilter = (d: Date): boolean => {
+  editTask(){
+    this.edit=!this.edit;
+  }
+  myFilter = (d: Date): boolean => {
     const day = d.getDate();
     const month=d.getMonth();
     const year=d.getFullYear()

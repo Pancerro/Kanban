@@ -3,7 +3,7 @@
     <button mat-stroked-button color="primary" (click)="return()">Return to previous page</button>
     <h1>Welcome to settings!</h1>
     <p>Your email: {{item.email}}</p>
-    <p>Your thema: {{item.thema}}</p>
+    <p>Color scheme: {{item.thema}}</p>
     <h4>Update your email: </h4>
     <form (ngSubmit)="updateEmail(emailForm)" #emailForm="ngForm">
         <div class="updateEmail">
@@ -15,12 +15,12 @@
     <h4>Update your password: </h4>
     <form (ngSubmit)="updatePassword(passwordForm)" #passwordForm="ngForm">
         <div class="updatePassword">
-            <input type="text" placeholder="New Password" required name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
+            <input type="password" placeholder="New Password" required name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
         </div>
         <div class="updatePassword">
-            <input type="text" placeholder="New Repeat Password" required name="newRepeatPassword" ngModel>
+            <input type="password" placeholder="New Repeat Password" required name="newRepeatPassword" ngModel>
         </div>
-        <button mat-stroked-button color="primary" type="submit">Update your thema!</button>
+        <button mat-stroked-button color="primary" type="submit">Update color scheme!</button>
     </form>
     <p>{{info}}</p>
     <br>

@@ -15,8 +15,7 @@ export class WelcomePageComponent  {
   constructor(public dialog: MatDialog,
     private router: Router,
     public auth:AuthService,
-    public db:DataService) { 
-    }
+    public db:DataService) {}
   random:string;
   captcha:boolean=false;
   numberOfTests:number=0;
@@ -29,45 +28,42 @@ export class WelcomePageComponent  {
   registerUser(): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
     width: '350px',   
-});
-
+  });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=undefined){
-      this.random=Math.random().toString();
-      this.random=this.random.replace("0.","logRegister");
-      this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-      if(result.invalid){
-        this.info="Please correct all errors and resubmit the form register";
-      }
-      else{
-      if(this.matchingPasswords(result.value.register.repeatPassword,result.value.register.password)==true)
-      {
-      this.email=result.value.register.email;
-      this.thema=result.value.register.thema;
-      this.thema=""; // :)
-      this.auth.register(result.value.register.email,result.value.register.password)
-      .then(()=>this.info="You can login now ")
-      .then(()=>this.userId=this.auth.getUser().uid)
-      .then(()=>this.db.writeTitleTable(this.userId,"table0","table0"))
-      .then(()=>this.db.writeTitleTable(this.userId,"table1","table1"))
-      .then(()=>this.db.writeTitleTable(this.userId,"table2","table2"))
-      .then(()=>this.db.writeTitleTable(this.userId,"table3","table3"))
-      .then(()=>this.db.writeTitleTable(this.userId,"table4","table4"))
-      .then(()=>this.db.writeTitleTable(this.userId,"table5","table5"))
-      .then(()=>this.db.writeTitleTable(this.userId,"table6","table6"))
-      .then(()=>this.db.writeTitleTable(this.userId,"table7","table7"))
-      .then(()=>this.db.writeTitleTable(this.userId,"table8","table8"))
-      .then(()=>this.db.writeTitleTable(this.userId,"table9","table9"))
-      .then(()=>this.db.writeUserNumber(this.userId,0))
-      .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"Create Account","","","","",""))
-      .then(()=>this.db.writeUserData(this.userId,this.email,this.thema));
+        this.random=Math.random().toString();
+        this.random=this.random.replace("0.","logRegister");
+        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+        if(result.invalid){
+          this.info="Please correct all errors and resubmit the form register";
+        }
+        else{
+          if(this.matchingPasswords(result.value.register.repeatPassword,result.value.register.password)==true){
+            this.email=result.value.register.email;
+            this.thema=result.value.register.thema;
+            this.thema=""; // :)
+            this.auth.register(result.value.register.email,result.value.register.password)
+            .then(()=>this.info="You can login now ")
+            .then(()=>this.userId=this.auth.getUser().uid)
+            .then(()=>this.db.writeTitleTable(this.userId,"table0","table0"))
+            .then(()=>this.db.writeTitleTable(this.userId,"table1","table1"))
+            .then(()=>this.db.writeTitleTable(this.userId,"table2","table2"))
+            .then(()=>this.db.writeTitleTable(this.userId,"table3","table3"))
+            .then(()=>this.db.writeTitleTable(this.userId,"table4","table4"))
+            .then(()=>this.db.writeTitleTable(this.userId,"table5","table5"))
+            .then(()=>this.db.writeTitleTable(this.userId,"table6","table6"))
+            .then(()=>this.db.writeTitleTable(this.userId,"table7","table7"))
+            .then(()=>this.db.writeTitleTable(this.userId,"table8","table8"))
+            .then(()=>this.db.writeTitleTable(this.userId,"table9","table9"))
+            .then(()=>this.db.writeUserNumber(this.userId,0))
+            .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"Create Account","","","","",""))
+            .then(()=>this.db.writeUserData(this.userId,this.email,this.thema));
     }}}});
   }
   loginUser(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '300px',
-        });
-
+    });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=undefined){
         this.random=Math.random().toString();
@@ -75,11 +71,12 @@ export class WelcomePageComponent  {
         this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
       if(result==false) this.numberOfTests++;
       else{
-      this.auth.login(result.email,result.password).then(() => this.router.navigate(['/dashboard'])).catch(err => this.loginError())
-      .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"Log in","","","","",""));
-    }}else this.numberOfTests++;
+        this.auth.login(result.email,result.password).then(() => this.router.navigate(['/dashboard'])).catch(err => this.loginError())
+        .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"Log in","","","","",""));
+      }
+    }else this.numberOfTests++;
   });
-  }
+}
   loginError():void{
     this.numberOfTests++;
     this.info="Login Failed.Try Again";
@@ -99,5 +96,4 @@ matchingPasswords(repeatPassword,password):boolean{
     return false;
   }
 }
-
 }
