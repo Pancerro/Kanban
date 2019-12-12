@@ -3,7 +3,7 @@
 <div *ngFor="let user of user| async">
     <h1> Welcome</h1>
     <h3> Your email: {{user.email}}</h3>
-    <p *ngIf="!verifyEmail">please verify your email</p>
+    <p *ngIf="!verifyEmail">please verify your email and refresh websites!</p>
     <button mat-stroked-button color="primary" (click)="sendRepeatVerificationEmail()">Send repeat verification email</button>
     <div *ngIf="verifyEmail">
         <h1> Thank you for verifying your email </h1>
