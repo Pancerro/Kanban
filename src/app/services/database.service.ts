@@ -59,6 +59,12 @@ export class DataService {
   getLogs(userId):Observable<any[]>{
     return this.db.list('/users/'+userId+'/logs').valueChanges();
   }
-
-      
+  updateEmail(userId,newEmail){
+    
+    return this.db.object('/users/'+userId+'/userInfo/info').update({email:newEmail})
+  }
+  updateThema(userId,newThema){
+    return this.db.object('/users/'+userId+'/userInfo/info').update({thema:newThema})
+  }
+  
 }

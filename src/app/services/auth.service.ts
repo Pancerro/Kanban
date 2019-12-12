@@ -31,7 +31,9 @@ export class AuthService {
     return this.fireAuth.auth.signOut();
   }
   resetPassword(email){
-    return this.fireAuth.auth.sendPasswordResetEmail(email);
+    return this.fireAuth.auth.sendPasswordResetEmail(email).catch((error) => {
+      window.alert(error.message);
+    })
   }
   googleAuth() {
     return this.AuthLogin(new auth.GoogleAuthProvider());
@@ -45,9 +47,13 @@ export class AuthService {
     })
   }
   updateEmail(newEmail){
-    return this.fireAuth.auth.currentUser.updateEmail(newEmail);
+    return this.fireAuth.auth.currentUser.updateEmail(newEmail).catch((error) => {
+      window.alert(error.message);
+    })
   }
   updatePassowrd(newPassword){
-    return this.fireAuth.auth.currentUser.updatePassword(newPassword);
+    return this.fireAuth.auth.currentUser.updatePassword(newPassword).catch((error) => {
+      window.alert(error.message);
+    })
   }
 }

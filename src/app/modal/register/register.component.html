@@ -17,13 +17,13 @@
                         </button>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Repeat Password" required name="repeatPassword" ngModel></p>
+                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Re-enter Password" required name="repeatPassword" ngModel></p>
                         <mat-error>Repeat Password is Mandatory</mat-error>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field *ngIf="false">
                         <mat-label>Defualt theme: </mat-label>
                         <mat-select name="thema" ngModel>
                             <mat-option style="background-color:green; color:white;" value="green">Green</mat-option>
@@ -34,7 +34,6 @@
                 </div>
             </form>
         </div>
-        <p *ngIf="!captcha">Select your captcha: </p>
         <p>
             <re-captcha (resolved)="resolved($event)" siteKey="6LfOQ8QUAAAAAE310YWvEdGYeXWAIlq_frghVmRe" required></re-captcha>
         </p>

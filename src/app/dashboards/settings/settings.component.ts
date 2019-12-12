@@ -12,15 +12,16 @@ export class SettingsComponent implements OnInit {
   userInfo=[];
   fontColor;
   background;
+  info:string;
   userId:string;
   random:string;
-  date:Date;
+  date:Date=new Date();
   currentDate:string;
   constructor(
     private auth:AuthService,
     private db:DataService,
     private router: Router) { 
-      this.userId=auth.getUser().uid;
+    this.userId=auth.getUser().uid;
     }
 
   ngOnInit() {
@@ -60,4 +61,31 @@ export class SettingsComponent implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 
+  updateEmail(updateEmail){
+    if(updateEmail.invalid) window.alert("Please try again");
+    else{
+    this.auth.updateEmail(updateEmail.value.newEmail);
+    this.db.updateEmail(this.userId,updateEmail.value.newEmail);
+    }
+  }
+  
+  updatePassword(updatePassword){
+    if(updatePassword.invalid) window.alert("Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers")
+    else
+    { 
+      if(this.matchingPasswords(updatePassword.value.newPassword,updatePassword.value.newRepeatPassword)) this.auth.updatePassowrd(updatePassword.value.newPassword);
+    }
+  }
+  updateThema(updateThema)
+  {
+    if(updateThema.invalid) window.alert("Please try again");
+    else this.db.updateThema(this.userId,updateThema.value.thema);
+  }
+  matchingPasswords(repeatPassword,password):boolean{
+    if(repeatPassword.valueOf()==password.valueOf()) return true;
+    else {
+      this.info='Passwords do not match.Try to again!';
+      return false;
+    }
+  }
 }

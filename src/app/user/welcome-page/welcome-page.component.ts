@@ -44,8 +44,9 @@ export class WelcomePageComponent  {
       {
       this.email=result.value.register.email;
       this.thema=result.value.register.thema;
+      this.thema=""; // :)
       this.auth.register(result.value.register.email,result.value.register.password)
-      .then(()=>this.info="Registration complete. You can login! ")
+      .then(()=>this.info="You can login now ")
       .then(()=>this.userId=this.auth.getUser().uid)
       .then(()=>this.db.writeTitleTable(this.userId,"table0","table0"))
       .then(()=>this.db.writeTitleTable(this.userId,"table1","table1"))

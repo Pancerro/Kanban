@@ -12,7 +12,7 @@ export class LogiComponent implements OnInit {
   userId:string;
   logs=[];
   random:string;
-  date:Date;
+  date:Date=new Date();
   currentDate:string;
   userInfo=[];
   fontColor;

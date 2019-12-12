@@ -4,28 +4,37 @@
     <h1>Welcome to settings!</h1>
     <p>Your email: {{item.email}}</p>
     <p>Your thema: {{item.thema}}</p>
-    <p>Update your email: </p>
-    <input placeholder="New Email">
-
-
-
-    <div class="center">
-        <h1 mat-dialog-title>Update your email!</h1>
-        <div mat-dialog-content>
-            <div class="newEmail">
-                <form #newEmailForm="ngForm">
-                    <div ngModelGroup="Email">
-                        <mat-form-field>
-                            <p><input matInput type="text" placeholder="New Email" required name="newEmail" ngModel></p>
-                            <mat-error>New Email is Mandatory</mat-error>
-                        </mat-form-field>
-                    </div>
-                </form>
-            </div>
+    <h4>Update your email: </h4>
+    <form (ngSubmit)="updateEmail(emailForm)" #emailForm="ngForm">
+        <div class="updateEmail">
+            <input type="text" placeholder="New Email" required name="newEmail" ngModel>
         </div>
-        <div mat-dialog-actions>
-            <button mat-button [mat-dialog-close]="undefined">Cancel</button>
-            <button mat-button [mat-dialog-close]="newEmailForm" cdkFocusInitial>Update Email</button>
+        <button mat-stroked-button color="primary" type="submit">Update your email!</button>
+    </form>
+    <br>
+    <h4>Update your password: </h4>
+    <form (ngSubmit)="updatePassword(passwordForm)" #passwordForm="ngForm">
+        <div class="updatePassword">
+            <input type="text" placeholder="New Password" required name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
         </div>
-    </div>
+        <div class="updatePassword">
+            <input type="text" placeholder="New Repeat Password" required name="newRepeatPassword" ngModel>
+        </div>
+        <button mat-stroked-button color="primary" type="submit">Update your thema!</button>
+    </form>
+    <p>{{info}}</p>
+    <br>
+    <h4>Update your thema: </h4>
+    <form (ngSubmit)="updateThema(themaForm)" #themaForm="ngForm">
+        <div class="updateThema">
+            <mat-form-field class="form">
+                <mat-select name="thema" ngModel>
+                    <mat-option selected style="background-color:white; color:black;" value="white">White</mat-option>
+                    <mat-option style="background-color:green; color:white;" value="green">Green</mat-option>
+                    <mat-option style="background-color:black; color:white;" value="black">Black</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <button mat-stroked-button color="primary" type="submit">Update your thema!</button>
+    </form>
 </div>
