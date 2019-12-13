@@ -68,4 +68,21 @@ export class DataService {
   updateThema(userId,newThema){
     return this.db.object('/users/'+userId+'/userInfo/info').update({thema:newThema})
   } 
+  writeCategory(userId,category,color){
+    firebase.database().ref('users/'+ userId+'/category/'+category).set({
+    category:category,
+    color:color,
+  });}
+  getCategory(userId):Observable<any[]>{
+    return this.db.list('users/'+ userId+'/category/').valueChanges();
+  }
+  removeCategory(userId,removeCategory){
+    return this.db.list('users/'+ userId+'/category/').remove(removeCategory);
+}
+  updateColorCategory(userId,category,color){
+    return this.db.object('users/'+ userId+'/category/'+category).update({color:color})
+  }
+  updateNameCategory(userId,category,nameCategory){
+    return this.db.object('users/'+ userId+'/category/'+category).update({category:nameCategory})
+  }
 }

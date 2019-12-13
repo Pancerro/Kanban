@@ -182,6 +182,7 @@ export class DashboardsComponent implements OnInit {
           this.description=result.value.task.description;
           this.priority=result.value.task.priority;
           this.color=result.value.task.color;
+          console.log(this.color);
           this.endDate=result.value.task.endDate;
           if(!this.endDate) this.endDate=new Date();
             this.endData=this.endDate.getDate()+'/'+(this.endDate.getMonth()+1)+'/'+this.endDate.getFullYear();

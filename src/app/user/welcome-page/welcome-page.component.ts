@@ -57,6 +57,10 @@ export class WelcomePageComponent  {
             .then(()=>this.db.writeTitleTable(this.userId,"table9","table9"))
             .then(()=>this.db.writeUserNumber(this.userId,0))
             .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"Create Account","","","","",""))
+            .then(()=>this.db.writeCategory(this.userId,"not easy","blue"))
+            .then(()=>this.db.writeCategory(this.userId,"easy","green"))
+            .then(()=>this.db.writeCategory(this.userId,"critical","red"))
+            .then(()=>this.db.writeCategory(this.userId,"normal","white"))
             .then(()=>this.db.writeUserData(this.userId,this.email,this.thema));
     }}}});
   }
