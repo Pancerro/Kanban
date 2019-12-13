@@ -5,10 +5,15 @@ import { DashboardsComponent } from './dashboards/dashboards/dashboards.componen
 import { AuthGuard } from './services/auth.guard';
 import { LogiComponent } from './dashboards/logi/logi.component';
 import { SettingsComponent } from './dashboards/settings/settings.component';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome-page', pathMatch: 'full'},
   {path: 'welcome-page', component: WelcomePageComponent},
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent
+  },
   {
     path: 'dashboard',
     component: DashboardsComponent,

@@ -20,11 +20,11 @@
         <div class="updatePassword">
             <input type="password" placeholder="New Repeat Password" required name="newRepeatPassword" ngModel>
         </div>
-        <button mat-stroked-button color="primary" type="submit">Update color scheme!</button>
+        <button mat-stroked-button color="primary" type="submit">Update your password!</button>
     </form>
     <p>{{info}}</p>
     <br>
-    <h4>Update your thema: </h4>
+    <h4>Update color scheme! </h4>
     <form (ngSubmit)="updateThema(themaForm)" #themaForm="ngForm">
         <div class="updateThema">
             <mat-form-field class="form">
@@ -35,6 +35,6 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <button mat-stroked-button color="primary" type="submit">Update your thema!</button>
+        <button mat-stroked-button color="primary" type="submit">Update color scheme!</button>
     </form>
 </div>

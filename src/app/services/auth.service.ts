@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/index';
 @Injectable({providedIn: 'root'})
 export class AuthService {
   readonly authState$: Observable<User | null> = this.fireAuth.authState;
-  this: any;
   constructor(private fireAuth: AngularFireAuth) {}
   getUser(): User | null {
     return this.fireAuth.auth.currentUser;
@@ -51,6 +50,12 @@ export class AuthService {
   updatePassowrd(newPassword){
     return this.fireAuth.auth.currentUser.updatePassword(newPassword).catch((error) => {
       window.alert(error.message);
-    })
+    });
+  }
+  deleteUSer(){
+    return this.fireAuth.auth.currentUser.delete();
+  }
+  userResetPassword(code,password){
+    return this.fireAuth.auth.confirmPasswordReset(code,password);
   }
 }

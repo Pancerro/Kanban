@@ -9,13 +9,14 @@
                         <mat-error>Email is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" #password="ngModel" name="password" required title="Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers " pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                ngModel></p>
-                        <mat-error>Wrong Password</mat-error>
+                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" #password="ngModel" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel></p>
+                        <mat-error>Wrong Password - Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers</mat-error>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
                     </mat-form-field>
+                    <br>
+                    <br>
                     <mat-form-field>
                         <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Re-enter Password" required name="repeatPassword" ngModel></p>
                         <mat-error>Repeat Password is Mandatory</mat-error>

@@ -25,6 +25,7 @@ import { LogiComponent } from './dashboards/logi/logi.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { SettingsComponent } from './dashboards/settings/settings.component';
 import {MatTableModule} from '@angular/material/table';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
 @NgModule({
   entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent],
   declarations: [
@@ -37,7 +38,8 @@ import {MatTableModule} from '@angular/material/table';
     EditTaskComponent,
     EditTableNameComponent,
     LogiComponent,
-    SettingsComponent
+    SettingsComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
