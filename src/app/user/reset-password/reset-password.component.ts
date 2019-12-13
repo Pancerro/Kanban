@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -7,32 +7,30 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent{
 info:string;
 code: any;
 hide:boolean = true;
 verifyEmail=this.auth.getUser().emailVerified;
   constructor( public auth:AuthService,
     private router: Router,
-    private route: ActivatedRoute) { }
-  ngOnInit() {
-  }
-
+    private route: ActivatedRoute,
+    private activateRoute: ActivatedRoute) { }
   resetUserPassword(updatePassword){
-    console.log(updatePassword.value.reset.newPassword)
-    console.log(updatePassword.value.reset.newRepeatPassword)
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
-    this.code = this.route.snapshot.queryParams['oobCode'];
-    this.auth.userResetPassword(this.code,updatePassword.value.newPassword).then(() => this.router.navigate(['welcome-page']))
-    .catch(err => {
-     window.alert("hehe errror")});
+      this.code = this.activateRoute.snapshot.queryParams['oobCode'];
+      this.auth.userResetPassword(this.code,updatePassword.value.newPassword)
+      .then(()=>this.info="You can login now ")
+      .then(() => this.router.navigate(['welcome-page']))
+      .catch(err => {
+       window.alert("eh! error, please try to again")});
     }
-    else{ window.alert("hehe error xDDD kisne");}
+    else window.alert("eh! error, please try to again");
   }
   matchingPasswords(repeatPassword,password):boolean{
     if(repeatPassword.valueOf()==password.valueOf()) return true;
     else {
-      this.info='Passwords do not match.Try to register again!';
+      this.info='Passwords do not match.Try to again!';
       return false;
     }
   }

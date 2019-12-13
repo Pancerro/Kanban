@@ -19,14 +19,8 @@ export class LoginComponent {
     @Inject(MAT_DIALOG_DATA) public data,
     private auth:AuthService) {} 
   resetPassword(email){
-    this.auth.resetPassword(email);
-  }
-  googleAuth():void{
-    this.auth.googleAuth()
-    .then(() => this.router.navigate(['/dashboard'])
-    .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.auth.getUser().email,""))
-    .then(()=>this.auth.sendVerificationMail))
-    .catch(err => console.log(err.message));
-    this.dialogRef.close();
+    this.auth.resetPassword(email)
+    .catch(err => {
+      window.alert("eh! error, please try to again")})
   }
 }

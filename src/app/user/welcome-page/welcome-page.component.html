@@ -1,9 +1,12 @@
 <div class="center">
     <img src="https://i.imgur.com/9ZQatoL.png" alt="logo" height="30%" width="30%">
     <br>
-
     <button mat-stroked-button color="primary" (click)="registerUser()">Register User</button>
     <button mat-stroked-button color="primary" [disabled]="viewCaptcha()" (click)="loginUser()">Login User</button>
+    <button type="button" width="30px" class="buttonGoogle" mat-stroked-button color="primary" (click)="loginWithGoogle()">                  
+            <img width="20px" alt="Google Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+             Login with Google
+    </button>
     <div *ngIf="viewCaptcha()">
         <h1>If you see this message, there were too many failed login attempts, you must select the captche and try again </h1>
         <div class="captcha">

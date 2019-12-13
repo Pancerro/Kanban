@@ -21,10 +21,6 @@
             <button mat-stroked-button color="primary" class="buttonGoogle" (click)="resetPassword(loginForm.value.login.email)">Reset password</button>
         </div>
     </div>
-    <button type="button" width="30px" class="buttonGoogle" mat-stroked-button color="primary" (click)="googleAuth()">                  
-        <img width="20px" alt="Google Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-         Login with Google
-    </button>
     <div class="result" mat-dialog-actions>
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
         <button mat-button [mat-dialog-close]="loginForm.value.login" cdkFocusInitial>Login</button>

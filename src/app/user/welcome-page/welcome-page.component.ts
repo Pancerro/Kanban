@@ -96,4 +96,11 @@ matchingPasswords(repeatPassword,password):boolean{
     return false;
   }
 }
+loginWithGoogle():void{
+  this.auth.googleAuth()
+  .then(() => this.router.navigate(['/dashboard'])
+  .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.auth.getUser().email,""))
+  .then(()=>this.auth.sendVerificationMail))
+  .catch(err => console.log(err.message));
+}
 }
