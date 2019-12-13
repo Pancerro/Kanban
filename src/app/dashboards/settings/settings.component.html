@@ -3,38 +3,80 @@
     <button mat-stroked-button color="primary" (click)="return()">Return to previous page</button>
     <h1>Welcome to settings!</h1>
     <p>Your email: {{item.email}}</p>
-    <p>Color scheme: {{item.thema}}</p>
-    <h4>Update your email: </h4>
-    <form (ngSubmit)="updateEmail(emailForm)" #emailForm="ngForm">
-        <div class="updateEmail">
-            <input type="text" placeholder="New Email" required name="newEmail" ngModel>
-        </div>
-        <button mat-stroked-button color="primary" type="submit">Update your email!</button>
-    </form>
+    <p *ngIf="pokaz">Color scheme: {{item.thema}}</p>
+    <div *ngIf="pokaz">
+        <h4>Update your email: </h4>
+        <form (ngSubmit)="updateEmail(emailForm)" #emailForm="ngForm">
+            <div class="updateEmail">
+                <input type="text" placeholder="New Email" required name="newEmail" ngModel>
+            </div>
+            <button mat-stroked-button color="primary" type="submit">Update your email!</button>
+        </form>
+    </div>
     <br>
-    <h4>Update your password: </h4>
-    <form (ngSubmit)="updatePassword(passwordForm)" #passwordForm="ngForm">
-        <div class="updatePassword">
-            <input type="password" placeholder="New Password" required name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
-        </div>
-        <div class="updatePassword">
-            <input type="password" placeholder="New Repeat Password" required name="newRepeatPassword" ngModel>
-        </div>
-        <button mat-stroked-button color="primary" type="submit">Update your password!</button>
-    </form>
-    <p>{{info}}</p>
+    <div *ngIf="pokaz">
+        <h4>Update your password: </h4>
+        <form (ngSubmit)="updatePassword(passwordForm)" #passwordForm="ngForm">
+            <div class="updatePassword">
+                <input type="password" placeholder="New Password" required name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
+            </div>
+            <div class="updatePassword">
+                <input type="password" placeholder="New Repeat Password" required name="newRepeatPassword" ngModel>
+            </div>
+            <button mat-stroked-button color="primary" type="submit">Update your password!</button>
+        </form>
+        <p>{{info}}</p>
+    </div>
     <br>
-    <h4>Update color scheme! </h4>
-    <form (ngSubmit)="updateThema(themaForm)" #themaForm="ngForm">
-        <div class="updateThema">
-            <mat-form-field class="form">
-                <mat-select name="thema" ngModel>
-                    <mat-option selected style="background-color:white; color:black;" value="white">White</mat-option>
-                    <mat-option style="background-color:green; color:white;" value="green">Green</mat-option>
-                    <mat-option style="background-color:black; color:white;" value="black">Black</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <button mat-stroked-button color="primary" type="submit">Update color scheme!</button>
-    </form>
+    <div *ngIf="pokaz">
+        <h4>Update color scheme! </h4>
+        <form (ngSubmit)="updateThema(themaForm)" #themaForm="ngForm">
+            <div class="updateThema">
+                <mat-form-field class="form">
+                    <mat-select name="thema" ngModel>
+                        <mat-option selected style="background-color:white; color:black;" value="white">White</mat-option>
+                        <mat-option style="background-color:green; color:white;" value="green">Green</mat-option>
+                        <mat-option style="background-color:black; color:white;" value="black">Black</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <button mat-stroked-button color="primary" type="submit">Update color scheme!</button>
+        </form>
+    </div>
+    <mat-form-field class="backgroundInput">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    <p>Add category</p>
+    <button mat-stroked-button color="primary" (click)="addCategory()"><mat-icon>add_circle</mat-icon></button>
+    <br>
+    <br>
+    <div class="tableClass">
+        <table mat-table [dataSource]="dataLogs" matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> Category </th>
+                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> {{element.category}} </td>
+            </ng-container>
+            <ng-container matColumnDef="color">
+                <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> Color </th>
+                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> {{element.color}} </td>
+            </ng-container>
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> Delete </th>
+                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> <button mat-stroked-button color="primary" class="buttonRemove" (click)="deleteCategory(element.category)"><mat-icon>delete</mat-icon></button> </td>
+            </ng-container>
+            <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> Edit </th>
+                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> <button mat-stroked-button color="primary" class="buttonRemove" (click)="editCategory(element.category,element.color)"><mat-icon>edit</mat-icon></button> </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <br>
+    <button *ngIf="pokaz" mat-stroked-button color="primary" (click)="deleteAccount()">Prosze nie klikaj tu :(</button>
+    <br>
+    <p></p>
+    <button class="best" mat-stroked-button color="primary" (click)="bestRegards()">Stopka</button>
+
+
 </div>

@@ -1,0 +1,23 @@
+<div class="center">
+    <h1 mat-dialog-title>Add your category</h1>
+    <div mat-dialog-content>
+        <div class="addCategory">
+            <form #categoryForm="ngForm">
+                <div ngModelGroup="category">
+                    <mat-form-field>
+                        <p><input matInput type="text" placeholder="Category" required name="category" ngModel></p>
+                        <mat-error>Category is Mandatory</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <p><input matInput type="text" placeholder="Color" required name="color" ngModel></p>
+                        <mat-error>Color is Mandatory</mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+        <button mat-button [mat-dialog-close]="categoryForm" cdkFocusInitial>Add Task</button>
+    </div>
+</div>

@@ -79,10 +79,7 @@ export class DataService {
   removeCategory(userId,removeCategory){
     return this.db.list('users/'+ userId+'/category/').remove(removeCategory);
 }
-  updateColorCategory(userId,category,color){
-    return this.db.object('users/'+ userId+'/category/'+category).update({color:color})
-  }
-  updateNameCategory(userId,category,nameCategory){
-    return this.db.object('users/'+ userId+'/category/'+category).update({category:nameCategory})
+  deleteUser(userId){
+    return this.db.list('users/').remove(userId);
   }
 }

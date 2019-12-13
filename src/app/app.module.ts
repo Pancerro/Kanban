@@ -26,8 +26,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { SettingsComponent } from './dashboards/settings/settings.component';
 import {MatTableModule} from '@angular/material/table';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import {MatSortModule} from '@angular/material/sort';
+import { AddCategoryComponent } from './modal/add-category/add-category.component';
+import { EditCategoryComponent } from './modal/edit-category/edit-category.component';
 @NgModule({
-  entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent],
+  entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent,AddCategoryComponent,EditCategoryComponent],
   declarations: [
     AppComponent,
     WelcomePageComponent,
@@ -39,7 +42,9 @@ import { ResetPasswordComponent } from './user/reset-password/reset-password.com
     EditTableNameComponent,
     LogiComponent,
     SettingsComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AddCategoryComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,8 @@ import { ResetPasswordComponent } from './user/reset-password/reset-password.com
     DragDropModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
 
   ],
   providers: [],

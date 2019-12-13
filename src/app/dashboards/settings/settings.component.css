@@ -9,3 +9,26 @@
     background: white;
     width: auto;
 }
+
+.tableClass {
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+}
+
+table {
+    width: 100%;
+}
+
+.best {
+    width: 99.9%;
+    height: 10%;
+    border: none;
+}
+
+.buttonRemove {
+    color: red;
+    width: 10%;
+    height: 100%;
+    border: none;
+}

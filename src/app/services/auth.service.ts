@@ -54,7 +54,7 @@ export class AuthService {
       window.alert(error.message);
     });
   }
-  deleteUSer(){
+  deleteUser(){
     return this.fireAuth.auth.currentUser.delete();
   }
   userResetPassword(code,password){

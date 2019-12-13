@@ -1,7 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { DashboardsComponent } from 'src/app/dashboards/dashboards/dashboards.component';
 
 @Component({
   selector: 'app-edit-table-name',
@@ -11,3 +8,4 @@ import { DashboardsComponent } from 'src/app/dashboards/dashboards/dashboards.co
 export class EditTableNameComponent {
   constructor() {}
 }
+  

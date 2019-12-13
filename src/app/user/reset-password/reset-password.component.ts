@@ -18,7 +18,7 @@ verifyEmail=this.auth.getUser().emailVerified;
     private activateRoute: ActivatedRoute) { }
   resetUserPassword(updatePassword){
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
-      this.code = this.activateRoute.snapshot.queryParams['oobCode'];
+      this.code = this.route.snapshot.queryParams['oobCode'];
       this.auth.userResetPassword(this.code,updatePassword.value.newPassword)
       .then(()=>this.info="You can login now ")
       .then(() => this.router.navigate(['welcome-page']))

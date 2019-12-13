@@ -1,5 +1,5 @@
 <div class="center">
-    <button mat-stroked-button color="primary" (click)="editTask()">Edit task</button><br>
+    <button class="editButton" mat-stroked-button color="primary" (click)="editTask()"><mat-icon>edit</mat-icon></button><br>
     <h1 mat-dialog-title *ngIf="!edit">Update your task</h1>
     <div mat-dialog-content>
         <div class="updateTask">
@@ -16,9 +16,9 @@
                         <mat-label>Priority: </mat-label>
                         <mat-select name="priority" [disabled]="edit" [(ngModel)]="data.priority" ngModel>
                             <mat-option value="-">-</mat-option>
-                            <mat-option value="Low">Low</mat-option>
-                            <mat-option value="Medium">Medium</mat-option>
-                            <mat-option value="High">High</mat-option>
+                            <mat-option style="background-color:yellow" value="yellow">Low</mat-option>
+                            <mat-option style="background-color:purple" value="purple">Medium</mat-option>
+                            <mat-option style="background-color:darkred" value="darkred">High</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>

@@ -53,7 +53,7 @@ export class DashboardsComponent implements OnInit {
   tableEight=[];
   tableNine=[];
   tableTitle=[];
-  numbers=[];
+  numbers=[]
   tabEndDate=[];
   userInfo=[];
   ngOnInit(){
@@ -175,14 +175,13 @@ export class DashboardsComponent implements OnInit {
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logAddTaskFailed");
           this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-          this.db.writeLogs(this.userId,this.random,this.currentDate,"adding task failed","","","","","");
+          this.db.writeLogs(this.userId,this.random,this.currentDate,"add task failed","","","","","");
         }
         else{
           this.title=result.value.task.title;
           this.description=result.value.task.description;
           this.priority=result.value.task.priority;
           this.color=result.value.task.color;
-          console.log(this.color);
           this.endDate=result.value.task.endDate;
           if(!this.endDate) this.endDate=new Date();
             this.endData=this.endDate.getDate()+'/'+(this.endDate.getMonth()+1)+'/'+this.endDate.getFullYear();
@@ -298,7 +297,6 @@ export class DashboardsComponent implements OnInit {
     }
   }
   bestRegards():void{
-    window.alert("BEST REGARDS, SUKO!");
     this.pokaz=!this.pokaz;
   }  
   logout():void{
@@ -362,5 +360,14 @@ export class DashboardsComponent implements OnInit {
     for(let d of this.tableNine){
       this.db.writeUserTable(this.userId,this.table9,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
+  }
+  checkPrio(priority){
+    switch(priority){
+      case "darkred":return "high"; break;
+      case "purple":return "medium";break;
+      case "yellow":return "low"; break;
+      default:return "NONE"
+    }
+
   }
 }
