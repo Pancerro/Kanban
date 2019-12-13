@@ -24,10 +24,7 @@
                     <mat-form-field>
                         <mat-label>Category: </mat-label>
                         <mat-select name="color" [disabled]="edit" [(ngModel)]="data.color" ngModel>
-                            <mat-option style="background-color:green" value="green">Easy</mat-option>
-                            <mat-option style="background-color:white" value="white">Normal</mat-option>
-                            <mat-option style="background-color:orange" value="orange">Not Easy</mat-option>
-                            <mat-option style="background-color:red" value="red">Critical</mat-option>
+                            <mat-option *ngFor="let item of category" [style.backgroundColor]="item.color" value="{{item.color}}">{{item.category}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>
