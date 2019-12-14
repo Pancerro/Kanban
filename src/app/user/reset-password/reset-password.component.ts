@@ -14,7 +14,7 @@ hide:boolean = true;
 emailVerify: boolean=false;
 mode = this.activatedActivated.snapshot.queryParams['mode'];
 code = this.route.snapshot.queryParams['oobCode'];
-  activatedRoute: any;
+  activatedRoute: ActivatedRoute;
   emailVerificationCode: any;
 
   constructor( public auth:AuthService,
