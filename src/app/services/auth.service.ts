@@ -60,4 +60,7 @@ export class AuthService {
   userResetPassword(code,password){
     return this.fireAuth.auth.confirmPasswordReset(code,password);
   }
+  changeEmailVerifity(code){
+    return this.fireAuth.auth.applyActionCode(code);
+  }
 }
