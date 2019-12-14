@@ -44,10 +44,10 @@
         </form>
     </div>
     <mat-form-field class="backgroundInput">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter your category">
     </mat-form-field>
     <p>Add category</p>
-    <button mat-stroked-button color="primary" (click)="addCategory()"><mat-icon>add_circle</mat-icon></button>
+    <button mat-stroked-button color="primary" class="addButton" (click)="addCategory()"><mat-icon>add_circle</mat-icon></button>
     <br>
     <br>
     <div class="tableClass">

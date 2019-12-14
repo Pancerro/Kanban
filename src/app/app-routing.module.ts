@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'welcome-page', component: WelcomePageComponent},
   {
     path: 'reset-password',
-    component: ResetPasswordComponent
+    component: ResetPasswordComponent,
   },
   {
     path: 'dashboard',

@@ -32,3 +32,11 @@ table {
     height: 100%;
     border: none;
 }
+
+.addButton {
+    border: none;
+}
+
+.backgroundInput {
+    background: white;
+}

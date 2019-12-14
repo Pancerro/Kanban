@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-reset-password',
@@ -9,23 +10,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ResetPasswordComponent{
 info:string;
-code: any;
 hide:boolean = true;
-verifyEmail=this.auth.getUser().emailVerified;
+mode = this.activatedActivated.snapshot.queryParams['mode'];
+code = this.route.snapshot.queryParams['oobCode'];
   constructor( public auth:AuthService,
+    private afAuth: AngularFireAuth, 
     private router: Router,
     private route: ActivatedRoute,
-    private activateRoute: ActivatedRoute) { }
+    private activatedActivated: ActivatedRoute) { }
   resetUserPassword(updatePassword){
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
-      this.code = this.route.snapshot.queryParams['oobCode'];
-      this.auth.userResetPassword(this.code,updatePassword.value.newPassword)
-      .then(()=>this.info="You can login now ")
-      .then(() => this.router.navigate(['welcome-page']))
-      .catch(err => {
-       window.alert("eh! error, please try to again")});
+      this.afAuth.auth
+  .confirmPasswordReset(this.code,updatePassword.value.reset.newPassword)
+  .then(() => this.router.navigate(['welcome-page']))
     }
-    else window.alert("eh! error, please try to again");
   }
   matchingPasswords(repeatPassword,password):boolean{
     if(repeatPassword.valueOf()==password.valueOf()) return true;

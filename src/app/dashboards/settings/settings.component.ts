@@ -107,9 +107,9 @@ export class SettingsComponent implements OnInit {
     this.dataLogs.filter = filterValue.trim().toLowerCase();
   }
   deleteAccount(){
-    this.db.deleteUser(this.userId);
-    this.auth.deleteUser()
-    .then(()=>this.router.navigate(['/welcome-page']));
+    this.router.navigate(['/welcome-page'])
+    .then(()=> this.db.deleteUser(this.userId))
+    .then(()=> this.auth.deleteUser());
   }
   deleteCategory(removeCategory){
     this.db.removeCategory(this.userId,removeCategory);
