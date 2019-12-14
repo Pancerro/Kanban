@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ResetPasswordComponent{
 info:string;
 hide:boolean = true;
-emailVerify: boolean;
+emailVerify: boolean=false;
 mode = this.activatedActivated.snapshot.queryParams['mode'];
 code = this.route.snapshot.queryParams['oobCode'];
   constructor( public auth:AuthService,
