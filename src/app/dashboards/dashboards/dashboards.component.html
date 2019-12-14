@@ -8,9 +8,9 @@
             <h3> Your email: {{user.email}}</h3>
             <p *ngIf="!verifyEmail">Please verify your email and refresh website!</p>
             <p *ngIf="verifyEmail">Your email is verified</p>
+            {{verifyEmail}}
             <button mat-stroked-button color="primary0" *ngIf="!verifyEmail" (click)="sendRepeatVerificationEmail()"> Re-send verification e-mail </button>
             <div>
-                <h1> Thank you for verifying your email </h1>
                 <h3> Your see {{numbers[0].number}} tables</h3>
                 <button *ngIf="pokaz" mat-stroked-button color="primary" [disabled]="numbers[0].number==10" (click)="addNewTable()">Add new table</button>
                 <button *ngIf="pokaz" mat-stroked-button color="primary" [disabled]="numbers[0].number==0" (click)="deleteLastTable()">Delete last table</button>

@@ -9,7 +9,8 @@
                         <mat-error>Category is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <input matInput name="color" [(ngModel)]="color" value="{{color}}" [style.background]="color" [cpOKButton]="true" [cpSaveClickOutside]="false" [cpOKButtonClass]="'btn btn-primary btn-xs'" [(colorPicker)]="color">
+                        <input matInput name="color" [(ngModel)]="color" value="{{color}}" [style.background]="color" [cpCancelButton]="true" [cpOKButton]="true" [cpSaveClickOutside]="false" [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+                            [(colorPicker)]="color">
                     </mat-form-field>
                 </div>
             </form>

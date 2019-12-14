@@ -17,7 +17,9 @@ code = this.route.snapshot.queryParams['oobCode'];
   constructor( public auth:AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private activatedActivated: ActivatedRoute) {}
+    private activatedActivated: ActivatedRoute) {
+      this.emailVerify=this.auth.getUser().emailVerified=true;
+    }
 
   emailVerificate(){
     this.emailVerify=this.auth.getUser().emailVerified=true;
