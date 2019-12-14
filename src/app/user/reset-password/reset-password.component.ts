@@ -14,16 +14,23 @@ hide:boolean = true;
 emailVerify: boolean=false;
 mode = this.activatedActivated.snapshot.queryParams['mode'];
 code = this.route.snapshot.queryParams['oobCode'];
+  activatedRoute: any;
+  emailVerificationCode: any;
 
   constructor( public auth:AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private activatedActivated: ActivatedRoute,
-    private fireAuth: AngularFireAuth) {}
+    private firebase: AngularFireAuth) {
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.emailVerificationCode = params['oobCode'];
+    });
+      
+    }
   
 
   emailVerificate(){
-  return this.fireAuth.auth.applyActionCode(this.code);}
+    this.firebase.auth.applyActionCode(this.emailVerificationCode)}
   
   resetUserPassword(updatePassword):void{
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
