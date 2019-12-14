@@ -17,12 +17,12 @@ code = this.route.snapshot.queryParams['oobCode'];
     private router: Router,
     private route: ActivatedRoute,
     private activatedActivated: ActivatedRoute) {
+      auth.getUser().emailVerified=true;
     }
 
   emailVerificate(){
-    this.auth.getUser().emailVerified=true;
     this.emailVerify=this.auth.getUser().emailVerified;
-    return "haha";
+    return true;
   }
   resetUserPassword(updatePassword):void{
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
