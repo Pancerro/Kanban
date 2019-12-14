@@ -18,11 +18,11 @@ code = this.route.snapshot.queryParams['oobCode'];
     private router: Router,
     private route: ActivatedRoute,
     private activatedActivated: ActivatedRoute) { }
-  resetUserPassword(updatePassword){
+  resetUserPassword(updatePassword):void{
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
       this.afAuth.auth
-  .confirmPasswordReset(this.code,updatePassword.value.reset.newPassword)
-  .then(() => this.router.navigate(['welcome-page']))
+      .confirmPasswordReset(this.code,updatePassword.value.reset.newPassword)
+      .then(() => this.router.navigate(['welcome-page']))
     }
   }
   matchingPasswords(repeatPassword,password):boolean{
@@ -32,11 +32,11 @@ code = this.route.snapshot.queryParams['oobCode'];
       return false;
     }
   }
-  verifyMailOrPasswordReset(){
+  verifyMailOrPasswordReset():string{
     if(this.mode=="verifyEmail") return "verifyEmail";
     else return "resetPassword";
   }
-  login(){
+  login():void{
     this.router.navigate(['/welcome-page']);
   }
 }

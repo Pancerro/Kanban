@@ -21,12 +21,12 @@ export class EditTaskComponent {
     private db:DataService) {
       this.userId=auth.getUser().uid;
     }
-    ngOnInit() {
-      this.db.getCategory(this.userId).subscribe(res => {
+  ngOnInit() {
+    this.db.getCategory(this.userId).subscribe(res => {
         this.category = res;
-      });
-    } 
-  editTask(){
+    });
+  } 
+  editTask():void{
     this.edit=!this.edit;
   }
   myFilter = (d: Date): boolean => {
@@ -34,6 +34,5 @@ export class EditTaskComponent {
     const month=d.getMonth();
     const year=d.getFullYear()
     return day>=this.date.getDate() && month>=this.date.getMonth() &&year>=this.date.getFullYear();
- 
   }
 }

@@ -9,15 +9,6 @@ import { Observable } from 'rxjs';
 export class DataService {
   constructor(public db:AngularFireDatabase) {
    }
-  getDateUser(userId):Observable<any[]>{
-    return this.db.list('/users/'+userId+'/userInfo').valueChanges();
-  }
-  getUserNumber(userId):Observable<any[]>{
-    return this.db.list('/users/'+userId+'/viewTables').valueChanges();
-  }
-  getTask(userId,tableparent):Observable<any[]>{
-    return this.db.list('/users/'+userId+'/'+tableparent).valueChanges();
-  }
   writeUserData(userId,email,thema){
     firebase.database().ref('users/'+ userId+'/userInfo/info').set({
     email:email,
@@ -39,12 +30,6 @@ export class DataService {
     color:color,
     endDate:endDate
   });}
-  removeTask(userId,tableparent,removeItem){
-    return this.db.list('/users/'+userId+'/'+tableparent).remove(removeItem)
-  }
-  removeTable(userId,removeItem){
-    return this.db.object('/users/'+userId+"/"+removeItem).remove()
-  }
   writeTitleTable(userId,tablechild,title){
     firebase.database().ref('users/'+ userId+'/table/'+tablechild).set({
     title:title
@@ -59,8 +44,20 @@ export class DataService {
     color:color,
     endDate:endDate
   });}
+  getDateUser(userId):Observable<any[]>{
+    return this.db.list('/users/'+userId+'/userInfo').valueChanges();
+  }
+  getUserNumber(userId):Observable<any[]>{
+    return this.db.list('/users/'+userId+'/viewTables').valueChanges();
+  }
+  getTask(userId,tableparent):Observable<any[]>{
+    return this.db.list('/users/'+userId+'/'+tableparent).valueChanges();
+  }
   getLogs(userId):Observable<any[]>{
     return this.db.list('/users/'+userId+'/logs').valueChanges();
+  }
+  getCategory(userId):Observable<any[]>{
+    return this.db.list('users/'+ userId+'/category/').valueChanges();
   }
   updateEmail(userId,newEmail){
     return this.db.object('/users/'+userId+'/userInfo/info').update({email:newEmail})
@@ -68,14 +65,17 @@ export class DataService {
   updateThema(userId,newThema){
     return this.db.object('/users/'+userId+'/userInfo/info').update({thema:newThema})
   } 
+  removeTask(userId,tableparent,removeItem){
+    return this.db.list('/users/'+userId+'/'+tableparent).remove(removeItem)
+  }
+  removeTable(userId,removeItem){
+    return this.db.object('/users/'+userId+"/"+removeItem).remove()
+  }
   writeCategory(userId,category,color){
     firebase.database().ref('users/'+ userId+'/category/'+category).set({
     category:category,
     color:color,
   });}
-  getCategory(userId):Observable<any[]>{
-    return this.db.list('users/'+ userId+'/category/').valueChanges();
-  }
   removeCategory(userId,removeCategory){
     return this.db.list('users/'+ userId+'/category/').remove(removeCategory);
 }

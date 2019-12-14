@@ -45,7 +45,6 @@ export class SettingsComponent implements OnInit {
       this.dataLogs=new MatTableDataSource(this.category);
     });
   }
-
   changeFont():string
   {
     if(this.userInfo[0].thema=="green"){
@@ -57,7 +56,7 @@ export class SettingsComponent implements OnInit {
       return this.fontColor;
     }
   }
-  changeBackground(){
+  changeBackground():string{
     if(this.userInfo[0].thema=="green"){
       this.background="green";
       return this.background;
@@ -77,21 +76,21 @@ export class SettingsComponent implements OnInit {
   return():void{
     this.router.navigate(['/dashboard']);
   }
-  updateEmail(updateEmail){
+  updateEmail(updateEmail):void{
     if(updateEmail.invalid) window.alert("Please try again");
     else{
       this.auth.updateEmail(updateEmail.value.newEmail);
       this.db.updateEmail(this.userId,updateEmail.value.newEmail);
     }
   }
-  updatePassword(updatePassword){
+  updatePassword(updatePassword):void{
     if(updatePassword.invalid) window.alert("Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers")
     else
     { 
       if(this.matchingPasswords(updatePassword.value.newPassword,updatePassword.value.newRepeatPassword)) this.auth.updatePassowrd(updatePassword.value.newPassword);
     }
   }
-  updateThema(updateThema)
+  updateThema(updateThema):void
   {
     if(updateThema.invalid) window.alert("Please try again");
     else this.db.updateThema(this.userId,updateThema.value.thema);
@@ -103,15 +102,15 @@ export class SettingsComponent implements OnInit {
       return false;
     }
   }
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string):void {
     this.dataLogs.filter = filterValue.trim().toLowerCase();
   }
-  deleteAccount(){
+  deleteAccount():void{
     this.router.navigate(['/welcome-page'])
     .then(()=> this.db.deleteUser(this.userId))
     .then(()=> this.auth.deleteUser());
   }
-  deleteCategory(removeCategory){
+  deleteCategory(removeCategory):void{
     this.db.removeCategory(this.userId,removeCategory);
   }
   editCategory(category,color):void {
@@ -142,34 +141,32 @@ export class SettingsComponent implements OnInit {
       }
     }
     );
-    }
-    addCategory():void {
-      const dialogRef = this.dialog.open(AddCategoryComponent, {
-      width: '250px',
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if(result!=undefined){
-          if(result.invalid){
-            window.alert("Please correct all errors and resubmit add category");
-            this.random=Math.random().toString();
-            this.random=this.random.replace("0.","logAddCategoryFailed");
-            this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-            this.db.writeLogs(this.userId,this.random,this.currentDate,"add category failed","","","","","");
-          }
-          else{
-            this.newCategory=result.value.category.category;
-            this.color=result.value.category.color;
-            this.db.writeCategory(this.userId,this.newCategory,this.color)
-              this.random=Math.random().toString();
-              this.random=this.random.replace("0.","logAddCategory");
-              this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-              this.db.writeLogs(this.userId,this.random,this.currentDate,"add category",this.newCategory,"","",this.color,"");
-          }
+  }
+  addCategory():void {
+    const dialogRef = this.dialog.open(AddCategoryComponent, {
+    width: '250px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result!=undefined){
+        if(result.invalid){
+          window.alert("Please correct all errors and resubmit add category");
+          this.random=Math.random().toString();
+          this.random=this.random.replace("0.","logAddCategoryFailed");
+          this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+          this.db.writeLogs(this.userId,this.random,this.currentDate,"add category failed","","","","","");
+        }
+        else{
+          this.newCategory=result.value.category.category;
+          this.color=result.value.category.color;
+          this.db.writeCategory(this.userId,this.newCategory,this.color)
+          this.random=Math.random().toString();
+          this.random=this.random.replace("0.","logAddCategory");
+          this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+          this.db.writeLogs(this.userId,this.random,this.currentDate,"add category",this.newCategory,"","",this.color,"");
         }
       }
-      );
-    }
-
+    });
+  }
   bestRegards():void{
     this.pokaz=!this.pokaz;
   } 

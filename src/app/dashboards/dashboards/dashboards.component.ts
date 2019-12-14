@@ -117,7 +117,7 @@ export class DashboardsComponent implements OnInit {
     return this.fontColor;
     }
   }
-  changeBackground(){
+  changeBackground():string{
     if(this.userInfo[0].thema=="green"){
       this.background="green";
       return this.background;
@@ -232,7 +232,7 @@ export class DashboardsComponent implements OnInit {
       }
     }
     );
-    }
+  }
   removeTask(removeTask,tableName):void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logRemoveTask");
@@ -361,13 +361,12 @@ export class DashboardsComponent implements OnInit {
       this.db.writeUserTable(this.userId,this.table9,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
   }
-  checkPrio(priority){
+  checkPrio(priority):string{
     switch(priority){
       case "darkred":return "high"; break;
       case "purple":return "medium";break;
       case "yellow":return "low"; break;
       default:return "NONE"
     }
-
   }
 }

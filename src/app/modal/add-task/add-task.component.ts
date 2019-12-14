@@ -26,7 +26,6 @@ export class AddTaskComponent implements OnInit{
     const year=d.getFullYear()
     return day>=this.date.getDate() && month>=this.date.getMonth() &&year>=this.date.getFullYear();
   }
-
 }
 
 

@@ -93,18 +93,18 @@ export class WelcomePageComponent  {
     this.captcha=captchaResponse;
     this.numberOfTests=0;
 } 
-matchingPasswords(repeatPassword,password):boolean{
-  if(repeatPassword.valueOf()==password.valueOf()) return true;
-  else {
-    this.info='Passwords do not match.Try to register again!';
-    return false;
+  matchingPasswords(repeatPassword,password):boolean{
+    if(repeatPassword.valueOf()==password.valueOf()) return true;
+    else {
+      this.info='Passwords do not match.Try to register again!';
+      return false;
   }
 }
-loginWithGoogle():void{
-  this.auth.googleAuth()
-  .then(() => this.router.navigate(['/dashboard'])
-  .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.auth.getUser().email,""))
-  .then(()=>this.auth.sendVerificationMail))
-  .catch(err => console.log(err.message));
-}
+  loginWithGoogle():void{
+    this.auth.googleAuth()
+    .then(() => this.router.navigate(['/dashboard'])
+    .then(()=>this.db.writeUserData(this.auth.getUser().uid,this.auth.getUser().email,""))
+    .then(()=>this.auth.sendVerificationMail))
+   .  catch(err => console.log(err.message));
+  }
 }

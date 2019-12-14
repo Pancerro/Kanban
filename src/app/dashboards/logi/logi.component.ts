@@ -53,7 +53,7 @@ export class LogiComponent implements OnInit {
       return this.fontColor;
     }
   }
-  changeBackground(){
+  changeBackground():string{
     if(this.userInfo[0].thema=="green"){
       this.background="green";
       return this.background;
