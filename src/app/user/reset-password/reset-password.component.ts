@@ -32,4 +32,11 @@ code = this.route.snapshot.queryParams['oobCode'];
       return false;
     }
   }
+  verifyMailOrPasswordReset(){
+    if(this.mode=="verifyEmail") return "verifyEmail";
+    else return "resetPassword";
+  }
+  login(){
+    this.router.navigate(['/welcome-page']);
+  }
 }
