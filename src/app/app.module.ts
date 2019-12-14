@@ -26,9 +26,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { SettingsComponent } from './dashboards/settings/settings.component';
 import {MatTableModule} from '@angular/material/table';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
-import {MatSortModule} from '@angular/material/sort';
 import { AddCategoryComponent } from './modal/add-category/add-category.component';
 import { EditCategoryComponent } from './modal/edit-category/edit-category.component';
+import { ColorPickerModule } from 'ngx-color-picker';
 @NgModule({
   entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent,AddCategoryComponent,EditCategoryComponent],
   declarations: [
@@ -66,8 +66,7 @@ import { EditCategoryComponent } from './modal/edit-category/edit-category.compo
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
-    MatSortModule
-
+    ColorPickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,8 +9,7 @@
                         <mat-error>Category is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Color" [(ngModel)]="data.color" required name="color" ngModel></p>
-                        <mat-error>Color is Mandatory</mat-error>
+                        <input matInput name="color" [(ngModel)]="data.color" value="{{data.color}}" [style.background]="data.color" [cpOKButton]="true" [cpSaveClickOutside]="false" [cpOKButtonClass]="'btn btn-primary btn-xs'" [(colorPicker)]="data.color">
                     </mat-form-field>
                 </div>
             </form>

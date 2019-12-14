@@ -15,13 +15,12 @@ emailVerify;
 mode = this.activatedActivated.snapshot.queryParams['mode'];
 code = this.route.snapshot.queryParams['oobCode'];
   constructor( public auth:AuthService,
-    private afAuth: AngularFireAuth, 
     private router: Router,
     private route: ActivatedRoute,
     private activatedActivated: ActivatedRoute) {}
 
   emailVerificate(){
-    this.emailVerify=this.auth.getUser().emailVerified;
+    this.emailVerify=this.auth.getUser().emailVerified=true;
     return this.emailVerify;
   }
   resetUserPassword(updatePassword):void{

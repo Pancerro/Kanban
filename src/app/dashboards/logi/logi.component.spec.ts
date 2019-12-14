@@ -5,7 +5,6 @@ import { LogiComponent } from './logi.component';
 describe('LogiComponent', () => {
   let component: LogiComponent;
   let fixture: ComponentFixture<LogiComponent>;
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LogiComponent ]

@@ -9,8 +9,7 @@
                         <mat-error>Category is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Color" required name="color" ngModel></p>
-                        <mat-error>Color is Mandatory</mat-error>
+                        <input matInput name="color" [(ngModel)]="color" value="{{color}}" [style.background]="color" [cpOKButton]="true" [cpSaveClickOutside]="false" [cpOKButtonClass]="'btn btn-primary btn-xs'" [(colorPicker)]="color">
                     </mat-form-field>
                 </div>
             </form>
@@ -20,4 +19,5 @@
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
         <button mat-button [mat-dialog-close]="categoryForm" cdkFocusInitial>Add Task</button>
     </div>
+
 </div>

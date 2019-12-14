@@ -158,6 +158,7 @@ export class SettingsComponent implements OnInit {
         else{
           this.newCategory=result.value.category.category;
           this.color=result.value.category.color;
+          console.log(result.value.category.color);
           this.db.writeCategory(this.userId,this.newCategory,this.color)
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logAddCategory");
