@@ -11,14 +11,13 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class ResetPasswordComponent{
 info:string;
 hide:boolean = true;
-emailVerify;
+emailVerify: boolean;
 mode = this.activatedActivated.snapshot.queryParams['mode'];
 code = this.route.snapshot.queryParams['oobCode'];
   constructor( public auth:AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private activatedActivated: ActivatedRoute) {
-      this.emailVerify=this.auth.getUser().emailVerified=true;
     }
 
   emailVerificate(){
