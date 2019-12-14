@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-reset-password',
