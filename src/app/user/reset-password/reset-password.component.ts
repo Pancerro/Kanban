@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-reset-password',
@@ -13,15 +14,17 @@ hide:boolean = true;
 emailVerify: boolean=false;
 mode = this.activatedActivated.snapshot.queryParams['mode'];
 code = this.route.snapshot.queryParams['oobCode'];
+
   constructor( public auth:AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private activatedActivated: ActivatedRoute) {
-    }
+    private activatedActivated: ActivatedRoute,
+    private fireAuth: AngularFireAuth) {}
+  
 
   emailVerificate(){
-  return this.auth.changeEmailVerifity(this.mode);
-  }
+  return this.fireAuth.auth.applyActionCode(this.code);}
+  
   resetUserPassword(updatePassword):void{
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
       this.auth.userResetPassword(this.code,updatePassword.value.reset.newPassword)
