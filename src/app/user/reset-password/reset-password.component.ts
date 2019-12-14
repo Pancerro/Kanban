@@ -26,7 +26,10 @@ code = this.route.snapshot.queryParams['oobCode'];
   
 
   emailVerificate(){
-    this.firebase.auth.applyActionCode(this.code)}
+    this.activatedRoute.snapshot.queryParams.subscribe(params => {
+      this.emailVerificationCode = params['oobCode'];
+  });
+    this.firebase.auth.applyActionCode(this.emailVerificationCode)}
   
   resetUserPassword(updatePassword):void{
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
