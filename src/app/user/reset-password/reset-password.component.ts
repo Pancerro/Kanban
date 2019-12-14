@@ -20,7 +20,8 @@ code = this.route.snapshot.queryParams['oobCode'];
     }
 
   emailVerificate(){
-    this.emailVerify=this.auth.getUser().emailVerified=true;
+    this.auth.getUser().emailVerified=true;
+    this.emailVerify=this.auth.getUser().emailVerified;
     return "haha";
   }
   resetUserPassword(updatePassword):void{
