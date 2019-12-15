@@ -22,14 +22,14 @@ code = this.route.snapshot.queryParams['oobCode'];
     private route: ActivatedRoute,
     private activatedActivated: ActivatedRoute,
     private firebase: AngularFireAuth) {
-      this.activatedRoute.queryParams.subscribe(params => {
-        this.emailVerificationCode = params['oobCode'];
-    });
     }
   
 
   emailVerificate(){
-    this.firebase.auth.applyActionCode(this.emailVerificationCode)}
+    this.firebase.auth.applyActionCode(this.code)
+    .then(() => this.firebase.auth.currentUser.emailVerified=true)
+    .then(() => this.router.navigate(['welcome-page']))
+  }
   
   resetUserPassword(updatePassword):void{
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
