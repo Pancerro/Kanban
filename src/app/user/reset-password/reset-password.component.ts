@@ -26,7 +26,7 @@ code = this.route.snapshot.queryParams['oobCode'];
   
 
   emailVerificate(){
-    this.activatedRoute.snapshot.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe(params => {
       this.emailVerificationCode = params['oobCode'];
   });
     this.firebase.auth.applyActionCode(this.emailVerificationCode)}
