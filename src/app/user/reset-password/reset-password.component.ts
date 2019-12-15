@@ -20,13 +20,12 @@ code = this.route.snapshot.queryParams['oobCode'];
   constructor( public auth:AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private activatedActivated: ActivatedRoute,
-    private firebase: AngularFireAuth) {
+    private activatedActivated: ActivatedRoute) {
     }
   
 
   emailVerificate(){
-    this.firebase.auth.applyActionCode
+   console.log(this.auth.getUser().uid)
   }
   
   resetUserPassword(updatePassword):void{
