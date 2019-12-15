@@ -25,7 +25,7 @@ code = this.route.snapshot.queryParams['oobCode'];
   
 
   emailVerificate(){
-   console.log(this.code)
+   console.log(this.auth.changeEmailVerifity(this.code))
   }
   
   resetUserPassword(updatePassword):void{
