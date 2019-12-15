@@ -26,7 +26,7 @@ code = this.route.snapshot.queryParams['oobCode'];
   
 
   emailVerificate(){
-    this.firebase.auth.applyActionCode(this.code)
+    this.firebase.auth.applyActionCode(this.route.snapshot.queryParams['oobCode'])
     .then(() => this.firebase.auth.currentUser.emailVerified=true)
     .then(() => this.router.navigate(['welcome-page']))
   }
