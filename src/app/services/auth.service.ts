@@ -38,11 +38,6 @@ export class AuthService {
   }  
   AuthLogin(provider) {
     return this.fireAuth.auth.signInWithPopup(provider)
-    .then((result) => {
-        console.log('You have been successfully logged in!');
-    }).catch((error) => {
-        console.log(error);
-    })
   }
   updateEmail(newEmail){
     return this.fireAuth.auth.currentUser.updateEmail(newEmail).catch((error) => {
@@ -61,6 +56,6 @@ export class AuthService {
     return this.fireAuth.auth.confirmPasswordReset(code,password);
   }
   changeEmailVerifity(code){
-    return this.fireAuth.auth.applyActionCode(code);
+    return this.fireAuth.auth.checkActionCode(code);
   }
 }

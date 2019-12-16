@@ -41,7 +41,7 @@ export class DashboardsComponent implements OnInit {
   fontColor:string;
   background:string;
   pokaz:boolean=false;
-  user:Observable<any[]>;
+
   tableZero=[];
   tableOne=[];
   tableTwo=[];
@@ -88,7 +88,7 @@ export class DashboardsComponent implements OnInit {
       this.tableNine = res;
     });
     this.db.getTask(this.userId,"table").subscribe(res => {
-      this.tableTitle = res;
+       this.tableTitle = res;
     });
     this.db.getUserNumber(this.userId).subscribe(res => {
       this.numbers = res;
@@ -104,8 +104,12 @@ export class DashboardsComponent implements OnInit {
     public dialog: MatDialog,
   ) {
       this.userId=auth.getUser().uid;
-      this.user=db.getDateUser(this.userId);
+
     }
+
+  emptyTableTitle(){
+ console.log(this.tableTitle);
+  }
   changeFont():string
   {
     if(this.userInfo[0].thema=="green"){

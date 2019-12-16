@@ -46,6 +46,7 @@ export class DataService {
   });}
   getDateUser(userId):Observable<any[]>{
     return this.db.list('/users/'+userId+'/userInfo').valueChanges();
+    
   }
   getUserNumber(userId):Observable<any[]>{
     return this.db.list('/users/'+userId+'/viewTables').valueChanges();

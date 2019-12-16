@@ -81,19 +81,35 @@ export class SettingsComponent implements OnInit {
     else{
       this.auth.updateEmail(updateEmail.value.newEmail);
       this.db.updateEmail(this.userId,updateEmail.value.newEmail);
+      this.random=Math.random().toString();
+      this.random=this.random.replace("0.","logUpdateEmail");
+      this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email",updateEmail.value.newEmail,"","","","");
     }
   }
   updatePassword(updatePassword):void{
     if(updatePassword.invalid) window.alert("Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers")
     else
     { 
-      if(this.matchingPasswords(updatePassword.value.newPassword,updatePassword.value.newRepeatPassword)) this.auth.updatePassowrd(updatePassword.value.newPassword);
+      if(this.matchingPasswords(updatePassword.value.newPassword,updatePassword.value.newRepeatPassword)){
+       this.auth.updatePassowrd(updatePassword.value.newPassword); this.random=Math.random().toString();
+       this.random=this.random.replace("0.","logUpdatePassword");
+       this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+       this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","","","","","");
+
+      }
     }
   }
   updateThema(updateThema):void
   {
     if(updateThema.invalid) window.alert("Please try again");
-    else this.db.updateThema(this.userId,updateThema.value.thema);
+    else{
+    this.db.updateThema(this.userId,updateThema.value.thema);
+    this.random=Math.random().toString();
+    this.random=this.random.replace("0.","logUpdateThema");
+    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    this.db.writeLogs(this.userId,this.random,this.currentDate,"update thema",updateThema.value.thema,"","","","");
+    }
   }
   matchingPasswords(repeatPassword,password):boolean{
     if(repeatPassword.valueOf()==password.valueOf()) return true;
@@ -112,6 +128,10 @@ export class SettingsComponent implements OnInit {
   }
   deleteCategory(removeCategory):void{
     this.db.removeCategory(this.userId,removeCategory);
+    this.random=Math.random().toString();
+    this.random=this.random.replace("0.","logRemoveCategory");
+    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    this.db.writeLogs(this.userId,this.random,this.currentDate,"remove category",removeCategory,"","","","");
   }
   editCategory(category,color):void {
     const dialogRef = this.dialog.open(EditCategoryComponent, {
@@ -158,7 +178,6 @@ export class SettingsComponent implements OnInit {
         else{
           this.newCategory=result.value.category.category;
           this.color=result.value.category.color;
-          console.log(result.value.category.color);
           this.db.writeCategory(this.userId,this.newCategory,this.color)
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logAddCategory");
