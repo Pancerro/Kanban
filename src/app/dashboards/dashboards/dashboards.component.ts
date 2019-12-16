@@ -2,16 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/database.service';
-import { Observable } from 'rxjs';
-import { MatDialog, throwMatDialogContentAlreadyAttachedError } from '@angular/material';
+import { MatDialog} from '@angular/material';
 import { AddTaskComponent } from 'src/app/modal/add-task/add-task.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { EditTaskComponent } from 'src/app/modal/edit-task/edit-task.component';
 import { EditTableNameComponent } from 'src/app/modal/edit-table-name/edit-table-name.component';
+import { trigger, transition, style, animate, group } from '@angular/animations';
+
 @Component({
   selector: 'app-dashboards',
   templateUrl: './dashboards.component.html',
-  styleUrls: ['./dashboards.component.css']
+  styleUrls: ['./dashboards.component.css'],
+  animations: [
+    trigger('itemAnim', [
+      transition(':enter', [
+        style({transform: 'translateX(-100%)',
+        backgroundColor: 'green'}),
+        animate(350)
+      ]),
+      transition(':leave', [
+          animate('0.1s 0.1s ease', style({
+            opacity: 0,
+            backgroundColor: 'red'
+          }))
+      ])
+    ])
+  ]
 })
 export class DashboardsComponent implements OnInit {
   table0:string="table0";
@@ -41,7 +57,6 @@ export class DashboardsComponent implements OnInit {
   fontColor:string;
   background:string;
   pokaz:boolean=false;
-
   tableZero=[];
   tableOne=[];
   tableTwo=[];
@@ -56,6 +71,7 @@ export class DashboardsComponent implements OnInit {
   numbers=[]
   tabEndDate=[];
   userInfo=[];
+  
   ngOnInit(){
     this.db.getTask(this.userId,this.table0).subscribe(res => {
       this.tableZero = res;

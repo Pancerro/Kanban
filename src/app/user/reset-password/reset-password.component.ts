@@ -1,33 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent{
+export class ResetPasswordComponent implements OnInit{
+  ngOnInit(){
+    this.mode = this.activatedActivated.snapshot.queryParams['mode'];
+    this.code = this.route.snapshot.queryParams['oobCode'];
+  }
 info:string;
 hide:boolean = true;
 emailVerify: boolean=false;
-mode = this.activatedActivated.snapshot.queryParams['mode'];
-code = this.route.snapshot.queryParams['oobCode'];
-  activatedRoute: ActivatedRoute;
-  emailVerificationCode: any;
-
+mode: string
+code: string; 
   constructor( public auth:AuthService,
     public router: Router,
     public route: ActivatedRoute,
     public activatedActivated: ActivatedRoute) {
     }
-  
-
+    
   emailVerificate(){
-   console.log(this.auth.changeEmailVerifity(this.code))
+   this.auth.changeEmailVerifity(this.code);
+   this.login();
   }
-  
   resetUserPassword(updatePassword):void{
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
       this.auth.userResetPassword(this.code,updatePassword.value.reset.newPassword)

@@ -29,6 +29,7 @@ export class SettingsComponent implements OnInit {
   currentDate:string;
   displayedColumns: string[] = ['category', 'color','delete','edit'];
   dataLogs: MatTableDataSource<Category>;
+  verifyEmail=this.auth.getUser().emailVerified;
   constructor(
     private auth:AuthService,
     private db:DataService,
@@ -43,7 +44,11 @@ export class SettingsComponent implements OnInit {
     this.db.getCategory(this.userId).subscribe(res => {
       this.category = res;
       this.dataLogs=new MatTableDataSource(this.category);
+    
     });
+  }
+  sendRepeatVerificationEmail():void{
+    this.auth.sendVerificationMail();
   }
   changeFont():string
   {

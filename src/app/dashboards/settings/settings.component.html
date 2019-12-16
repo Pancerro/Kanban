@@ -3,6 +3,9 @@
     <button mat-stroked-button color="primary" (click)="return()">Return to previous page</button>
     <h1>Welcome to settings!</h1>
     <p>Your email: {{item.email}}</p>
+    <p *ngIf="!verifyEmail">Please verify your email and refresh website!</p>
+    <p *ngIf="verifyEmail">Your email is verified</p>
+    <button mat-stroked-button color="primary0" *ngIf="!verifyEmail" (click)="sendRepeatVerificationEmail()"> Re-send verification e-mail </button>
     <p *ngIf="pokaz">Color scheme: {{item.thema}}</p>
     <div *ngIf="pokaz">
         <h4>Update your email: </h4>
