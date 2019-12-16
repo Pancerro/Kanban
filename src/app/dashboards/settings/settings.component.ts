@@ -44,7 +44,6 @@ export class SettingsComponent implements OnInit {
     this.db.getCategory(this.userId).subscribe(res => {
       this.category = res;
       this.dataLogs=new MatTableDataSource(this.category);
-    
     });
   }
   sendRepeatVerificationEmail():void{
@@ -101,7 +100,6 @@ export class SettingsComponent implements OnInit {
        this.random=this.random.replace("0.","logUpdatePassword");
        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
        this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","","","","","");
-
       }
     }
   }

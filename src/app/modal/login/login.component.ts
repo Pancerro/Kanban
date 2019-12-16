@@ -18,7 +18,7 @@ export class LoginComponent {
     public dialogRef: MatDialogRef<WelcomePageComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private auth:AuthService) {} 
-  resetPassword(email):void{
+  resetPassword(email:string):void{
     this.auth.resetPassword(email)
     .catch(err => {window.alert("eh! error, please try to again")})
   }

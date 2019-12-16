@@ -5,6 +5,6 @@ import { Component} from '@angular/core';
   styleUrls: ['./add-category.component.css']
 })
 export class AddCategoryComponent {
-  color='white';
+  color:string='white';
   constructor(){}
 }

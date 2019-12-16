@@ -5,22 +5,18 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-
 export class DataService {
-  constructor(public db:AngularFireDatabase) {
-   }
+  constructor(public db:AngularFireDatabase) {}
   writeUserData(userId,email,thema){
     firebase.database().ref('users/'+ userId+'/userInfo/info').set({
     email:email,
     thema:thema
-    }
-    );
+    });
   }
   writeUserNumber(userId,number){
     firebase.database().ref('users/'+ userId+'/viewTables/numbers').set({
     number:number
-    }
-    );
+    });
   }
   writeUserTable(userId,tableparent,tablechild,title,description,priority,color,endDate){
     firebase.database().ref('users/'+ userId+'/'+tableparent+'/'+tablechild).set({
@@ -29,11 +25,13 @@ export class DataService {
     priority:priority,
     color:color,
     endDate:endDate
-  });}
+  });
+  }
   writeTitleTable(userId,tablechild,title){
     firebase.database().ref('users/'+ userId+'/table/'+tablechild).set({
     title:title
-  });}
+  });
+  }
   writeLogs(userId,tableName,data,operation,title,description,priority,color,endDate){
     firebase.database().ref('users/'+ userId+'/logs/'+tableName).set({
     data:data,
@@ -43,10 +41,10 @@ export class DataService {
     priority:priority,
     color:color,
     endDate:endDate
-  });}
+  });
+  }
   getDateUser(userId):Observable<any[]>{
     return this.db.list('/users/'+userId+'/userInfo').valueChanges();
-    
   }
   getUserNumber(userId):Observable<any[]>{
     return this.db.list('/users/'+userId+'/viewTables').valueChanges();

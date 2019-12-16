@@ -71,7 +71,6 @@ export class DashboardsComponent implements OnInit {
   numbers=[]
   tabEndDate=[];
   userInfo=[];
-  
   ngOnInit(){
     this.db.getTask(this.userId,this.table0).subscribe(res => {
       this.tableZero = res;
@@ -120,12 +119,7 @@ export class DashboardsComponent implements OnInit {
     public dialog: MatDialog,
   ) {
       this.userId=auth.getUser().uid;
-
     }
-
-  emptyTableTitle(){
- console.log(this.tableTitle);
-  }
   changeFont():string
   {
     if(this.userInfo[0].thema=="green"){
@@ -212,8 +206,7 @@ export class DashboardsComponent implements OnInit {
             this.db.writeLogs(this.userId,this.random,this.currentDate,"add task",this.title,this.description,this.priority,this.color,this.endData);
         }
       }
-    }
-    );
+    });
   }
   editTask(title,description,priority,color,endDate,tableName):void {
     const dialogRef = this.dialog.open(EditTaskComponent, {
@@ -250,8 +243,7 @@ export class DashboardsComponent implements OnInit {
             this.db.writeLogs(this.userId,this.random,this.currentDate,"edit task",this.title,this.description,this.priority,this.color,this.endData);
         }
       }
-    }
-    );
+    });
   }
   removeTask(removeTask,tableName):void{
     this.random=Math.random().toString();
@@ -291,8 +283,7 @@ export class DashboardsComponent implements OnInit {
           }
         }
         }
-      }
-    );
+    });
   }
   replece(replace:string):string{
     this.word="";

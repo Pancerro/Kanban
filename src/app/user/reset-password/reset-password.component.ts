@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -12,20 +11,18 @@ export class ResetPasswordComponent implements OnInit{
     this.mode = this.activatedActivated.snapshot.queryParams['mode'];
     this.code = this.route.snapshot.queryParams['oobCode'];
   }
-info:string;
-hide:boolean = true;
-emailVerify: boolean=false;
-mode: string
-code: string; 
+  info:string;
+  hide:boolean = true;
+  emailVerify: boolean=false;
+  mode:string
+  code:string; 
   constructor( public auth:AuthService,
     public router: Router,
     public route: ActivatedRoute,
-    public activatedActivated: ActivatedRoute) {
-    }
-    
-  emailVerificate(){
-   this.auth.changeEmailVerifity(this.code);
-   this.login();
+    public activatedActivated: ActivatedRoute) {}
+  emailVerificate():void{
+    this.auth.changeEmailVerifity(this.code);
+    this.router.navigate(['/welcome-page']);
   }
   resetUserPassword(updatePassword):void{
     if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
@@ -43,8 +40,5 @@ code: string;
   verifyMailOrPasswordReset():string{
     if(this.mode=="verifyEmail") return "verifyEmail";
     else return "resetPassword";
-  }
-  login():void{
-    this.router.navigate(['/welcome-page']);
   }
 }
