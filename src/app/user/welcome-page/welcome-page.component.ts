@@ -17,9 +17,9 @@ import { trigger, transition, style, animate } from '@angular/animations';
         transition(
           ':enter', 
           [
-            style({ height: 0, width: 0, opacity: 0,  filter:' grayscale(100%) brightness(0%)'}),
+            style({background:"red", height: 0, width: 0, opacity: 0,  filter:' grayscale(100%) brightness(0%)'}),
             animate('25s ease-out', 
-                    style({ height: "100%", width:"100%", opacity: 1 ,filter:' grayscale(0%) brightness(100%)'}))
+                    style({ height: 900, width:1000, opacity: 1 ,filter:' grayscale(0%) brightness(100%)'}))
           ]
         )
   
