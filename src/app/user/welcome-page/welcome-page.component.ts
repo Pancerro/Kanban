@@ -19,7 +19,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
           [
             style({ height: 0, width: 0, opacity: 0 }),
             animate('25s ease-out', 
-                    style({ height: 1500, width:1500, opacity: 1 }))
+                    style({ height: "100%", width:"100%", opacity: 1 }))
           ]
         )
   

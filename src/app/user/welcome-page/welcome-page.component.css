@@ -6,3 +6,11 @@
     margin-left: 42%;
     margin-right: 42%;
 }
+
+.kanban img {
+    filter: grayscale(100%) brightness(0%);
+}
+
+.kanban img:hover {
+    filter: grayscale(0) brightness(100%);
+}
