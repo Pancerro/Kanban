@@ -6,3 +6,12 @@
     margin-left: 42%;
     margin-right: 42%;
 }
+
+.kanban {
+    background: url(https://i.imgur.com/9ZQatoL.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 800px;
+    height: 500px;
+    margin: auto;
+}
