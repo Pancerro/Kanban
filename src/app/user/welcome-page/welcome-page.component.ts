@@ -5,10 +5,27 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LoginComponent } from 'src/app/modal/login/login.component';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/database.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
-  styleUrls: ['./welcome-page.component.css']
+  styleUrls: ['./welcome-page.component.css'],
+  animations: [
+    trigger(
+      'inOutAnimation', 
+      [
+        transition(
+          ':enter', 
+          [
+            style({ height: 0, width: 0, opacity: 0 }),
+            animate('25s ease-out', 
+                    style({ height: 1500, width:1500, opacity: 1 }))
+          ]
+        )
+  
+      ]
+    )
+  ]
 })
 export class WelcomePageComponent   {
   constructor(public dialog: MatDialog,
