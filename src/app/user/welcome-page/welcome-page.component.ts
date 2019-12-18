@@ -17,32 +17,26 @@ import { trigger, transition, style, animate } from '@angular/animations';
         transition(
           ':enter', 
           [
-            style({
-              filter:' grayscale(0%) brightness(100%)'}),
+            animate('4s ease-out',  style({ //->
+              transform: 'translateX(80%) translateY(0%)',
+              background: " no-repeat url(https://images.squarespace-cdn.com/content/v1/528252b7e4b00150d03a4848/1503802786036-ZOOD48EI07ZEY2B3N3I9/ke17ZwdGBToddI8pDm48kJUlZr2Ql5GtSKWrQpjur5t7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1Uc2TsYyWrvo4cxLsTiAHD0wm8wv6KuSQ-vWcvdKCNFvRm4bjm9DAHF2kOsIZRJKXnA/RickAndMorty_RickAngryBurp1500.gif?format=500w)"
+            })),
             animate('4s ease-out',  style({
-              transform: 'translateX(-80%)',
-              background: "no-repeat url('https://data4.cupsell.pl/upload/generator/278278/640x420/4598896_print_1.png?resize=max_sizes&key=55f9a22768eed085006592c1174c0235')"
-              ,opacity: 1 ,filter:' grayscale(0%) brightness(100%)'})),
-             animate('4s ease-out',  style({
-              transform: 'translateX(0%)',
-              background: "no-repeat url('https://vignette.wikia.nocookie.net/cartoon-network/images/7/77/Jednorozce.png/revision/latest?cb=20140524124941&path-prefix=pl')"
-              ,opacity: 0 ,filter:' grayscale(100%) brightness(100%)'})),
+              transform: 'translateX(80%) translateY(50%)',//|
+              background: " no-repeat url(https://images.squarespace-cdn.com/content/v1/528252b7e4b00150d03a4848/1503802775944-14J565KYKE9VUEXQZ7UX/ke17ZwdGBToddI8pDm48kJUlZr2Ql5GtSKWrQpjur5t7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1Uc2TsYyWrvo4cxLsTiAHD0wm8wv6KuSQ-vWcvdKCNFvRm4bjm9DAHF2kOsIZRJKXnA/RickAndMorty_MortyConfusedBlink1500.gif?format=500w)"
+           })),
             animate('4s ease-out',  style({
-              transform: 'translateX(80%)',
-              background: "no-repeat url(https://cdn.pixabay.com/photo/2017/01/25/08/11/unicorn-2007266_960_720.png)",
-              opacity: 1 ,filter:' grayscale(0%) brightness(100%)'})),
+              transform: 'translateX(-80%) translateY(50%)',//<-
+              background: " no-repeat url(https://chpic.su/_data/stickers/d/DamnRicknMorty/DamnRicknMorty_030.webp)"
+          })),
             animate('4s ease-out',  style({
-              transform: 'translateX(5%)',
-              background: "no-repeat url(https://cdn.pixabay.com/photo/2017/01/25/08/11/unicorn-2007266_960_720.png)",
-              opacity: 1 ,filter:' grayscale(0%) brightness(100%)'})),
-              animate('4s ease-out',  style({
-                transform: 'translateY(50%)',
-                background: "no-repeat url(https://cdn.pixabay.com/photo/2017/01/25/08/11/unicorn-2007266_960_720.png)",
-                opacity: 0})),
-                animate('4s ease-out',  style({
-                  transform: 'translateY(0%)',
-                  background: "no-repeat url(https://cdn.pixabay.com/photo/2017/01/25/08/11/unicorn-2007266_960_720.png)",
-                  opacity: 1})), 
+              transform: 'translateX(-80%) translateY(0%)',
+              background: " no-repeat url(https://thumbs.gfycat.com/BarrenTightLeopard-size_restricted.gif)"})), //|
+              
+            animate('4s ease-out',  style({
+                transform: 'translateX(0%) translateY(0%)',
+                background: " no-repeat url(https://cdn.pixabay.com/photo/2017/01/25/08/11/unicorn-2007266_960_720.png)" //->
+                })), 
             
           ] ),
       ]
