@@ -7,6 +7,7 @@ import { Component,  Inject } from '@angular/core';
 export class RegisterComponent  {
   hide:boolean = true;
   captcha:boolean=false;
+  red="red";
   constructor() {}
   resolved(captchaResponse):void {
     this.captcha=captchaResponse;

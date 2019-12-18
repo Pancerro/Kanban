@@ -18,13 +18,13 @@ import { trigger, transition, style, animate } from '@angular/animations';
           ':enter', 
           [
             animate('4s ease-out',  style({ //->
-              transform: 'translateX(70%) translateY(0%)',
+              transform: ' rotateY(180deg) rotateZ(90deg) ',
               background: " no-repeat url(https://images.squarespace-cdn.com/content/v1/528252b7e4b00150d03a4848/1503802786036-ZOOD48EI07ZEY2B3N3I9/ke17ZwdGBToddI8pDm48kJUlZr2Ql5GtSKWrQpjur5t7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1Uc2TsYyWrvo4cxLsTiAHD0wm8wv6KuSQ-vWcvdKCNFvRm4bjm9DAHF2kOsIZRJKXnA/RickAndMorty_RickAngryBurp1500.gif?format=500w)"
-            })),
+          })),
             animate('4s ease-out',  style({
               transform: 'translateX(70%) translateY(35%)',//|
               background: " no-repeat url(https://images.squarespace-cdn.com/content/v1/528252b7e4b00150d03a4848/1503802775944-14J565KYKE9VUEXQZ7UX/ke17ZwdGBToddI8pDm48kJUlZr2Ql5GtSKWrQpjur5t7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1Uc2TsYyWrvo4cxLsTiAHD0wm8wv6KuSQ-vWcvdKCNFvRm4bjm9DAHF2kOsIZRJKXnA/RickAndMorty_MortyConfusedBlink1500.gif?format=500w)"
-           })),
+          })),
             animate('4s ease-out',  style({
               transform: 'translateX(-60%) translateY(35%)',//<-
               background: " no-repeat url(https://chpic.su/_data/stickers/d/DamnRicknMorty/DamnRicknMorty_030.webp)"
@@ -34,21 +34,24 @@ import { trigger, transition, style, animate } from '@angular/animations';
               background: " no-repeat url(https://thumbs.gfycat.com/BarrenTightLeopard-size_restricted.gif)"})), //|
               
             animate('4s ease-out',  style({
-                transform: 'translateX(0%) translateY(0%)',
-                background: " no-repeat url(https://cdn.pixabay.com/photo/2017/01/25/08/11/unicorn-2007266_960_720.png)" //->
-                })), 
-            
+              transform: 'rotateY(270deg) rotateZ(270deg) translateX(0%) translateY(0%)',
+              background: " no-repeat url(https://cdn.pixabay.com/photo/2017/01/25/08/11/unicorn-2007266_960_720.png)" //->
+          })), 
+            animate('4s ease-out',  style({
+              transform: 'rotateY(360deg) rotateZ(360deg) translateX(0%) translateY(0%)',
+              background: " no-repeat url(https://cdn.pixabay.com/photo/2017/01/25/08/11/unicorn-2007266_960_720.png)" //o
+          })), 
           ] ),
       ]
     ),
     trigger('itemTaskAnim', [
       transition(':enter', [
-        animate('0.1s ease-out',  style({
+        animate('0s ease-out',  style({
           opacity: 0})),
-        animate('23s ease-out',  style({
+        animate('25s ease-out',  style({
           opacity: 1}))
       ])
-      ])
+      ]),
     
   ]
 })
