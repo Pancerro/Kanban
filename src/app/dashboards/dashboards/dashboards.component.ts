@@ -16,18 +16,32 @@ import { trigger, transition, style, animate, group } from '@angular/animations'
   animations: [
     trigger('itemAnim', [
       transition(':enter', [
-        style({transform: 'translateX(-100%)',
+        style({transform: 'translateX(-200%)',
         backgroundColor: 'green'}),
         animate(350)
       ]),
       transition(':leave', [
-          animate('0.1s 0.1s ease', style({
-            opacity: 0,
-            backgroundColor: 'red'
-          }))
+      style({
+      backgroundColor: 'red',
+      opacity: 1}),
+      animate('0.5s ease-in')
       ])
-    ])
-  ]
+      ]),
+      trigger('itemTaskAnim', [
+        transition(':enter', [
+          style({
+          opacity:1,
+          backgroundColor: 'green'}),
+          animate('0.1s ease-in')
+        ]),
+        transition(':leave', [
+        style({
+        backgroundColor: 'red',
+        opacity: 1}),
+        animate('0.1s ease-out')
+        ])
+        ])
+    ]
 })
 export class DashboardsComponent implements OnInit {
   table0:string="table0";
@@ -210,7 +224,7 @@ export class DashboardsComponent implements OnInit {
   }
   editTask(title,description,priority,color,endDate,tableName):void {
     const dialogRef = this.dialog.open(EditTaskComponent, {
-    width: '250px',
+    width: '350px',
     data: {title: title, description: description, priority:priority,color:color,endDate:endDate}
     });
     dialogRef.afterClosed().subscribe(result => {
