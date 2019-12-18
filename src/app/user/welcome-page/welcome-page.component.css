@@ -8,10 +8,15 @@
 }
 
 .kanban {
-    background: url(https://i.imgur.com/9ZQatoL.png);
+    background: url(https://cdn.pixabay.com/photo/2017/01/25/08/11/unicorn-2007266_960_720.png);
     background-repeat: no-repeat;
     background-position: center;
     width: 800px;
-    height: 500px;
+    height: 700px;
     margin: auto;
+}
+
+.center {
+    height: 100%;
+    background: linear-gradient(to right, red, orange, yellow, lime, blue, purple, fuchsia);
 }
