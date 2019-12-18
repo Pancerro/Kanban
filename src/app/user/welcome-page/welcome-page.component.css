@@ -1,7 +1,3 @@
-.center {
-    text-align: center;
-}
-
 .captcha {
     margin-left: 42%;
     margin-right: 42%;
@@ -12,12 +8,13 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: 50%;
-    width: 800px;
-    height: 700px;
+    width: 70vh;
+    height: 60vh;
     margin: auto;
 }
 
 .center {
+    text-align: center;
     min-height: 100%;
     height: auto;
     min-width: 100%;
