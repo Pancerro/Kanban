@@ -18,19 +18,19 @@ import { trigger, transition, style, animate } from '@angular/animations';
           ':enter', 
           [
             animate('4s ease-out',  style({ //->
-              transform: 'translateX(80%) translateY(0%)',
+              transform: 'translateX(60%) translateY(0%)',
               background: " no-repeat url(https://images.squarespace-cdn.com/content/v1/528252b7e4b00150d03a4848/1503802786036-ZOOD48EI07ZEY2B3N3I9/ke17ZwdGBToddI8pDm48kJUlZr2Ql5GtSKWrQpjur5t7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1Uc2TsYyWrvo4cxLsTiAHD0wm8wv6KuSQ-vWcvdKCNFvRm4bjm9DAHF2kOsIZRJKXnA/RickAndMorty_RickAngryBurp1500.gif?format=500w)"
             })),
             animate('4s ease-out',  style({
-              transform: 'translateX(80%) translateY(50%)',//|
+              transform: 'translateX(60%) translateY(50%)',//|
               background: " no-repeat url(https://images.squarespace-cdn.com/content/v1/528252b7e4b00150d03a4848/1503802775944-14J565KYKE9VUEXQZ7UX/ke17ZwdGBToddI8pDm48kJUlZr2Ql5GtSKWrQpjur5t7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1Uc2TsYyWrvo4cxLsTiAHD0wm8wv6KuSQ-vWcvdKCNFvRm4bjm9DAHF2kOsIZRJKXnA/RickAndMorty_MortyConfusedBlink1500.gif?format=500w)"
            })),
             animate('4s ease-out',  style({
-              transform: 'translateX(-80%) translateY(50%)',//<-
+              transform: 'translateX(-60%) translateY(50%)',//<-
               background: " no-repeat url(https://chpic.su/_data/stickers/d/DamnRicknMorty/DamnRicknMorty_030.webp)"
           })),
             animate('4s ease-out',  style({
-              transform: 'translateX(-80%) translateY(0%)',
+              transform: 'translateX(-60%) translateY(0%)',
               background: " no-repeat url(https://thumbs.gfycat.com/BarrenTightLeopard-size_restricted.gif)"})), //|
               
             animate('4s ease-out',  style({
