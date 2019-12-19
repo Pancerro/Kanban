@@ -101,10 +101,10 @@ export class WelcomePageComponent   {
             this.db.writeTitleTable(this.userId,"table9","table9")
             this.db.writeUserNumber(this.userId,3)
             this.db.writeLogs(this.userId,this.random,this.currentDate,"Create Account","","","","","")
-            this.db.writeCategory(this.userId,"not easy","pink")
-            this.db.writeCategory(this.userId,"easy","green")
-            this.db.writeCategory(this.userId,"critical","red")
-            this.db.writeCategory(this.userId,"normal","white")
+            this.db.writeCategory(this.userId,"date","pink");
+            this.db.writeCategory(this.userId,"shop","green");
+            this.db.writeCategory(this.userId,"cars","red");
+            this.db.writeCategory(this.userId,"school","white");
             this.db.writeUserData(this.userId,this.email,this.thema);
     })}}}});
   }
@@ -166,10 +166,10 @@ export class WelcomePageComponent   {
         this.db.writeTitleTable(this.userId,"table7","table7");
         this.db.writeTitleTable(this.userId,"table8","table8");
         this.db.writeTitleTable(this.userId,"table9","table9");
-        this.db.writeCategory(this.userId,"not easy","pink");
-        this.db.writeCategory(this.userId,"easy","green");
-        this.db.writeCategory(this.userId,"critical","red");
-        this.db.writeCategory(this.userId,"normal","white");
+        this.db.writeCategory(this.userId,"date","pink");
+        this.db.writeCategory(this.userId,"shop","green");
+        this.db.writeCategory(this.userId,"cars","red");
+        this.db.writeCategory(this.userId,"school","white");
         this.db.writeUserNumber(this.userId,3);
       }
     });

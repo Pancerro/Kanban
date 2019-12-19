@@ -10,7 +10,7 @@
                     </mat-form-field>
                     <mat-form-field>
                         <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" #password="ngModel" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel></p>
-                        <mat-error>Wrong Password - Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers :)</mat-error>
+                        <mat-error>Wrong Password - Passsword must contain at least 8 charactes, including UPPER/lowercase and numbers :)</mat-error>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
