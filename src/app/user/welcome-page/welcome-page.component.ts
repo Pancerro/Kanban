@@ -101,7 +101,7 @@ export class WelcomePageComponent   {
             this.db.writeTitleTable(this.userId,"table9","table9")
             this.db.writeUserNumber(this.userId,3)
             this.db.writeLogs(this.userId,this.random,this.currentDate,"Create Account","","","","","")
-            this.db.writeCategory(this.userId,"not easy","blue")
+            this.db.writeCategory(this.userId,"not easy","pink")
             this.db.writeCategory(this.userId,"easy","green")
             this.db.writeCategory(this.userId,"critical","red")
             this.db.writeCategory(this.userId,"normal","white")
@@ -152,34 +152,27 @@ export class WelcomePageComponent   {
     this.random=this.random.replace("0.","logLoginWitchGoogle");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     this.db.writeLogs(this.userId,this.random,this.currentDate,"LOGIN WITH GOOGLE","","","","","");
-    this.db.writeUserData(this.userId,this.email,"");
-    this.db.getCategory(this.userId).subscribe(res => {
-      if(res.length==0)
+    this.db.getTask(this.userId,"table").subscribe(res => {
+      if(res.length==0) 
       {
-        this.db.writeCategory(this.userId,"not easy","blue");
+        this.db.writeUserData(this.userId,this.email,"");
+        this.db.writeTitleTable(this.userId,"table0","table0");
+        this.db.writeTitleTable(this.userId,"table1","table1");
+        this.db.writeTitleTable(this.userId,"table2","table2");
+        this.db.writeTitleTable(this.userId,"table3","table3");
+        this.db.writeTitleTable(this.userId,"table4","table4");
+        this.db.writeTitleTable(this.userId,"table5","table5");
+        this.db.writeTitleTable(this.userId,"table6","table6");
+        this.db.writeTitleTable(this.userId,"table7","table7");
+        this.db.writeTitleTable(this.userId,"table8","table8");
+        this.db.writeTitleTable(this.userId,"table9","table9");
+        this.db.writeCategory(this.userId,"not easy","pink");
         this.db.writeCategory(this.userId,"easy","green");
         this.db.writeCategory(this.userId,"critical","red");
         this.db.writeCategory(this.userId,"normal","white");
+        this.db.writeUserNumber(this.userId,3);
       }
-    })
-  this.db.getTask(this.userId,"table").subscribe(res => {
-    if(res.length==0) 
-    {
-      this.db.writeTitleTable(this.userId,"table0","table0");
-      this.db.writeTitleTable(this.userId,"table1","table1");
-      this.db.writeTitleTable(this.userId,"table2","table2");
-      this.db.writeTitleTable(this.userId,"table3","table3");
-      this.db.writeTitleTable(this.userId,"table4","table4");
-      this.db.writeTitleTable(this.userId,"table5","table5");
-      this.db.writeTitleTable(this.userId,"table6","table6");
-      this.db.writeTitleTable(this.userId,"table7","table7");
-      this.db.writeTitleTable(this.userId,"table8","table8");
-      this.db.writeTitleTable(this.userId,"table9","table9");
-    }
-  });
-  this.db.getUserNumber(this.userId).subscribe(res => {
-    if(res.length==0) this.db.writeUserNumber(this.userId,3);
-  });
+    });
   this.router.navigate(['/dashboard'])
 })
 }
