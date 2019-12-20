@@ -57,19 +57,19 @@
         <table mat-table [dataSource]="dataLogs" matSort class="mat-elevation-z8">
             <ng-container matColumnDef="category">
                 <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> Category </th>
-                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> {{element.category}} </td>
+                <td mat-cell *matCellDef="let element" [style.background]="element.color" [style.color]="changeFont()"> {{element.category}} </td>
             </ng-container>
             <ng-container matColumnDef="color">
                 <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> Color </th>
-                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> {{element.color}} </td>
+                <td mat-cell *matCellDef="let element" [style.background]="element.color" [style.color]="changeFont()"> {{element.color}} </td>
             </ng-container>
             <ng-container matColumnDef="delete">
                 <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> Delete </th>
-                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> <button mat-stroked-button color="primary" class="buttonRemove" (click)="deleteCategory(element.category)"><mat-icon>delete</mat-icon></button> </td>
+                <td mat-cell *matCellDef="let element" [style.background]="element.color" [style.color]="changeFont()"> <button mat-stroked-button color="primary" class="buttonRemove" (click)="deleteCategory(element.category)"><mat-icon>delete</mat-icon></button> </td>
             </ng-container>
             <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> Edit </th>
-                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> <button mat-stroked-button color="primary" class="buttonRemove" (click)="editCategory(element.category,element.color)"><mat-icon>edit</mat-icon></button> </td>
+                <td mat-cell *matCellDef="let element" [style.background]="element.color" [style.color]="changeFont()"> <button mat-stroked-button color="primary" class="buttonRemove" (click)="editCategory(element.category,element.color)"><mat-icon>edit</mat-icon></button> </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

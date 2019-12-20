@@ -8,7 +8,7 @@
     </mat-form-field>
     <p></p>
     <div class="tableClass">
-        <table mat-table [dataSource]="dataLogs" matSort class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataLogs" class="mat-elevation-z8">
             <ng-container matColumnDef="operation">
                 <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> Operation </th>
                 <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> {{element.operation}} </td>
