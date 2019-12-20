@@ -14,7 +14,7 @@
     </button>
     </div>
     <div *ngIf="viewCaptcha()">
-        <h1>If you see this message, there were too many failed login attempts . Please complete the captcha and try again </h1>
+        <h1>If you see this message, there were too many failed login attempts. Please complete the captcha and try again </h1>
         <div class="captcha">
             <re-captcha (resolved)="resolved($event)" siteKey="6LfOQ8QUAAAAAE310YWvEdGYeXWAIlq_frghVmRe" required></re-captcha>
         </div>
