@@ -39,6 +39,6 @@
     </div>
     <div mat-dialog-actions>
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
-        <button mat-button [mat-dialog-close]="updateTaskForm" cdkFocusInitial>Update Task</button>
+        <button mat-button [mat-dialog-close]="updateTaskForm" *ngIf="!edit" cdkFocusInitial>Update Task</button>
     </div>
 </div>

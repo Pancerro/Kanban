@@ -37,6 +37,6 @@
     </div>
     <div mat-dialog-actions>
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
-        <button mat-button [mat-dialog-close]="taskForm" cdkFocusInitial>Add Task</button>
+        <button mat-button [mat-dialog-close]="taskForm" [disabled]="taskForm.invalid" cdkFocusInitial>Add Task</button>
     </div>
 </div>
