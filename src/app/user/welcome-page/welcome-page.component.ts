@@ -156,9 +156,9 @@ export class WelcomePageComponent   {
       if(res.length==0) 
       {
         this.db.writeUserData(this.userId,this.email,"");
-        this.db.writeTitleTable(this.userId,"table0","table0");
-        this.db.writeTitleTable(this.userId,"table1","table1");
-        this.db.writeTitleTable(this.userId,"table2","table2");
+        this.db.writeTitleTable(this.userId,"table0","to do")
+        this.db.writeTitleTable(this.userId,"table1","doing")
+        this.db.writeTitleTable(this.userId,"table2","done")
         this.db.writeTitleTable(this.userId,"table3","table3");
         this.db.writeTitleTable(this.userId,"table4","table4");
         this.db.writeTitleTable(this.userId,"table5","table5");
