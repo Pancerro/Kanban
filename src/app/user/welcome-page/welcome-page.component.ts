@@ -89,9 +89,9 @@ export class WelcomePageComponent   {
             this.auth.register(result.value.register.email,result.value.register.password)
             .then(()=>{this.info="You can login now ";
             this.userId=this.auth.getUser().uid
-            this.db.writeTitleTable(this.userId,"table0","table0")
-            this.db.writeTitleTable(this.userId,"table1","table1")
-            this.db.writeTitleTable(this.userId,"table2","table2")
+            this.db.writeTitleTable(this.userId,"table0","to do")
+            this.db.writeTitleTable(this.userId,"table1","doing")
+            this.db.writeTitleTable(this.userId,"table2","done")
             this.db.writeTitleTable(this.userId,"table3","table3")
             this.db.writeTitleTable(this.userId,"table4","table4")
             this.db.writeTitleTable(this.userId,"table5","table5")
