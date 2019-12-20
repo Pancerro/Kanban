@@ -6,8 +6,8 @@
         <h3> Welcome {{item.email}}</h3>
         <div>
             <h3>You see {{numbers[0].number}} tables</h3>
-            <button *ngIf="pokaz" mat-stroked-button color="primary" [disabled]="numbers[0].number==10" (click)="addNewTable()">Add new table</button>
-            <button *ngIf="pokaz" mat-stroked-button color="primary" [disabled]="numbers[0].number==0" (click)="deleteLastTable()">Delete last table</button>
+            <button mat-stroked-button color="primary" [disabled]="numbers[0].number==10" (click)="addNewTable()">Add new table</button>
+            <button mat-stroked-button color="primary" [disabled]="numbers[0].number==0" (click)="deleteLastTable()">Delete last table</button>
             <div cdkDropListGroup name="toName">
                 <div *ngIf="numbers[0].number>0" class="example-container" [@itemAnim]>
                     <h2>{{tableTitle[0].title}}</h2>
