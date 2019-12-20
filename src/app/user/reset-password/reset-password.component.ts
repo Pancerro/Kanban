@@ -37,8 +37,8 @@ export class ResetPasswordComponent implements OnInit{
       return false;
     }
   }
-  verifyMailOrPasswordReset():string{
-    if(this.mode=="verifyEmail") return "verifyEmail";
-    else return "resetPassword";
+  verifyMailOrPasswordReset():boolean{
+    if(this.mode=="verifyEmail") return true;
+    else return false;
   }
 }
