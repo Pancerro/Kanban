@@ -388,9 +388,9 @@ export class DashboardsComponent implements OnInit {
   }
   checkPrio(priority):string{
     switch(priority){
-      case "darkred":return "high"; break;
-      case "purple":return "medium";break;
-      case "yellow":return "low"; break;
+      case "red":return "high"; break;
+      case "yellow":return "medium";break;
+      case "green":return "low"; break;
       default:return "NONE"
     }
   }
