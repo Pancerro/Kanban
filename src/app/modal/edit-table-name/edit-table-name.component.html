@@ -5,7 +5,7 @@
             <form #updateTitleForm="ngForm">
                 <div ngModelGroup="titleTable">
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Title" required name="title" ngModel></p>
+                        <p><input matInput type="text" placeholder="Title" [(ngModel)]="data.title" required name="title" ngModel></p>
                         <mat-error>Title is Mandatory</mat-error>
                     </mat-form-field>
                 </div>

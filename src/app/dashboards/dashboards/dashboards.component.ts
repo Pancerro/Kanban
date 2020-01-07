@@ -159,6 +159,18 @@ export class DashboardsComponent implements OnInit {
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logAddNewTable");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    switch(this.numbers[0].number){
+      case 0:this.updateTableTitle(this.table0); break;
+      case 1:this.updateTableTitle(this.table1); break;
+      case 2:this.updateTableTitle(this.table2); break;
+      case 3:this.updateTableTitle(this.table3); break;
+      case 4:this.updateTableTitle(this.table4); break;
+      case 5:this.updateTableTitle(this.table5); break;
+      case 6:this.updateTableTitle(this.table6); break;
+      case 7:this.updateTableTitle(this.table7); break;
+      case 8:this.updateTableTitle(this.table8); break;
+      case 9:this.updateTableTitle(this.table9); break;
+    }
     this.numbers[0].number++;
     this.db.writeUserNumber(this.userId,this.numbers[0].number);
     this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.numbers[0].number,"","","","");
@@ -192,7 +204,7 @@ export class DashboardsComponent implements OnInit {
     }
     this.db.writeUserNumber(this.userId,this.numbers[0].number)
   }
-  addTask(tableName):void {
+  addTask(tableName:string):void {
     const dialogRef = this.dialog.open(AddTaskComponent, {
     width: '250px',
     });
@@ -222,7 +234,7 @@ export class DashboardsComponent implements OnInit {
       }
     });
   }
-  editTask(title,description,priority,color,endDate,tableName):void {
+  editTask(title:string,description:string,priority:string,color:string,endDate,tableName:string):void {
     const dialogRef = this.dialog.open(EditTaskComponent, {
     width: '350px',
     data: {title: title, description: description, priority:priority,color:color,endDate:endDate}
@@ -259,23 +271,24 @@ export class DashboardsComponent implements OnInit {
       }
     });
   }
-  removeTask(removeTask,tableName):void{
+  removeTask(removeTask: string,tableName:string):void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logRemoveTask");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     this.db.writeLogs(this.userId,this.random,this.currentDate,"remove task",removeTask,tableName,"","","");
     this.db.removeTask(this.userId,tableName,this.replece(removeTask));
   }
-  removeAllTask(tableName):void{
+  removeAllTask(tableName:string):void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logRemoveAllTask");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     this.db.writeLogs(this.userId,this.random,this.currentDate,"remove all task",tableName,"","","","");
     this.db.removeTable(this.userId,tableName);
   }
-  updateTableTitle(title):void {
+  updateTableTitle(title:string):void {
     const dialogRef = this.dialog.open(EditTableNameComponent, {
-    width: '250px',
+    width: '250px', 
+    data:{title:title}
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=undefined){
@@ -386,7 +399,7 @@ export class DashboardsComponent implements OnInit {
       this.db.writeUserTable(this.userId,this.table9,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
   }
-  checkPrio(priority):string{
+  checkPrio(priority: string):string{
     switch(priority){
       case "red":return "high"; break;
       case "yellow":return "medium";break;
