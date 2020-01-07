@@ -54,6 +54,7 @@ export class DashboardsComponent implements OnInit {
   table7:string="table7";
   table8:string="table8";
   table9:string="table9";
+  tableEditTitle:string;
   tableZero=[];
   tableOne=[];
   tableTwo=[];
@@ -160,18 +161,17 @@ export class DashboardsComponent implements OnInit {
     this.random=this.random.replace("0.","logAddNewTable");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     switch(this.numbers[0].number){
-      case 0:this.updateTableTitle(this.table0); break;
-      case 1:this.updateTableTitle(this.table1); break;
-      case 2:this.updateTableTitle(this.table2); break;
-      case 3:this.updateTableTitle(this.table3); break;
-      case 4:this.updateTableTitle(this.table4); break;
-      case 5:this.updateTableTitle(this.table5); break;
-      case 6:this.updateTableTitle(this.table6); break;
-      case 7:this.updateTableTitle(this.table7); break;
-      case 8:this.updateTableTitle(this.table8); break;
-      case 9:this.updateTableTitle(this.table9); break;
+      case 0:this.updateTableTitle(this.table0,true); break;
+      case 1:this.updateTableTitle(this.table1,true); break;
+      case 2:this.updateTableTitle(this.table2,true); break;
+      case 3:this.updateTableTitle(this.table3,true); break;
+      case 4:this.updateTableTitle(this.table4,true); break;
+      case 5:this.updateTableTitle(this.table5,true); break;
+      case 6:this.updateTableTitle(this.table6,true); break;
+      case 7:this.updateTableTitle(this.table7,true); break;
+      case 8:this.updateTableTitle(this.table8,true); break;
+      case 9:this.updateTableTitle(this.table9,true); break;
     }
-    this.db.writeUserNumber(this.userId,this.numbers[0].number);
     this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.numbers[0].number,"","","","");
   }
   deleteLastTable():void{
@@ -181,25 +181,25 @@ export class DashboardsComponent implements OnInit {
     this.numbers[0].number--;
     switch(this.numbers[0].number){
       case 0: this.db.removeTable(this.userId,this.table0);
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table0,"","","",""); break;
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table0,"","","",""); this.db.writeTitleTable(this.userId,this.table0,"table0"); break;
       case 1: this.db.removeTable(this.userId,this.table1);
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table1,"","","",""); break;
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table1,"","","",""); this.db.writeTitleTable(this.userId,this.table1,"table1"); break;
       case 2: this.db.removeTable(this.userId,this.table2);
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table2,"","","",""); break;
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table2,"","","",""); this.db.writeTitleTable(this.userId,this.table2,"table2"); break;
       case 3: this.db.removeTable(this.userId,this.table3);
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table3,"","","",""); break;
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table3,"","","",""); this.db.writeTitleTable(this.userId,this.table3,"table3"); break;
       case 4: this.db.removeTable(this.userId,this.table4);
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table4,"","","",""); break;
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table4,"","","",""); this.db.writeTitleTable(this.userId,this.table4,"table4"); break;
       case 5: this.db.removeTable(this.userId,this.table5);
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table5,"","","",""); break;
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table5,"","","",""); this.db.writeTitleTable(this.userId,this.table5,"table5"); break;
       case 6: this.db.removeTable(this.userId,this.table6);
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table6,"","","",""); break;
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table6,"","","",""); this.db.writeTitleTable(this.userId,this.table6,"table6"); break;
       case 7: this.db.removeTable(this.userId,this.table7);
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table7,"","","",""); break;
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table7,"","","",""); this.db.writeTitleTable(this.userId,this.table7,"table7"); break;
       case 8: this.db.removeTable(this.userId,this.table8);
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table8,"","","",""); break;
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table8,"","","",""); this.db.writeTitleTable(this.userId,this.table8,"table8"); break;
       case 9: this.db.removeTable(this.userId,this.table9);
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table9,"","","",""); break;
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"delete table",this.table9,"","","",""); this.db.writeTitleTable(this.userId,this.table9,"table9"); break;
     }
     this.db.writeUserNumber(this.userId,this.numbers[0].number)
   }
@@ -284,10 +284,22 @@ export class DashboardsComponent implements OnInit {
     this.db.writeLogs(this.userId,this.random,this.currentDate,"remove all task",tableName,"","","","");
     this.db.removeTable(this.userId,tableName);
   }
-  updateTableTitle(title:string):void {
+  updateTableTitle(title:string,addTable:boolean):void {
+    switch(title){
+      case "table0": this.tableEditTitle=this.tableTitle[0].title; break;
+      case "table1": this.tableEditTitle=this.tableTitle[1].title; break;
+      case "table2": this.tableEditTitle=this.tableTitle[2].title; break;
+      case "table3": this.tableEditTitle=this.tableTitle[3].title; break;
+      case "table4": this.tableEditTitle=this.tableTitle[4].title; break;
+      case "table5": this.tableEditTitle=this.tableTitle[5].title; break;
+      case "table6": this.tableEditTitle=this.tableTitle[6].title; break;
+      case "table7": this.tableEditTitle=this.tableTitle[7].title; break;
+      case "table8": this.tableEditTitle=this.tableTitle[8].title; break;
+      case "table9": this.tableEditTitle=this.tableTitle[9].title; break;
+    }
     const dialogRef = this.dialog.open(EditTableNameComponent, {
     width: '250px', 
-    data:{title:title}
+    data:{title:this.tableEditTitle}
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=undefined){
@@ -300,13 +312,16 @@ export class DashboardsComponent implements OnInit {
         }
         else{
           if(result){   
+            if(addTable) {
+              this.numbers[0].number++;
+              this.db.writeUserNumber(this.userId,this.numbers[0].number);
+            }
             this.titleTable=result.value.titleTable.title;
             this.random=Math.random().toString();
             this.random=this.random.replace("0.","logUpdateTableTitle");
             this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
             this.db.writeLogs(this.userId,this.random,this.currentDate,"update Table Title",this.titleTable,title,"","","");
             this.db.writeTitleTable(this.userId,title,this.titleTable);
-            this.numbers[0].number++;
           }
         }
         }

@@ -13,7 +13,7 @@
                     <h2>{{tableTitle[0].title}}</h2>
                     <button mat-stroked-button color="primary" (click)="addTask(table0)"><mat-icon>add_circle</mat-icon></button>
                     <button mat-stroked-button color="primary" (click)="removeAllTask(table0)">Remove all Task </button>
-                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table0)">Edit Title Table </button>
+                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table0,false)">Edit Title Table </button>
                     <div cdkDropList [cdkDropListData]="tableZero" class="example-list" (cdkDropListDropped)="drop($event)">
                         <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableZero" cdkDrag>
                             <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority">{{checkPrio(item.priority)}}</button><br>
@@ -27,7 +27,7 @@
                     <h2>{{tableTitle[1].title}}</h2>
                     <button mat-stroked-button color="primary" (click)="addTask(table1)"><mat-icon>add_circle</mat-icon></button>
                     <button mat-stroked-button color="primary" (click)="removeAllTask(table1)">Remove all Task </button>
-                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table1)">Edit Title Table </button>
+                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table1,false)">Edit Title Table </button>
                     <div cdkDropList [cdkDropListData]="tableOne" class="example-list" (cdkDropListDropped)="drop($event)">
                         <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableOne" cdkDrag>
                             <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority">{{checkPrio(item.priority)}}</button><br>
@@ -41,7 +41,7 @@
                     <h2>{{tableTitle[2].title}}</h2>
                     <button mat-stroked-button color="primary" (click)="addTask(table2)"><mat-icon>add_circle</mat-icon></button>
                     <button mat-stroked-button color="primary" (click)="removeAllTask(table2)">Remove all Task </button>
-                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table2)">Edit Title Table </button>
+                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table2,false)">Edit Title Table </button>
                     <div cdkDropList [cdkDropListData]="tableTwo" class="example-list" (cdkDropListDropped)="drop($event)">
                         <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableTwo" cdkDrag>
                             <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority">{{checkPrio(item.priority)}}</button><br>
@@ -55,7 +55,7 @@
                     <h2>{{tableTitle[3].title}}</h2>
                     <button mat-stroked-button color="primary" (click)="addTask(table3)"><mat-icon>add_circle</mat-icon></button>
                     <button mat-stroked-button color="primary" (click)="removeAllTask(table3)">Remove all Task </button>
-                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table3)">Edit Title Table </button>
+                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table3,false)">Edit Title Table </button>
                     <div cdkDropList [cdkDropListData]="tableThree" class="example-list" (cdkDropListDropped)="drop($event)">
                         <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableThree" cdkDrag>
                             <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority">{{checkPrio(item.priority)}}</button><br>
@@ -69,7 +69,7 @@
                     <h2>{{tableTitle[4].title}}</h2>
                     <button mat-stroked-button color="primary" (click)="addTask(table4)"><mat-icon>add_circle</mat-icon></button>
                     <button mat-stroked-button color="primary" (click)="removeAllTask(table4)">Remove all Task </button>
-                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table4)">Edit Title Table </button>
+                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table4,false)">Edit Title Table </button>
                     <div cdkDropList [cdkDropListData]="tableFour" class="example-list" (cdkDropListDropped)="drop($event)">
                         <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableFour" cdkDrag>
                             <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority">{{checkPrio(item.priority)}}</button><br>
@@ -84,7 +84,7 @@
                     <h2>{{tableTitle[5].title}}</h2>
                     <button mat-stroked-button color="primary" (click)="addTask(table5)"><mat-icon>add_circle</mat-icon></button>
                     <button mat-stroked-button color="primary" (click)="removeAllTask(table5)">Remove all Task </button>
-                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table5)">Edit Title Table </button>
+                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table5,false)">Edit Title Table </button>
                     <div cdkDropList [cdkDropListData]="tableFive" class="example-list" (cdkDropListDropped)="drop($event)">
                         <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableFive" cdkDrag>
                             <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority">{{checkPrio(item.priority)}}</button><br>
@@ -99,7 +99,7 @@
                     <h2>{{tableTitle[6].title}}</h2>
                     <button mat-stroked-button color="primary" (click)="addTask(table6)">	<mat-icon>add_circle</mat-icon></button>
                     <button mat-stroked-button color="primary" (click)="removeAllTask(table6)">Remove all Task </button>
-                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table6)">Edit Title Table </button>
+                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table6,false)">Edit Title Table </button>
                     <div cdkDropList [cdkDropListData]="tableSix" class="example-list" (cdkDropListDropped)="drop($event)">
                         <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableSix" cdkDrag>
                             <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority">{{checkPrio(item.priority)}}</button><br>
@@ -114,7 +114,7 @@
                     <h2>{{tableTitle[7].title}}</h2>
                     <button mat-stroked-button color="primary" (click)="addTask(table7)"><mat-icon>add_circle</mat-icon></button>
                     <button mat-stroked-button color="primary" (click)="removeAllTask(table7)">Remove all Task </button>
-                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table7)">Edit Title Table </button>
+                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table7,false)">Edit Title Table </button>
                     <div cdkDropList [cdkDropListData]="tableSeven" class="example-list" (cdkDropListDropped)="drop($event)">
                         <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableSeven" cdkDrag>
                             <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority">{{checkPrio(item.priority)}}</button><br>
@@ -129,7 +129,7 @@
                     <h2>{{tableTitle[8].title}}</h2>
                     <button mat-stroked-button color="primary" (click)="addTask(table8)"><mat-icon>add_circle</mat-icon></button>
                     <button mat-stroked-button color="primary" (click)="removeAllTask(table8)">Remove all Task </button>
-                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table8)">Edit Title Table </button>
+                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table8,false)">Edit Title Table </button>
                     <div cdkDropList [cdkDropListData]="tableEight" class="example-list" (cdkDropListDropped)="drop($event)">
                         <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableEight" cdkDrag>
                             <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority">{{checkPrio(item.priority)}}</button><br>
@@ -143,7 +143,7 @@
                     <h2>{{tableTitle[9].title}}</h2>
                     <button mat-stroked-button color="primary" (click)="addTask(table9)"><mat-icon>add_circle</mat-icon></button>
                     <button mat-stroked-button color="primary" (click)="removeAllTask(table9)">Remove all Task </button>
-                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table9)">Edit Title Table </button>
+                    <button mat-stroked-button color="primary" (click)="updateTableTitle(table9,false)">Edit Title Table </button>
                     <div cdkDropList [cdkDropListData]="tableNine" class="example-list" (cdkDropListDropped)="drop($event)">
                         <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableNine" cdkDrag>
                             <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority">{{checkPrio(item.priority)}}</button><br>
