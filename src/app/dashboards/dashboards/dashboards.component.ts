@@ -54,6 +54,16 @@ export class DashboardsComponent implements OnInit {
   table7:string="table7";
   table8:string="table8";
   table9:string="table9";
+  tableZero=[];
+  tableOne=[];
+  tableTwo=[];
+  tableThree=[];
+  tableFour=[];
+  tableFive=[];
+  tableSix=[];
+  tableSeven=[];
+  tableEight=[];
+  tableNine=[];
   titleTable:string;
   word:string;
   verifyEmail=this.auth.getUser().emailVerified;
@@ -71,16 +81,6 @@ export class DashboardsComponent implements OnInit {
   fontColor:string;
   background:string;
   pokaz:boolean=false;
-  tableZero=[];
-  tableOne=[];
-  tableTwo=[];
-  tableThree=[];
-  tableFour=[];
-  tableFive=[];
-  tableSix=[];
-  tableSeven=[];
-  tableEight=[];
-  tableNine=[];
   tableTitle=[];
   numbers=[]
   tabEndDate=[];
@@ -171,7 +171,6 @@ export class DashboardsComponent implements OnInit {
       case 8:this.updateTableTitle(this.table8); break;
       case 9:this.updateTableTitle(this.table9); break;
     }
-    this.numbers[0].number++;
     this.db.writeUserNumber(this.userId,this.numbers[0].number);
     this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.numbers[0].number,"","","","");
   }
@@ -307,6 +306,7 @@ export class DashboardsComponent implements OnInit {
             this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
             this.db.writeLogs(this.userId,this.random,this.currentDate,"update Table Title",this.titleTable,title,"","","");
             this.db.writeTitleTable(this.userId,title,this.titleTable);
+            this.numbers[0].number++;
           }
         }
         }
