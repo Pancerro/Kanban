@@ -299,7 +299,7 @@ export class DashboardsComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(EditTableNameComponent, {
     width: '250px', 
-    data:{title:this.tableEditTitle}
+    data:{title:this.tableEditTitle, addTable:addTable}
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=undefined){

@@ -1,5 +1,6 @@
 <div class="center">
-    <h1 mat-dialog-title>Update your table title!</h1>
+    <h1 mat-dialog-title *ngIf="!data.addTable">Update your table title!</h1>
+    <h1 mat-dialog-title *ngIf="data.addTable">Add your table</h1>
     <div mat-dialog-content>
         <div class="updateTitle">
             <form #updateTitleForm="ngForm">
@@ -14,6 +15,7 @@
     </div>
     <div mat-dialog-actions>
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
-        <button mat-button [mat-dialog-close]="updateTitleForm" cdkFocusInitial>Update Title</button>
+        <button mat-button [mat-dialog-close]="updateTitleForm" [disabled]="updateTitleForm.invalid" *ngIf="!data.addTable" cdkFocusInitial>Update Title</button>
+        <button mat-button [mat-dialog-close]="updateTitleForm" [disabled]="updateTitleForm.invalid" *ngIf="data.addTable" cdkFocusInitial>Add table</button>
     </div>
 </div>
