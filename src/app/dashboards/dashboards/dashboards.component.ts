@@ -222,8 +222,8 @@ export class DashboardsComponent implements OnInit {
           this.priority=result.value.task.priority;
           this.color=result.value.task.color;
           this.endDate=result.value.task.endDate;
-          if(!this.endDate) this.endDate=new Date();
-            this.endData=this.endDate.getDate()+'/'+(this.endDate.getMonth()+1)+'/'+this.endDate.getFullYear();
+          if(this.endDate) this.endData=this.endDate.getDate()+'/'+(this.endDate.getMonth()+1)+'/'+this.endDate.getFullYear();
+          else this.endData=null;
             this.db.writeUserTable(this.userId,tableName,this.replece(this.title),this.title,this.description,this.priority,this.color,this.endData);
             this.random=Math.random().toString();
             this.random=this.random.replace("0.","logAddTask");
