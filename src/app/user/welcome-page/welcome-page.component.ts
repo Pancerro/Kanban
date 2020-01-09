@@ -95,7 +95,7 @@ export class WelcomePageComponent   {
             this.db.writeTitleTable(this.userId,"table4","table5")
             this.db.writeTitleTable(this.userId,"table5","table6")
             this.db.writeTitleTable(this.userId,"table6","table7")
-            this.db.writeTitleTable(this.userId,"table7","table9")
+            this.db.writeTitleTable(this.userId,"table7","table8")
             this.db.writeTitleTable(this.userId,"table8","table9")
             this.db.writeTitleTable(this.userId,"table9","table10")
             this.db.writeUserNumber(this.userId,3)
