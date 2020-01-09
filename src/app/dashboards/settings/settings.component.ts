@@ -30,6 +30,7 @@ export class SettingsComponent implements OnInit {
   currentDate:string;
   displayedColumns: string[] = ['category', 'color','delete','edit'];
   dataLogs: MatTableDataSource<Category>;
+  hide:boolean = true;
   verifyEmail=this.auth.getUser().emailVerified;
   checkPass:boolean=false;
   constructor(
@@ -245,7 +246,4 @@ export class SettingsComponent implements OnInit {
       }
     });
   }
-  bestRegards():void{
-    this.pokaz=!this.pokaz;
-  } 
 }

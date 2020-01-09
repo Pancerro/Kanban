@@ -85,20 +85,19 @@ export class WelcomePageComponent   {
           if(this.matchingPasswords(result.value.register.repeatPassword,result.value.register.password)==true){
             this.email=result.value.register.email;
             this.thema=result.value.register.thema;
-            this.thema=""; // :)
             this.auth.register(result.value.register.email,result.value.register.password)
             .then(()=>{this.info="You can login now ";
             this.userId=this.auth.getUser().uid
             this.db.writeTitleTable(this.userId,"table0","to do")
             this.db.writeTitleTable(this.userId,"table1","doing")
             this.db.writeTitleTable(this.userId,"table2","done")
-            this.db.writeTitleTable(this.userId,"table3","table3")
-            this.db.writeTitleTable(this.userId,"table4","table4")
-            this.db.writeTitleTable(this.userId,"table5","table5")
-            this.db.writeTitleTable(this.userId,"table6","table6")
-            this.db.writeTitleTable(this.userId,"table7","table7")
-            this.db.writeTitleTable(this.userId,"table8","table8")
-            this.db.writeTitleTable(this.userId,"table9","table9")
+            this.db.writeTitleTable(this.userId,"table3","table4")
+            this.db.writeTitleTable(this.userId,"table4","table5")
+            this.db.writeTitleTable(this.userId,"table5","table6")
+            this.db.writeTitleTable(this.userId,"table6","table7")
+            this.db.writeTitleTable(this.userId,"table7","table9")
+            this.db.writeTitleTable(this.userId,"table8","table9")
+            this.db.writeTitleTable(this.userId,"table9","table10")
             this.db.writeUserNumber(this.userId,3)
             this.db.writeLogs(this.userId,this.random,this.currentDate,"Create Account","","","","","")
             this.db.writeCategory(this.userId,"date","pink");
@@ -159,13 +158,13 @@ export class WelcomePageComponent   {
         this.db.writeTitleTable(this.userId,"table0","to do")
         this.db.writeTitleTable(this.userId,"table1","doing")
         this.db.writeTitleTable(this.userId,"table2","done")
-        this.db.writeTitleTable(this.userId,"table3","table3");
-        this.db.writeTitleTable(this.userId,"table4","table4");
-        this.db.writeTitleTable(this.userId,"table5","table5");
-        this.db.writeTitleTable(this.userId,"table6","table6");
-        this.db.writeTitleTable(this.userId,"table7","table7");
-        this.db.writeTitleTable(this.userId,"table8","table8");
-        this.db.writeTitleTable(this.userId,"table9","table9");
+        this.db.writeTitleTable(this.userId,"table3","table4");
+        this.db.writeTitleTable(this.userId,"table4","table5");
+        this.db.writeTitleTable(this.userId,"table5","table6");
+        this.db.writeTitleTable(this.userId,"table6","table7");
+        this.db.writeTitleTable(this.userId,"table7","table8");
+        this.db.writeTitleTable(this.userId,"table8","table9");
+        this.db.writeTitleTable(this.userId,"table9","table10");
         this.db.writeCategory(this.userId,"date","pink");
         this.db.writeCategory(this.userId,"shop","green");
         this.db.writeCategory(this.userId,"cars","red");

@@ -6,23 +6,26 @@
     <p *ngIf="!verifyEmail">Please verify your email and refresh website!</p>
     <p *ngIf="verifyEmail">Your email is verified</p>
     <button mat-stroked-button color="primary0" *ngIf="!verifyEmail" (click)="sendRepeatVerificationEmail()"> Re-send verification e-mail </button>
-    <p *ngIf="pokaz">Color scheme: {{item.thema}}</p>
-    <div *ngIf="pokaz">
+    <p>Color scheme: {{item.thema}}</p>
+    <div>
         <h4>Update your email: </h4>
         <form (ngSubmit)="updateEmail(emailForm)" #emailForm="ngForm">
             <div class="updateEmail">
                 <mat-form-field class="form">
                     <input matInput type="text" placeholder="Old Email" required name="oldEmail" ngModel>
+                    <mat-error>Old mail is Mandatory</mat-error>
                 </mat-form-field>
             </div>
             <div class="updateEmail">
                 <mat-form-field class="form">
                     <input matInput type="text" placeholder="New Email" required name="newEmail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" ngModel>
+                    <mat-error>Email is Mandatory</mat-error>
                 </mat-form-field>
             </div>
             <div class="updateEmail">
                 <mat-form-field class="form">
                     <input matInput type="text" placeholder="New Repeat Email" required name="newRepeatEmail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" ngModel>
+                    <mat-error>New Repeat Email is Mandatory</mat-error>
                 </mat-form-field>
             </div>
             <button mat-stroked-button color="primary" type="submit">Update your email!</button>
@@ -30,22 +33,34 @@
         <p>{{infoEmail}}</p>
     </div>
     <br>
-    <div *ngIf="pokaz">
+    <div>
         <h4>Update your password: </h4>
         <form (ngSubmit)="updatePassword(passwordForm)" #passwordForm="ngForm">
             <div class="updatePassword">
                 <mat-form-field class="form">
-                    <input matInput type="password" placeholder="Old Password" required name="oldPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
+                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Old Password" required name="oldPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
+                    <mat-error>Old Password is Mandatory</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="form">
+                    <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="New Password" required name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel></p>
+                    <mat-error>New Password is Mandatory</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                 </mat-form-field>
             </div>
             <div class="updatePassword">
                 <mat-form-field class="form">
-                    <input matInput type="password" placeholder="New Password" required name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
-                </mat-form-field>
-            </div>
-            <div class="updatePassword">
-                <mat-form-field class="form">
-                    <input matInput type="password" placeholder="New Repeat Password" required name="newRepeatPassword" ngModel>
+                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="New Repeat Password" required name="newRepeatPassword" ngModel>
+                    <mat-error>Re-Enter New Password is Mandatory</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                 </mat-form-field>
             </div>
             <button mat-stroked-button color="primary" type="submit">Update your password!</button>
@@ -53,7 +68,7 @@
         <p>{{info}}</p>
     </div>
     <br>
-    <div *ngIf="pokaz">
+    <div>
         <h4>Update color scheme! </h4>
         <form (ngSubmit)="updateThema(themaForm)" #themaForm="ngForm">
             <div class="updateThema">
@@ -98,8 +113,5 @@
         </table>
     </div>
     <br>
-    <button *ngIf="pokaz" mat-stroked-button color="primary" (click)="deleteAccount()">Prosze nie klikaj tu :(</button>
-    <br>
-    <p></p>
-    <button class="best" mat-stroked-button color="primary" (click)="bestRegards()">Stopka</button>
+    <button mat-stroked-button color="primary" (click)="deleteAccount()">Prosze nie klikaj tu :(</button>
 </div>
