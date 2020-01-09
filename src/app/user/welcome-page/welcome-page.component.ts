@@ -133,11 +133,11 @@ export class WelcomePageComponent   {
     if(this.numberOfTests>=3) return true;
     else return false;
   }
-  resolved(captchaResponse):void {
+  resolved(captchaResponse: boolean):void {
     this.captcha=captchaResponse;
     this.numberOfTests=0;
 } 
-  matchingPasswords(repeatPassword,password):boolean{
+  matchingPasswords(repeatPassword:string,password:string):boolean{
     if(repeatPassword.valueOf()==password.valueOf()) return true;
     else {
       this.info='Passwords do not match.Try to register again!';

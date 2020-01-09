@@ -419,7 +419,7 @@ export class DashboardsComponent implements OnInit {
       case "red":return "high"; break;
       case "yellow":return "medium";break;
       case "green":return "low"; break;
-      default:return "NONE"
+      default:return "";
     }
   }
 }

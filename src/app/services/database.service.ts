@@ -43,42 +43,42 @@ export class DataService {
     endDate:endDate
   });
   }
-  getDateUser(userId):Observable<any[]>{
+  getDateUser(userId: string):Observable<any[]>{
     return this.db.list('/users/'+userId+'/userInfo').valueChanges();
   }
-  getUserNumber(userId):Observable<any[]>{
+  getUserNumber(userId:string):Observable<any[]>{
     return this.db.list('/users/'+userId+'/viewTables').valueChanges();
   }
-  getTask(userId,tableparent):Observable<any[]>{
+  getTask(userId:string,tableparent:string):Observable<any[]>{
     return this.db.list('/users/'+userId+'/'+tableparent).valueChanges();
   }
-  getLogs(userId):Observable<any[]>{
+  getLogs(userId:string):Observable<any[]>{
     return this.db.list('/users/'+userId+'/logs').valueChanges();
   }
-  getCategory(userId):Observable<any[]>{
+  getCategory(userId:string):Observable<any[]>{
     return this.db.list('users/'+ userId+'/category/').valueChanges();
   }
-  updateEmail(userId,newEmail){
+  updateEmail(userId:string,newEmail:string){
     return this.db.object('/users/'+userId+'/userInfo/info').update({email:newEmail})
   }
-  updateThema(userId,newThema){
+  updateThema(userId:string,newThema:string){
     return this.db.object('/users/'+userId+'/userInfo/info').update({thema:newThema})
   } 
-  removeTask(userId,tableparent,removeItem){
+  removeTask(userId:string,tableparent:string,removeItem:string){
     return this.db.list('/users/'+userId+'/'+tableparent).remove(removeItem)
   }
-  removeTable(userId,removeItem){
+  removeTable(userId:string,removeItem:string){
     return this.db.object('/users/'+userId+"/"+removeItem).remove()
   }
-  writeCategory(userId,category,color){
+  writeCategory(userId:string,category:string,color:string){
     firebase.database().ref('users/'+ userId+'/category/'+category).set({
     category:category,
     color:color,
   });}
-  removeCategory(userId,removeCategory){
+  removeCategory(userId:string,removeCategory:string){
     return this.db.list('users/'+ userId+'/category/').remove(removeCategory);
 }
-  deleteUser(userId){
+  deleteUser(userId:string){
     return this.db.list('users/').remove(userId);
   }
 }

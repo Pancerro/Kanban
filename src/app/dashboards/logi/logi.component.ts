@@ -33,7 +33,7 @@ export class LogiComponent implements OnInit {
     private router: Router) { 
       this.userId=auth.getUser().uid;
   } 
-  ngOnInit() {
+  ngOnInit():void {
     this.db.getLogs(this.userId).subscribe(res => {
       this.logs = res;
       this.dataLogs=new MatTableDataSource(this.logs);

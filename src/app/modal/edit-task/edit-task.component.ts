@@ -21,7 +21,7 @@ export class EditTaskComponent {
     private db:DataService) {
       this.userId=auth.getUser().uid;
   }
-  ngOnInit() {
+  ngOnInit():void {
     this.db.getCategory(this.userId).subscribe(res => {
         this.category = res;
     });

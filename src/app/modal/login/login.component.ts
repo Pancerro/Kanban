@@ -20,6 +20,6 @@ export class LoginComponent {
     private auth:AuthService) {} 
   resetPassword(email:string):void{
     this.auth.resetPassword(email)
-    .catch(err => {window.alert("eh! error, please try to again")})
+    .catch(() => {window.alert("eh! error, please try to again")})
   }
 }

@@ -9,7 +9,7 @@ export class RegisterComponent  {
   captcha:boolean=false;
   red="red";
   constructor() {}
-  resolved(captchaResponse):void {
+  resolved(captchaResponse: boolean):void {
     this.captcha=captchaResponse;
   } 
 }
