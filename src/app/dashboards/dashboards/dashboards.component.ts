@@ -365,9 +365,7 @@ export class DashboardsComponent implements OnInit {
   settings():void{
     this.router.navigate(['/settings']);
   }
-  sendRepeatVerificationEmail():void{
-    this.auth.sendVerificationMail();
-  }
+
   saveChanges():void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logSaveChanges");
@@ -384,33 +382,43 @@ export class DashboardsComponent implements OnInit {
     this.db.removeTable(this.auth.getUser().uid,this.table8);
     this.db.removeTable(this.auth.getUser().uid,this.table9);
     for(let d of this.tableZero){
+      if(d.endDate==null) d.endDate="";
       this.db.writeUserTable(this.userId,this.table0,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
     for(let d of this.tableOne){
+      if(d.endDate==null) d.endDate="";
       this.db.writeUserTable(this.userId,this.table1,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
     for(let d of this.tableTwo){
+      if(d.endDate==null) d.endDate="";
       this.db.writeUserTable(this.userId,this.table2,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
     for(let d of this.tableThree){
+      if(d.endDate==null) d.endDate="";
       this.db.writeUserTable(this.userId,this.table3,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
     for(let d of this.tableFour){
+      if(d.endDate==null) d.endDate="";
       this.db.writeUserTable(this.userId,this.table4,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
     for(let d of this.tableFive){
+      if(d.endDate==null) d.endDate="";
       this.db.writeUserTable(this.userId,this.table5,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
     for(let d of this.tableSix){
+      if(d.endDate==null) d.endDate="";
       this.db.writeUserTable(this.userId,this.table6,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
     for(let d of this.tableSeven){
+      if(d.endDate==null) d.endDate="";
       this.db.writeUserTable(this.userId,this.table7,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
     for(let d of this.tableEight){
+      if(d.endDate==null) d.endDate="";
       this.db.writeUserTable(this.userId,this.table8,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
     for(let d of this.tableNine){
+      if(d.endDate==null) d.endDate="";
       this.db.writeUserTable(this.userId,this.table9,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
     }
   }
