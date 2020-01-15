@@ -137,7 +137,7 @@ export class DashboardsComponent implements OnInit {
     }
   changeFont():string
   {
-    if(this.userInfo[0].thema=="green"){
+    if(this.userInfo[0].thema=="gray"){
     this.fontColor="white";
     return this.fontColor;
     }
@@ -147,8 +147,8 @@ export class DashboardsComponent implements OnInit {
     }
   }
   changeBackground():string{
-    if(this.userInfo[0].thema=="green"){
-      this.background="green";
+    if(this.userInfo[0].thema=="gray"){
+      this.background="gray";
       return this.background;
       }
       if(this.userInfo[0].thema=="black"){

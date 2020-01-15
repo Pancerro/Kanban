@@ -7,18 +7,19 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
   constructor(public db:AngularFireDatabase) {}
-  writeUserData(userId,email,thema){
+  writeUserData(userId: string,email: string,thema: string,google:boolean){
     firebase.database().ref('users/'+ userId+'/userInfo/info').set({
     email:email,
-    thema:thema
+    thema:thema,
+    google:google
     });
   }
-  writeUserNumber(userId,number){
+  writeUserNumber(userId: string,number: number){
     firebase.database().ref('users/'+ userId+'/viewTables/numbers').set({
     number:number
     });
   }
-  writeUserTable(userId,tableparent,tablechild,title,description,priority,color,endDate){
+  writeUserTable(userId: string,tableparent: string,tablechild: string,title: string,description: string,priority: string,color: string,endDate: string){
     firebase.database().ref('users/'+ userId+'/'+tableparent+'/'+tablechild).set({
     title:title,
     description:description,
@@ -27,12 +28,12 @@ export class DataService {
     endDate:endDate
   });
   }
-  writeTitleTable(userId,tablechild,title){
+  writeTitleTable(userId: string,tablechild: string,title: string){
     firebase.database().ref('users/'+ userId+'/table/'+tablechild).set({
     title:title
   });
   }
-  writeLogs(userId,tableName,data,operation,title,description,priority,color,endDate){
+  writeLogs(userId: string,tableName: string,data: string,operation: string,title: string,description: string,priority: string,color: string,endDate: string){
     firebase.database().ref('users/'+ userId+'/logs/'+tableName).set({
     data:data,
     operation:operation,

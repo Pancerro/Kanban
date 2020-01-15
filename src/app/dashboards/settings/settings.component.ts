@@ -16,7 +16,6 @@ export interface Category {
 })
 export class SettingsComponent implements OnInit {
   userInfo=[];
-  pokaz:boolean=false;
   fontColor:string;
   background:string;
   info:string;
@@ -54,7 +53,7 @@ export class SettingsComponent implements OnInit {
   }
   changeFont():string
   {
-    if(this.userInfo[0].thema=="green"){
+    if(this.userInfo[0].thema=="gray"){
       this.fontColor="white";
       return this.fontColor;
     }
@@ -64,8 +63,8 @@ export class SettingsComponent implements OnInit {
     }
   }
   changeBackground():string{
-    if(this.userInfo[0].thema=="green"){
-      this.background="green";
+    if(this.userInfo[0].thema=="gray"){
+      this.background="gray";
       return this.background;
     }
     if(this.userInfo[0].thema=="black"){
@@ -109,7 +108,8 @@ export class SettingsComponent implements OnInit {
       } else this.infoEmail='Email do not match.Try to again!';
     }
   } else 
-  {this.random=Math.random().toString();
+  {
+    this.random=Math.random().toString();
     this.random=this.random.replace("0.","logUpdatePassword");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     this.infoEmail="Bad old email";

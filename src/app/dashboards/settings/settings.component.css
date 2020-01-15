@@ -40,3 +40,11 @@ table {
 .backgroundInput {
     background: white;
 }
+
+.updateEmail {
+    color: black;
+}
+
+.updatePassword {
+    color: black;
+}

@@ -7,7 +7,7 @@
     <p *ngIf="verifyEmail">Your email is verified</p>
     <button mat-stroked-button color="primary0" *ngIf="!verifyEmail" (click)="sendRepeatVerificationEmail()"> Re-send verification e-mail </button>
     <p>Color scheme: {{item.thema}}</p>
-    <div>
+    <div *ngIf="!userInfo[0].google">
         <h4>Update your email: </h4>
         <form (ngSubmit)="updateEmail(emailForm)" #emailForm="ngForm">
             <div class="updateEmail">
@@ -28,27 +28,27 @@
                     <mat-error>New Repeat Email is Mandatory</mat-error>
                 </mat-form-field>
             </div>
-            <button mat-stroked-button color="primary" type="submit">Update your email!</button>
+            <button mat-stroked-button color="primary" type="submit" [disabled]="emailForm.invalid">Update your email!</button>
         </form>
         <p>{{infoEmail}}</p>
     </div>
     <br>
-    <div>
+    <div *ngIf="!userInfo[0].google">
         <h4>Update your password: </h4>
         <form (ngSubmit)="updatePassword(passwordForm)" #passwordForm="ngForm">
             <div class="updatePassword">
                 <mat-form-field class="form">
                     <input matInput [type]="hide ? 'password' : 'text'" placeholder="Old Password" required name="oldPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
-                    <mat-error>Old Password is Mandatory</mat-error>
+                    <mat-error>Wrong Old Password - Passsword must contain at least 8 charactes, including UPPER/lowercase and numbers :)</mat-error>
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
             </div>
-            <div>
+            <div class="updatePassword">
                 <mat-form-field class="form">
                     <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="New Password" required name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel></p>
-                    <mat-error>New Password is Mandatory</mat-error>
+                    <mat-error>Wrong New Password - Passsword must contain at least 8 charactes, including UPPER/lowercase and numbers :)</mat-error>
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
@@ -57,13 +57,13 @@
             <div class="updatePassword">
                 <mat-form-field class="form">
                     <input matInput [type]="hide ? 'password' : 'text'" placeholder="New Repeat Password" required name="newRepeatPassword" ngModel>
-                    <mat-error>Re-Enter New Password is Mandatory</mat-error>
+                    <mat-error>Wrong New Re-enter Password - Passsword must contain at least 8 charactes, including UPPER/lowercase and numbers :)</mat-error>
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
             </div>
-            <button mat-stroked-button color="primary" type="submit">Update your password!</button>
+            <button mat-stroked-button color="primary" [disabled]="passwordForm.invalid" type="submit">Update your password!</button>
         </form>
         <p>{{info}}</p>
     </div>
@@ -75,7 +75,7 @@
                 <mat-form-field class="form">
                     <mat-select name="thema" ngModel>
                         <mat-option selected style="background-color:white; color:black;" value="white">White</mat-option>
-                        <mat-option style="background-color:green; color:white;" value="green">Green</mat-option>
+                        <mat-option style="background-color:gray; color:white;" value="gray">Gray</mat-option>
                         <mat-option style="background-color:black; color:white;" value="black">Black</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -83,7 +83,7 @@
             <button mat-stroked-button color="primary" type="submit">Update color scheme!</button>
         </form>
     </div>
-    <mat-form-field class="backgroundInput">
+    <mat-form-field class="backgroundInput" class="updatePassword">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter your category">
     </mat-form-field>
     <p>Add category</p>

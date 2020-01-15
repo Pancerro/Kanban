@@ -104,7 +104,7 @@ export class WelcomePageComponent   {
             this.db.writeCategory(this.userId,"shop","green");
             this.db.writeCategory(this.userId,"cars","red");
             this.db.writeCategory(this.userId,"school","white");
-            this.db.writeUserData(this.userId,this.email,this.thema);
+            this.db.writeUserData(this.userId,this.email,this.thema,false);
     })}}}});
   }
   loginUser(): void {
@@ -154,7 +154,7 @@ export class WelcomePageComponent   {
     this.db.getTask(this.userId,"table").subscribe(res => {
       if(res.length==0) 
       {
-        this.db.writeUserData(this.userId,this.email,"");
+        this.db.writeUserData(this.userId,this.email,"",true);
         this.db.writeTitleTable(this.userId,"table0","to do")
         this.db.writeTitleTable(this.userId,"table1","doing")
         this.db.writeTitleTable(this.userId,"table2","done")
