@@ -151,10 +151,10 @@ export class WelcomePageComponent   {
     this.random=this.random.replace("0.","logLoginWitchGoogle");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     this.db.writeLogs(this.userId,this.random,this.currentDate,"LOGIN WITH GOOGLE","","","","","");
+    this.db.writeUserData(this.userId,this.email,"",true);
     this.db.getTask(this.userId,"table").subscribe(res => {
       if(res.length==0) 
       {
-        this.db.writeUserData(this.userId,this.email,"",true);
         this.db.writeTitleTable(this.userId,"table0","to do")
         this.db.writeTitleTable(this.userId,"table1","doing")
         this.db.writeTitleTable(this.userId,"table2","done")
