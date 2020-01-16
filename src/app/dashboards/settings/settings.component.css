@@ -37,14 +37,16 @@ table {
     border: none;
 }
 
-.backgroundInput {
-    background: white;
-}
-
 .updateEmail {
     color: black;
 }
 
 .updatePassword {
     color: black;
+}
+
+.button {
+    background-color: pink;
+    width: 9%;
+    height: 20%;
 }

@@ -15,6 +15,7 @@ export interface Category {
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+  selected:string
   userInfo=[];
   fontColor:string;
   background:string;
@@ -71,6 +72,10 @@ export class SettingsComponent implements OnInit {
       this.background="black";
       return this.background;
     }
+    if(this.userInfo[0].thema=="white"){
+      this.background="white";
+      return this.background;
+    }
   }
   logout():void{
     this.random=Math.random().toString();
@@ -103,7 +108,7 @@ export class SettingsComponent implements OnInit {
       this.random=this.random.replace("0.","logUpdateEmail");
       this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
       this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email",updateEmail.value.newEmail,"","","","");
-      this.infoEmail="Operation success"
+      this.infoEmail="email successfuly updated"
       })
       } else this.infoEmail='Email do not match.Try to again!';
     }
@@ -139,7 +144,7 @@ export class SettingsComponent implements OnInit {
        this.random=this.random.replace("0.","logUpdatePassword");
        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
        this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","","","","","");
-       if(this.checkPass) this.info="The operation was successful";
+       if(this.checkPass) this.info="password successfuly changed";
        else this.info="Operation failed";
       }
        } }).catch(err=>{
