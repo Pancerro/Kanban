@@ -15,7 +15,6 @@ export interface Category {
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  selected:string
   userInfo=[];
   fontColor:string;
   background:string;
@@ -104,6 +103,7 @@ export class SettingsComponent implements OnInit {
       {
       this.auth.updateEmail(updateEmail.value.newEmail).then(()=>{
       this.db.updateEmail(this.userId,updateEmail.value.newEmail)
+      this.sendRepeatVerificationEmail();
       this.random=Math.random().toString();
       this.random=this.random.replace("0.","logUpdateEmail");
       this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());

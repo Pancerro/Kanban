@@ -1,7 +1,7 @@
 <div class="mainContent" *ngFor="let item of userInfo" [style.background]="changeBackground()" [style.color]="changeFont()">
     <div class="center">
         <button mat-stroked-button color="primary" (click)="logout()">LOGOUT</button>
-        <button mat-stroked-button color="primary" *ngIf="pokaz" (click)="logs()">LOGS</button>
+        <button mat-stroked-button color="primary" (click)="logs()">LOGS</button>
         <button mat-stroked-button color="primary" (click)="settings()">USER SETTINGS</button>
         <h3> Welcome {{item.email}}</h3>
         <div>
@@ -154,5 +154,4 @@
             </div>
         </div>
     </div>
-    <button class="best" mat-stroked-button color="primary" (click)="bestRegards()">Stopka</button>
 </div>

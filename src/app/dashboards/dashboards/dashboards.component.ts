@@ -81,7 +81,6 @@ export class DashboardsComponent implements OnInit {
   endDataString:string;
   fontColor:string;
   background:string;
-  pokaz:boolean=false;
   tableTitle=[];
   numbers=[]
   tabEndDate=[];
@@ -255,11 +254,19 @@ export class DashboardsComponent implements OnInit {
           this.color=result.value.task.color;
           this.endDate=result.value.task.endDate;
             if(this.endDate==endDate){
+              console.log(this.endData)
+              if(this.endData==undefined)
+              {
+                this.endData="";
+              }
+              else{
               this.endDataString=endDate;
               this.tabEndDate=this.endDataString.split("/");
               this.endData=this.tabEndDate[0]+'/'+this.tabEndDate[1]+'/'+this.tabEndDate[2];
               } 
+            }
             else this.endData=this.endDate.getDate()+'/'+(this.endDate.getMonth()+1)+'/'+this.endDate.getFullYear();
+            if(this.endData=="/undefined/undefined") this.endData="";
             this.db.removeTask(this.userId,tableName,this.replece(title));
             this.db.writeUserTable(this.userId,tableName,this.replece(this.title),this.title,this.description,this.priority,this.color,this.endData);
             this.random=Math.random().toString();
@@ -349,9 +356,7 @@ export class DashboardsComponent implements OnInit {
       this.saveChanges();
     }
   }
-  bestRegards():void{
-    this.pokaz=!this.pokaz;
-  }  
+
   logout():void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logOut");
