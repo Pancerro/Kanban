@@ -254,7 +254,6 @@ export class DashboardsComponent implements OnInit {
           this.color=result.value.task.color;
           this.endDate=result.value.task.endDate;
             if(this.endDate==endDate){
-              console.log(this.endData)
               if(this.endData==undefined)
               {
                 this.endData="";
