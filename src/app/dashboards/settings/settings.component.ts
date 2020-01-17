@@ -94,7 +94,7 @@ export class SettingsComponent implements OnInit {
       {
          this.infoEmail="The old email is the same as the new email"
          this.random=Math.random().toString();
-         this.random=this.random.replace("0.","logUpdatePassword");
+         this.random=this.random.replace("0.","logUpdateEmail");
        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
          this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email failed","","","","","");
       }
