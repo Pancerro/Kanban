@@ -102,14 +102,24 @@ export class SettingsComponent implements OnInit {
       if(this.matchingEmail(updateEmail.value.newEmail,updateEmail.value.newRepeatEmail))
       {
       this.auth.updateEmail(updateEmail.value.newEmail).then(()=>{
-      this.db.updateEmail(this.userId,updateEmail.value.newEmail)
+      this.auth.authState$.subscribe(user=>{
+      this.db.updateEmail(this.userId,user.email)
       this.sendRepeatVerificationEmail();
       this.random=Math.random().toString();
       this.random=this.random.replace("0.","logUpdateEmail");
       this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+      if(this.matchingEmail(updateEmail.value.newEmail,user.email))
+      { 
+      this.infoEmail="email successfuly updated";
       this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email",updateEmail.value.newEmail,"","","","");
-      this.infoEmail="email successfuly updated"
-      })
+      }
+      else
+      {
+        this.infoEmail="email dont updated";
+        this.db.writeLogs(this.userId,this.random,this.currentDate,"failed Email",updateEmail.value.newEmail,"","","","");
+      }
+    }); 
+    })
       } else this.infoEmail='Email do not match.Try to again!';
     }
   } else 
