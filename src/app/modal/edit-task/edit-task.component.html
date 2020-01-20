@@ -24,6 +24,7 @@
                     <mat-form-field>
                         <mat-label>Category: </mat-label>
                         <mat-select name="color" [disabled]="edit" [(ngModel)]="data.color" ngModel>
+                            <mat-option value="white">-</mat-option>
                             <mat-option *ngFor="let item of category" [style.backgroundColor]="item.color" value="{{item.color}}">{{item.category}}</mat-option>
                         </mat-select>
                     </mat-form-field>

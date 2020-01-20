@@ -33,15 +33,11 @@ export class DataService {
     title:title
   });
   }
-  writeLogs(userId: string,tableName: string,data: string,operation: string,title: string,description: string,priority: string,color: string,endDate: string){
+  writeLogs(userId: string,tableName: string,data: string,operation: string,description: string){
     firebase.database().ref('users/'+ userId+'/logs/'+tableName).set({
     data:data,
-    operation:operation,
-    title:title,
+    type:operation,
     description:description,
-    priority:priority,
-    color:color,
-    endDate:endDate
   });
   }
   getDateUser(userId: string):Observable<any[]>{

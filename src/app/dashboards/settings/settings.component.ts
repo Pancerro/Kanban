@@ -80,7 +80,7 @@ export class SettingsComponent implements OnInit {
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logOut");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-    this.db.writeLogs(this.userId,this.random,this.currentDate,"log out","log out","","","","");
+    this.db.writeLogs(this.userId,this.random,this.currentDate,"log out","log out");
     this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
   }
   return():void{
@@ -96,7 +96,7 @@ export class SettingsComponent implements OnInit {
          this.random=Math.random().toString();
          this.random=this.random.replace("0.","logUpdateEmail");
        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-         this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email failed","","","","","");
+         this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email","update Email failed: "+this.infoEmail);
       }
       else{
       if(this.matchingEmail(updateEmail.value.newEmail,updateEmail.value.newRepeatEmail))
@@ -111,12 +111,12 @@ export class SettingsComponent implements OnInit {
       if(this.matchingEmail(updateEmail.value.newEmail,user.email))
       { 
       this.infoEmail="email successfuly updated";
-      this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email",updateEmail.value.newEmail,"","","","");
+      this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email","update Email success: "+updateEmail.value.newEmail);
       }
       else
       {
         this.infoEmail="email dont updated";
-        this.db.writeLogs(this.userId,this.random,this.currentDate,"failed Email",updateEmail.value.newEmail,"","","","");
+        this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email","update Email failed: "+this.infoEmail);
       }
     }); 
     })
@@ -125,10 +125,10 @@ export class SettingsComponent implements OnInit {
   } else 
   {
     this.random=Math.random().toString();
-    this.random=this.random.replace("0.","logUpdatePassword");
+    this.random=this.random.replace("0.","logUpdateEmail");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     this.infoEmail="Bad old email";
-    this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email failed","","","","","");
+    this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email","update Email failed: "+this.infoEmail);
   }
 }
   }
@@ -144,7 +144,7 @@ export class SettingsComponent implements OnInit {
          this.random=Math.random().toString();
        this.random=this.random.replace("0.","logUpdatePassword");
        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-         this.db.writeLogs(this.userId,this.random,this.currentDate,"update password failed","","","","","");
+         this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","update password failed"+this.info);
       }
       else{
       if(this.matchingPasswords(updatePassword.value.newPassword,updatePassword.value.newRepeatPassword)){
@@ -153,7 +153,7 @@ export class SettingsComponent implements OnInit {
        this.random=Math.random().toString();
        this.random=this.random.replace("0.","logUpdatePassword");
        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-       this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","","","","","");
+       this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","success");
        if(this.checkPass) this.info="password successfuly changed";
        else this.info="Operation failed";
       }
@@ -163,7 +163,7 @@ export class SettingsComponent implements OnInit {
           this.random=Math.random().toString();
        this.random=this.random.replace("0.","logUpdatePassword");
        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-          this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","","","","","");
+          this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","update password failed:"+this.info);
          }
        })
     }
@@ -176,7 +176,7 @@ export class SettingsComponent implements OnInit {
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logUpdateThema");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-    this.db.writeLogs(this.userId,this.random,this.currentDate,"update thema",updateThema.value.thema,"","","","");
+    this.db.writeLogs(this.userId,this.random,this.currentDate,"update thema","update thema: "+updateThema.value.thema);
     }
   }
   matchingPasswords(repeatPassword:string,password: string):boolean{
@@ -205,7 +205,7 @@ export class SettingsComponent implements OnInit {
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logRemoveCategory");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-    this.db.writeLogs(this.userId,this.random,this.currentDate,"remove category",removeCategory,"","","","");
+    this.db.writeLogs(this.userId,this.random,this.currentDate,"remove category","remove category: "+removeCategory);
   }
   editCategory(category:string,color:string):void {
     const dialogRef = this.dialog.open(EditCategoryComponent, {
@@ -216,11 +216,11 @@ export class SettingsComponent implements OnInit {
       if(result!=undefined)
       {
         if(result.invalid){
-          window.alert("Please correct all errors and resubmit update task");
+          window.alert("Please correct all errors and resubmit update category");
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logEditCategoryFailed");
           this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-          this.db.writeLogs(this.userId,this.random,this.currentDate,"edit task failed",category,"","",color,"");
+          this.db.writeLogs(this.userId,this.random,this.currentDate,"edit category","edit category: "+category+" failed");
         }
         else{  
           this.newCategory=result.value.category.category;
@@ -230,7 +230,7 @@ export class SettingsComponent implements OnInit {
             this.random=Math.random().toString();
             this.random=this.random.replace("0.","logEditCategory");
             this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-            this.db.writeLogs(this.userId,this.random,this.currentDate,"edit task",this.newCategory,"","",this.color,"");
+            this.db.writeLogs(this.userId,this.random,this.currentDate,"edit category","edit category: "+category+" success");
         }
       }
     }
@@ -247,7 +247,7 @@ export class SettingsComponent implements OnInit {
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logAddCategoryFailed");
           this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-          this.db.writeLogs(this.userId,this.random,this.currentDate,"add category failed","","","","","");
+          this.db.writeLogs(this.userId,this.random,this.currentDate,"add category","add category failed");
         }
         else{
           this.newCategory=result.value.category.category;
@@ -256,7 +256,7 @@ export class SettingsComponent implements OnInit {
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logAddCategory");
           this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-          this.db.writeLogs(this.userId,this.random,this.currentDate,"add category",this.newCategory,"","",this.color,"");
+          this.db.writeLogs(this.userId,this.random,this.currentDate,"add category","add catego"+this.newCategory+"success");
         }
       }
     });

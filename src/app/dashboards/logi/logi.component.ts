@@ -25,7 +25,7 @@ export class LogiComponent implements OnInit {
   userInfo=[];
   fontColor:string;
   background:string;
-  displayedColumns: string[] = ['operation', 'data', 'title', 'description','priority','color'];
+  displayedColumns: string[] = ['operation', 'data','description'];
   dataLogs: MatTableDataSource<Log>;
   constructor(
     private auth:AuthService,
@@ -67,7 +67,7 @@ export class LogiComponent implements OnInit {
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logOut");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-    this.db.writeLogs(this.userId,this.random,this.currentDate,"log out","log out","","","","");
+    this.db.writeLogs(this.userId,this.random,this.currentDate,"log out","log out");
     this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
   }
   return():void{
