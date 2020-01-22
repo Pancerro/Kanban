@@ -99,7 +99,7 @@ export class WelcomePageComponent   {
             this.db.writeTitleTable(this.userId,"table8","table9")
             this.db.writeTitleTable(this.userId,"table9","table10")
             this.db.writeUserNumber(this.userId,3)
-            this.db.writeLogs(this.userId,this.random,this.currentDate,"Create Account","Create Account")
+            this.db.writeLogs(this.userId,this.random,this.currentDate,"create Account","create Account")
             this.db.writeCategory(this.userId,"date","pink");
             this.db.writeCategory(this.userId,"shop","green");
             this.db.writeCategory(this.userId,"cars","red");
@@ -119,7 +119,7 @@ export class WelcomePageComponent   {
       if(result==false) this.numberOfTests++;
       else{
         this.auth.login(result.email,result.password).then(() => this.router.navigate(['/dashboard'])).catch(err => this.loginError())
-        .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"Log in","Log in"));
+        .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"log in","log in"));
       }
     }else this.numberOfTests++;
   });
@@ -150,7 +150,7 @@ export class WelcomePageComponent   {
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logLoginWitchGoogle");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-    this.db.writeLogs(this.userId,this.random,this.currentDate,"Log in","With google");
+    this.db.writeLogs(this.userId,this.random,this.currentDate,"log in","with google");
     this.db.writeUserData(this.userId,this.email,"",true);
     this.db.getTask(this.userId,"table").subscribe(res => {
       if(res.length==0) 

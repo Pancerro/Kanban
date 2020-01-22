@@ -160,18 +160,18 @@ export class DashboardsComponent implements OnInit {
     this.random=this.random.replace("0.","logAddNewTable");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     switch(this.numbers[0].number){
-      case 0:this.updateTableTitle(this.table0,true); break;
-      case 1:this.updateTableTitle(this.table1,true); break;
-      case 2:this.updateTableTitle(this.table2,true); break;
-      case 3:this.updateTableTitle(this.table3,true); break;
-      case 4:this.updateTableTitle(this.table4,true); break;
-      case 5:this.updateTableTitle(this.table5,true); break;
-      case 6:this.updateTableTitle(this.table6,true); break;
-      case 7:this.updateTableTitle(this.table7,true); break;
-      case 8:this.updateTableTitle(this.table8,true); break;
-      case 9:this.updateTableTitle(this.table9,true); break;
+      case 0:this.updateTableTitle(this.table0,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
+      case 1:this.updateTableTitle(this.table1,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
+      case 2:this.updateTableTitle(this.table2,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
+      case 3:this.updateTableTitle(this.table3,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
+      case 4:this.updateTableTitle(this.table4,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
+      case 5:this.updateTableTitle(this.table5,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
+      case 6:this.updateTableTitle(this.table6,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
+      case 7:this.updateTableTitle(this.table7,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
+      case 8:this.updateTableTitle(this.table8,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
+      case 9:this.updateTableTitle(this.table9,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
     }
-    this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.numbers[0].number);
+
   }
   deleteLastTable():void{
     this.random=Math.random().toString();

@@ -29,6 +29,7 @@ import { ResetPasswordComponent } from './user/reset-password/reset-password.com
 import { AddCategoryComponent } from './modal/add-category/add-category.component';
 import { EditCategoryComponent } from './modal/edit-category/edit-category.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import {MatSortModule} from '@angular/material/sort';
 @NgModule({
   entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent,AddCategoryComponent,EditCategoryComponent],
   declarations: [
@@ -67,6 +68,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatNativeDateModule,
     MatTableModule,
     ColorPickerModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

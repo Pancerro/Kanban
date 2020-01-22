@@ -4,12 +4,9 @@ import { DataService } from 'src/app/services/database.service';
 import { Router } from '@angular/router';
 import {  MatTableDataSource } from '@angular/material';
 export interface Log {
-  operation: string;
+  type: string;
   data:string;
-  title:string;
   description:string;
-  priority:string
-  color:string;
 }
 @Component({
   selector: 'app-logi',
@@ -76,4 +73,39 @@ export class LogiComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataLogs.filter = filterValue.trim().toLowerCase();
   }
+  sortO=true ;
+  sortByOperation(){
+    this.dataLogs=new MatTableDataSource(this.logs)
+    if(this.sortO){
+    this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.type<b.type?-1:1))
+    this.sortO=false;
+    }
+    else{
+    this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.type>b.type?-1:1))
+    this.sortO=true; 
+    }
+  }
+  sortDesc=true
+  sortByDescription(){
+    this.dataLogs=new MatTableDataSource(this.logs)
+    if(this.sortDesc){
+    this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.description<b.description?-1:1))
+    this.sortDesc=false;
+    } else {
+      this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.description>b.description?-1:1))
+      this.sortDesc=true;
+    }
+  }
+  sortD=true
+  sortByDate(){
+    this.dataLogs=new MatTableDataSource(this.logs)
+    if(this.sortD){
+      this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.data<b.data?-1:1))
+      this.sortD=false;
+    } else{
+      this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.data>b.data?-1:1))
+      this.sortD=true;
+    }
+  }
+ 
 }
