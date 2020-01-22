@@ -77,6 +77,7 @@ export class WelcomePageComponent   {
       if(result!=undefined){
         this.random=Math.random().toString();
         this.random=this.random.replace("0.","logRegister");
+        this.date=new Date;
         this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
         if(result.invalid){
           this.info="Please correct all errors and resubmit the form register";
@@ -115,6 +116,7 @@ export class WelcomePageComponent   {
       if(result!=undefined){
         this.random=Math.random().toString();
         this.random=this.random.replace("0.","logIn");
+        this.date=new Date;
         this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
       if(result==false) this.numberOfTests++;
       else{
@@ -150,6 +152,7 @@ export class WelcomePageComponent   {
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logLoginWitchGoogle");
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    this.date=new Date;
     this.db.writeLogs(this.userId,this.random,this.currentDate,"log in","with google");
     this.db.writeUserData(this.userId,this.email,"",true);
     this.db.getTask(this.userId,"table").subscribe(res => {

@@ -63,6 +63,7 @@ export class LogiComponent implements OnInit {
   logout():void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logOut");
+    this.date=new Date;
     this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     this.db.writeLogs(this.userId,this.random,this.currentDate,"log out","log out");
     this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
