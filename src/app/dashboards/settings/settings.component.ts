@@ -48,6 +48,10 @@ export class SettingsComponent implements OnInit {
       this.dataLogs=new MatTableDataSource(this.category);
     });
   }
+  zero(date){
+    if(date<10) return 0;
+    return "";
+  }
   sendRepeatVerificationEmail():void{
     this.auth.sendVerificationMail();
   }
@@ -79,7 +83,7 @@ export class SettingsComponent implements OnInit {
   logout():void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logOut");
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
     this.date=new Date;
     this.db.writeLogs(this.userId,this.random,this.currentDate,"log out","log out");
     this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
@@ -96,8 +100,9 @@ export class SettingsComponent implements OnInit {
          this.infoEmail="The old email is the same as the new email"
          this.random=Math.random().toString();
          this.random=this.random.replace("0.","logUpdateEmail");
-          this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-          this.date=new Date;
+         this.date=new Date;
+         this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
+          
           this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email","update Email failed: "+this.infoEmail);
       }
       else{
@@ -109,17 +114,20 @@ export class SettingsComponent implements OnInit {
       this.sendRepeatVerificationEmail();
       this.random=Math.random().toString();
       this.random=this.random.replace("0.","logUpdateEmail");
-      this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+      this.date=new Date;
+      this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
       if(this.matchingEmail(updateEmail.value.newEmail,user.email))
       { 
       this.infoEmail="email successfuly updated";
       this.date=new Date;
+      this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
       this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email","update Email success: "+updateEmail.value.newEmail);
       }
       else
       {
         this.infoEmail="email dont updated";
         this.date=new Date;
+        this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
         this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email","update Email failed: "+this.infoEmail);
       }
     }); 
@@ -130,9 +138,9 @@ export class SettingsComponent implements OnInit {
   {
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logUpdateEmail");
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-    this.infoEmail="Bad old email";
     this.date=new Date;
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
+    this.infoEmail="Bad old email";
     this.db.writeLogs(this.userId,this.random,this.currentDate,"update Email","update Email failed: "+this.infoEmail);
   }
 }
@@ -148,8 +156,8 @@ export class SettingsComponent implements OnInit {
          this.info="The old password is the same as the new password "
          this.random=Math.random().toString();
        this.random=this.random.replace("0.","logUpdatePassword");
-       this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-       this.date=new Date;  
+       this.date=new Date;
+       this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
        this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","update password failed"+this.info);
       }
       else{
@@ -158,8 +166,8 @@ export class SettingsComponent implements OnInit {
        this.auth.updatePassowrd(updatePassword.value.newPassword);
        this.random=Math.random().toString();
        this.random=this.random.replace("0.","logUpdatePassword");
-       this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
        this.date=new Date;
+       this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
        this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","success");
        if(this.checkPass) this.info="password successfuly changed";
        else this.info="Operation failed";
@@ -169,8 +177,8 @@ export class SettingsComponent implements OnInit {
           this.info="Bad old password"
           this.random=Math.random().toString();
        this.random=this.random.replace("0.","logUpdatePassword");
-       this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
-       this.date=new Date;   
+       this.date=new Date;
+       this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
        this.db.writeLogs(this.userId,this.random,this.currentDate,"update password","update password failed:"+this.info);
          }
        })
@@ -183,8 +191,8 @@ export class SettingsComponent implements OnInit {
     this.db.updateThema(this.userId,updateThema.value.thema);
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logUpdateThema");
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     this.date=new Date;
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
     this.db.writeLogs(this.userId,this.random,this.currentDate,"update thema","update thema: "+updateThema.value.thema);
     }
   }
@@ -213,8 +221,8 @@ export class SettingsComponent implements OnInit {
     this.db.removeCategory(this.userId,removeCategory);
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logRemoveCategory");
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     this.date=new Date;
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
     this.db.writeLogs(this.userId,this.random,this.currentDate,"remove category","remove category: "+removeCategory);
   }
   editCategory(category:string,color:string):void {
@@ -229,8 +237,8 @@ export class SettingsComponent implements OnInit {
           window.alert("Please correct all errors and resubmit update category");
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logEditCategoryFailed");
-          this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
           this.date=new Date;
+          this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
           this.db.writeLogs(this.userId,this.random,this.currentDate,"edit category","edit category: "+category+" failed");
         }
         else{  
@@ -240,8 +248,8 @@ export class SettingsComponent implements OnInit {
             this.db.writeCategory(this.userId,this.newCategory,this.color);
             this.random=Math.random().toString();
             this.random=this.random.replace("0.","logEditCategory");
-            this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
             this.date=new Date;
+            this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
             this.db.writeLogs(this.userId,this.random,this.currentDate,"edit category","edit category: "+category+" success");
         }
       }
@@ -258,8 +266,8 @@ export class SettingsComponent implements OnInit {
           window.alert("Please correct all errors and resubmit add category");
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logAddCategoryFailed");
-          this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
           this.date=new Date;
+          this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
           this.db.writeLogs(this.userId,this.random,this.currentDate,"add category","add category failed");
         }
         else{
@@ -268,8 +276,8 @@ export class SettingsComponent implements OnInit {
           this.db.writeCategory(this.userId,this.newCategory,this.color)
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logAddCategory");
-          this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
           this.date=new Date;
+          this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
           this.db.writeLogs(this.userId,this.random,this.currentDate,"add category","add catego"+this.newCategory+"success");
         }
       }

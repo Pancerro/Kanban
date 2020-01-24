@@ -23,12 +23,15 @@
                     <mat-form-field>
                         <mat-label>Category: </mat-label>
                         <mat-select name="color" ngModel>
+                            <mat-option value="none">-</mat-option>
                             <mat-option *ngFor="let item of category" [style.backgroundColor]="item.color" value="{{item.color}}">{{item.category}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>
                         <input matInput placeholder="End date" name="endDate" ngModel [matDatepickerFilter]="myFilter" [matDatepicker]="picker1">
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle matSuffix [for]="picker1">
+                            <h1>ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</h1>
+                        </mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
                 </div>

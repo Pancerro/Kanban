@@ -69,6 +69,10 @@ export class WelcomePageComponent   {
   thema:string;
   date:Date= new Date();
   currentDate:string;
+  zero(date){
+    if(date<10) return 0;
+    return "";
+  }
   registerUser(): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
     width: '350px',   
@@ -78,7 +82,7 @@ export class WelcomePageComponent   {
         this.random=Math.random().toString();
         this.random=this.random.replace("0.","logRegister");
         this.date=new Date;
-        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+        this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
         if(result.invalid){
           this.info="Please correct all errors and resubmit the form register";
         }
@@ -117,7 +121,7 @@ export class WelcomePageComponent   {
         this.random=Math.random().toString();
         this.random=this.random.replace("0.","logIn");
         this.date=new Date;
-        this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+        this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
       if(result==false) this.numberOfTests++;
       else{
         this.auth.login(result.email,result.password).then(() => this.router.navigate(['/dashboard'])).catch(err => this.loginError())
@@ -151,8 +155,8 @@ export class WelcomePageComponent   {
     this.email=this.auth.getUser().email
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logLoginWitchGoogle");
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
     this.date=new Date;
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
     this.db.writeLogs(this.userId,this.random,this.currentDate,"log in","with google");
     this.db.writeUserData(this.userId,this.email,"",true);
     this.db.getTask(this.userId,"table").subscribe(res => {

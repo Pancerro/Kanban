@@ -155,22 +155,26 @@ export class DashboardsComponent implements OnInit {
       return this.background;
       }
   }
+  zero(date){
+    if(date<10) return 0;
+    return "";
+  }
   addNewTable():void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logAddNewTable");
     this.date=new Date;
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
     switch(this.numbers[0].number){
       case 0:this.updateTableTitle(this.table0,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
-      case 1:this.updateTableTitle(this.table1,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
-      case 2:this.updateTableTitle(this.table2,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
-      case 3:this.updateTableTitle(this.table3,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
-      case 4:this.updateTableTitle(this.table4,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
-      case 5:this.updateTableTitle(this.table5,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
-      case 6:this.updateTableTitle(this.table6,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
-      case 7:this.updateTableTitle(this.table7,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
-      case 8:this.updateTableTitle(this.table8,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
-      case 9:this.updateTableTitle(this.table9,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table0);break;
+      case 1:this.updateTableTitle(this.table1,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table1);break;
+      case 2:this.updateTableTitle(this.table2,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table2);break;
+      case 3:this.updateTableTitle(this.table3,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table3);break;
+      case 4:this.updateTableTitle(this.table4,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table4);break;
+      case 5:this.updateTableTitle(this.table5,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table5);break;
+      case 6:this.updateTableTitle(this.table6,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table6);break;
+      case 7:this.updateTableTitle(this.table7,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table7);break;
+      case 8:this.updateTableTitle(this.table8,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table8);break;
+      case 9:this.updateTableTitle(this.table9,true); this.db.writeLogs(this.userId,this.random,this.currentDate,"add new table",this.table9);break;
     }
 
   }
@@ -178,7 +182,7 @@ export class DashboardsComponent implements OnInit {
     this.date=new Date;
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logDeleteLastTable");
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
     this.numbers[0].number--;
     switch(this.numbers[0].number){
       case 0: this.db.removeTable(this.userId,this.table0);
@@ -215,7 +219,7 @@ export class DashboardsComponent implements OnInit {
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logAddTaskFailed");
           this.date=new Date;
-          this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+          this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
           this.db.writeLogs(this.userId,this.random,this.currentDate,"add task","add task failed");
         }
         else{
@@ -230,7 +234,7 @@ export class DashboardsComponent implements OnInit {
             this.db.writeUserTable(this.userId,tableName,this.replece(this.title),this.title,this.description,this.priority,this.color,this.endData);
             this.random=Math.random().toString();
             this.random=this.random.replace("0.","logAddTask");
-            this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+            this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
             this.db.writeLogs(this.userId,this.random,this.currentDate,"add task","add task: "+this.title+" success");
         }
       }
@@ -249,7 +253,7 @@ export class DashboardsComponent implements OnInit {
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logEditTaskFailed");
           this.date=new Date;
-          this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+          this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
           this.db.writeLogs(this.userId,this.random,this.currentDate,"edit task","edit task: "+title+"failed");
         }
         else{  
@@ -258,6 +262,9 @@ export class DashboardsComponent implements OnInit {
           this.priority=result.value.task.priority;
           this.color=result.value.task.color;
           this.endDate=result.value.task.endDate;
+          this.endDataString=this.endDate+"";
+          if(this.endDataString=="") this.endData="";
+          else{
             if(this.endDate==endDate){
               if(this.endData==undefined)
               {
@@ -271,11 +278,12 @@ export class DashboardsComponent implements OnInit {
             }
             else this.endData=this.endDate.getDate()+'/'+(this.endDate.getMonth()+1)+'/'+this.endDate.getFullYear();
             if(this.endData=="/undefined/undefined") this.endData="";
+          }
             this.db.removeTask(this.userId,tableName,this.replece(title));
             this.db.writeUserTable(this.userId,tableName,this.replece(this.title),this.title,this.description,this.priority,this.color,this.endData);
             this.random=Math.random().toString();
             this.random=this.random.replace("0.","logEditTask");
-            this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+            this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
             this.date=new Date;
             this.db.writeLogs(this.userId,this.random,this.currentDate,"edit task","task "+title+" success");
         }
@@ -285,7 +293,7 @@ export class DashboardsComponent implements OnInit {
   removeTask(removeTask: string,tableName:string):void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logRemoveTask");
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
     this.date=new Date;
     this.db.writeLogs(this.userId,this.random,this.currentDate,"remove task","remove task: "+removeTask);
     this.db.removeTask(this.userId,tableName,this.replece(removeTask));
@@ -293,7 +301,7 @@ export class DashboardsComponent implements OnInit {
   removeAllTask(tableName:string):void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logRemoveAllTask");
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
     this.date=new Date;
     this.db.writeLogs(this.userId,this.random,this.currentDate,"remove all task","remove all task from table: "+tableName);
     this.db.removeTable(this.userId,tableName);
@@ -320,7 +328,7 @@ export class DashboardsComponent implements OnInit {
         if(result.invalid){
           this.random=Math.random().toString();
           this.random=this.random.replace("0.","logUpdateTableTitleFailed");
-          this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+          this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
           this.date=new Date;
           this.db.writeLogs(this.userId,this.random,this.currentDate,"update table title ","update table "+title+" failed");
           window.alert("Please correct all errors and resubmit add task");
@@ -334,7 +342,7 @@ export class DashboardsComponent implements OnInit {
             this.titleTable=result.value.titleTable.title;
             this.random=Math.random().toString();
             this.random=this.random.replace("0.","logUpdateTableTitle");
-            this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+            this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
             this.date=new Date;
             this.db.writeLogs(this.userId,this.random,this.currentDate,"update Table Title","update table "+title+" success");
             this.db.writeTitleTable(this.userId,title,this.titleTable);
@@ -369,7 +377,7 @@ export class DashboardsComponent implements OnInit {
   logout():void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logOut");
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
     this.date=new Date;
     this.db.writeLogs(this.userId,this.random,this.currentDate,"log out","log out");
     this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
@@ -380,11 +388,10 @@ export class DashboardsComponent implements OnInit {
   settings():void{
     this.router.navigate(['/settings']);
   }
-
   saveChanges():void{
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","logSaveChanges");
-    this.currentDate=(this.date.getDate()+'/'+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.date.getHours()+':'+this.date.getMinutes()+':'+this.date.getSeconds());
+    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
     this.date=new Date;
     this.db.writeLogs(this.userId,this.random,this.currentDate,"save changes","save changes");
     this.db.removeTable(this.auth.getUser().uid,this.table0);
