@@ -60,29 +60,19 @@ export class WelcomePageComponent   {
     private router: Router,
     public auth:AuthService,
     public db:DataService) {}
-  random:string;
   captcha:boolean=false;
   numberOfTests:number=0;
   userId:string;
   info:string;
   email:string;
   thema:string;
-  date:Date= new Date();
-  currentDate:string;
-  zero(date){
-    if(date<10) return 0;
-    return "";
-  }
+  word:string;
   registerUser(): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
     width: '350px',   
   });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=undefined){
-        this.random=Math.random().toString();
-        this.random=this.random.replace("0.","logRegister");
-        this.date=new Date;
-        this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
         if(result.invalid){
           this.info="Please correct all errors and resubmit the form register";
         }
@@ -93,6 +83,10 @@ export class WelcomePageComponent   {
             this.auth.register(result.value.register.email,result.value.register.password)
             .then(()=>{this.info="You can login now ";
             this.userId=this.auth.getUser().uid
+            this.db.writeMyFriends(this.userId,this.replece(this.email),this.userId,true);
+            localStorage.setItem("lastTable","kanban");
+            this.db.kanban=localStorage.getItem("lastTable")
+            this.db.writeUser(this.userId,this.replece(this.email),false);
             this.db.writeTitleTable(this.userId,"table0","to do")
             this.db.writeTitleTable(this.userId,"table1","doing")
             this.db.writeTitleTable(this.userId,"table2","done")
@@ -104,12 +98,13 @@ export class WelcomePageComponent   {
             this.db.writeTitleTable(this.userId,"table8","table9")
             this.db.writeTitleTable(this.userId,"table9","table10")
             this.db.writeUserNumber(this.userId,3)
-            this.db.writeLogs(this.userId,this.random,this.currentDate,"create Account","create Account")
+            this.db.logSave(this.userId,"logRegister","create Account","create Account")
             this.db.writeCategory(this.userId,"date","pink");
             this.db.writeCategory(this.userId,"shop","green");
             this.db.writeCategory(this.userId,"cars","red");
             this.db.writeCategory(this.userId,"school","white");
             this.db.writeUserData(this.userId,this.email,this.thema,false);
+            this.db.writeKanbanTable(this.userId,this.db.kanban)
     })}}}});
   }
   loginUser(): void {
@@ -118,14 +113,11 @@ export class WelcomePageComponent   {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=undefined){
-        this.random=Math.random().toString();
-        this.random=this.random.replace("0.","logIn");
-        this.date=new Date;
-        this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
       if(result==false) this.numberOfTests++;
       else{
+        this.db.updateOnline(this.replece(result.email),true);
         this.auth.login(result.email,result.password).then(() => this.router.navigate(['/dashboard'])).catch(err => this.loginError())
-        .then(()=>this.db.writeLogs(this.userId,this.random,this.currentDate,"log in","log in"));
+        .then(()=> this.db.logSave(this.userId,"logIn","log in","log in"))
       }
     }else this.numberOfTests++;
   });
@@ -149,22 +141,23 @@ export class WelcomePageComponent   {
       return false;
   }
 }
+
   loginWithGoogle():void{
   this.auth.googleAuth().then(()=>{
     this.userId=this.auth.getUser().uid;
-    this.email=this.auth.getUser().email
-    this.random=Math.random().toString();
-    this.random=this.random.replace("0.","logLoginWitchGoogle");
-    this.date=new Date;
-    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
-    this.db.writeLogs(this.userId,this.random,this.currentDate,"log in","with google");
-    this.db.writeUserData(this.userId,this.email,"",true);
+    this.email=this.auth.getUser().email;
+    this.db.logSave(this.userId,"logLoginWitchGoogle","log in","with google")
     this.db.getTask(this.userId,"table").subscribe(res => {
       if(res.length==0) 
       {
-        this.db.writeTitleTable(this.userId,"table0","to do")
-        this.db.writeTitleTable(this.userId,"table1","doing")
-        this.db.writeTitleTable(this.userId,"table2","done")
+        this.db.writeMyFriends(this.userId,this.replece(this.email),this.userId,true);
+        localStorage.setItem("lastTable","kanban");
+        this.db.kanban=localStorage.getItem("lastTable")
+        this.db.writeUser(this.userId,this.replece(this.email),false);
+        this.db.writeUserData(this.userId,this.email,"",true);
+        this.db.writeTitleTable(this.userId,"table0","to do");
+        this.db.writeTitleTable(this.userId,"table1","doing");
+        this.db.writeTitleTable(this.userId,"table2","done");
         this.db.writeTitleTable(this.userId,"table3","table4");
         this.db.writeTitleTable(this.userId,"table4","table5");
         this.db.writeTitleTable(this.userId,"table5","table6");
@@ -177,9 +170,24 @@ export class WelcomePageComponent   {
         this.db.writeCategory(this.userId,"cars","red");
         this.db.writeCategory(this.userId,"school","white");
         this.db.writeUserNumber(this.userId,3);
+        this.db.writeKanbanTable(this.userId,this.db.kanban)
       }
     });
-  this.router.navigate(['/dashboard'])
+  this.db.updateOnline(this.replece(this.email),true);
+ this.router.navigate(['/dashboard'])
 })
+}
+replece(replace:string):string{
+  this.word="";
+  for(let letter of replace)
+  {
+    letter=letter.replace(".","1");
+    letter=letter.replace("#","2");      
+    letter=letter.replace("$","3");
+    letter=letter.replace("[","4");
+    letter=letter.replace("]","5");
+    this.word=this.word+letter;
+  }
+  return this.word;
 }
 }

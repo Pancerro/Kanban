@@ -1,6 +1,5 @@
 <div class="mainContent" *ngFor="let item of userInfo" [style.background]="changeBackground()" [style.color]="changeFont()">
-    <button mat-stroked-button color="primary" (click)="logout()">LOGOUT</button>
-    <button mat-stroked-button color="primary" (click)="return()">Return to previous page</button>
+    <app-menu></app-menu>
     <h1>Welcome to logs!</h1>
     <h1>LOGS</h1>
     <mat-form-field class="backgroundInput">

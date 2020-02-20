@@ -13,7 +13,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { WelcomePageComponent } from './user/welcome-page/welcome-page.component';
 import { RegisterComponent } from './modal/register/register.component';
 import { FormsModule } from '@angular/forms';
-import { DashboardsComponent } from './dashboards/dashboards/dashboards.component';
+import { DashboardsComponent} from './dashboards/dashboards/dashboards.component';
 import { LoginComponent } from './modal/login/login.component';
 import {MatIconModule} from '@angular/material/icon';
 import { AddTaskComponent } from './modal/add-task/add-task.component';
@@ -30,8 +30,13 @@ import { AddCategoryComponent } from './modal/add-category/add-category.componen
 import { EditCategoryComponent } from './modal/edit-category/edit-category.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import {MatSortModule} from '@angular/material/sort';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { CreateNewKanbanComponent } from './modal/create-new-kanban/create-new-kanban.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { MenuComponent } from './dashboards/menu/menu.component'
+import { ScrollToBottomDirective } from './dashboards/scroll-to-bottom.directive/scroll-to-bottom.directive.component';
 @NgModule({
-  entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent,AddCategoryComponent,EditCategoryComponent],
+  entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent,AddCategoryComponent,EditCategoryComponent,CreateNewKanbanComponent],
   declarations: [
     AppComponent,
     WelcomePageComponent,
@@ -45,7 +50,10 @@ import {MatSortModule} from '@angular/material/sort';
     SettingsComponent,
     ResetPasswordComponent,
     AddCategoryComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    CreateNewKanbanComponent,
+    MenuComponent,
+    ScrollToBottomDirective,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +76,9 @@ import {MatSortModule} from '@angular/material/sort';
     MatNativeDateModule,
     MatTableModule,
     ColorPickerModule,
-    MatSortModule
+    MatSortModule,
+    MatSidenavModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

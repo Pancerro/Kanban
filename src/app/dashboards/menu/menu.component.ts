@@ -1,0 +1,50 @@
+import { Component} from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { DataService } from 'src/app/services/database.service';
+import { Router } from '@angular/router';
+import { StickyDirection } from '@angular/cdk/table';
+
+@Component({
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
+})
+export class MenuComponent{
+userId:string;
+word:string;
+constructor(
+  private auth:AuthService,
+  private db:DataService,
+  private router: Router,
+) {
+    this.userId=auth.getUser().uid;
+  }
+  logout():void{
+    this.db.logSave(this.userId,"logOut","log out","log out")
+    this.db.updateOnline(this.replece(this.auth.getUser().email),false);
+    this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
+  }
+  logs():void{
+    this.router.navigate(['/logi']);
+  }
+  settings():void{
+    this.router.navigate(['/settings']);
+  }
+  dashboard():void{
+    this.router.navigate(['/dashboard']);
+  }
+
+  replece(replace:string):string{
+    this.word="";
+    for(let letter of replace)
+    {
+      letter=letter.replace(".","1");
+      letter=letter.replace("#","2");      
+      letter=letter.replace("$","3");
+      letter=letter.replace("[","4");
+      letter=letter.replace("]","5");
+      this.word=this.word+letter;
+    }
+    return this.word;
+  }
+}

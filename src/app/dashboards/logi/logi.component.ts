@@ -16,9 +16,6 @@ export interface Log {
 export class LogiComponent implements OnInit {
   userId:string;
   logs:Log[]=[];
-  random:string;
-  date:Date=new Date();
-  currentDate:string;
   userInfo=[];
   fontColor:string;
   background:string;
@@ -39,10 +36,6 @@ export class LogiComponent implements OnInit {
       this.userInfo = res;
     });
   } 
-  zero(date){
-    if(date<10) return 0;
-    return "";
-  }
   changeFont():string
   {
     if(this.userInfo[0].thema=="gray"){
@@ -63,17 +56,6 @@ export class LogiComponent implements OnInit {
       this.background="black";
       return this.background;
     }
-  }
-  logout():void{
-    this.random=Math.random().toString();
-    this.random=this.random.replace("0.","logOut");
-    this.date=new Date;
-    this.currentDate=(this.date.getDate()+'/'+this.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.zero(this.date.getHours())+this.date.getHours()+':'+this.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.zero(this.date.getSeconds())+this.date.getSeconds());
-    this.db.writeLogs(this.userId,this.random,this.currentDate,"log out","log out");
-    this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
-  }
-  return():void{
-    this.router.navigate(['/dashboard']);
   }
   applyFilter(filterValue: string) {
     this.dataLogs.filter = filterValue.trim().toLowerCase();
