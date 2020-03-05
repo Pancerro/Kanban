@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { RegisterComponent } from 'src/app/modal/register/register.component';
 import { AuthService } from 'src/app/services/auth.service';
@@ -55,7 +55,13 @@ import { trigger, transition, style, animate } from '@angular/animations';
     
   ]
 })
-export class WelcomePageComponent   {
+
+export class WelcomePageComponent  implements OnInit {
+  ngOnInit(): void {
+    this.audio.src = "../../../assets/1.mp3";
+    this.audio.load();
+    this.audio.play();
+  }
   constructor(public dialog: MatDialog,
     private router: Router,
     public auth:AuthService,
@@ -67,6 +73,7 @@ export class WelcomePageComponent   {
   email:string;
   thema:string;
   word:string;
+  audio=new Audio();
   registerUser(): void {
     const dialogRef = this.dialog.open(RegisterComponent, {
     width: '350px',   
@@ -85,6 +92,8 @@ export class WelcomePageComponent   {
             this.userId=this.auth.getUser().uid
             this.db.writeMyFriends(this.userId,this.replece(this.email),this.userId,true);
             localStorage.setItem("lastTable","kanban");
+            localStorage.setItem("userId",this.userId);
+            localStorage.setItem("share","");
             this.db.kanban=localStorage.getItem("lastTable")
             this.db.writeUser(this.userId,this.replece(this.email),false);
             this.db.writeTitleTable(this.userId,"table0","to do")
@@ -146,12 +155,15 @@ export class WelcomePageComponent   {
   this.auth.googleAuth().then(()=>{
     this.userId=this.auth.getUser().uid;
     this.email=this.auth.getUser().email;
+    this.db.updateOnline(this.replece(this.email),true);
     this.db.logSave(this.userId,"logLoginWitchGoogle","log in","with google")
     this.db.getTask(this.userId,"table").subscribe(res => {
       if(res.length==0) 
       {
         this.db.writeMyFriends(this.userId,this.replece(this.email),this.userId,true);
         localStorage.setItem("lastTable","kanban");
+        localStorage.setItem("userId",this.userId);
+        localStorage.setItem("share","");
         this.db.kanban=localStorage.getItem("lastTable")
         this.db.writeUser(this.userId,this.replece(this.email),false);
         this.db.writeUserData(this.userId,this.email,"",true);

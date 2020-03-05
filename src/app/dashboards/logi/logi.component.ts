@@ -28,6 +28,7 @@ export class LogiComponent implements OnInit {
       this.userId=auth.getUser().uid;
   } 
   ngOnInit():void {
+    localStorage.setItem("menu","Logi");
     this.db.getLogs(this.userId).subscribe(res => {
       this.logs = res;
       this.dataLogs=new MatTableDataSource(this.logs);

@@ -50,15 +50,21 @@ export class DataService {
     number:number
     });
   }
-  writeUserTable(userId: string,tableparent: string,tablechild: string,title: string,description: string,priority: string,color: string,endDate: string){
+  writeUserTable(userId: string,tableparent: string,tablechild: string,title: string,description: string,priority: string,color: string,endDate: string,user:string){
     firebase.database().ref('users/'+ userId+'/'+this.kanban+'/'+tableparent+'/'+tablechild).set({
     title:title,
     description:description,
     priority:priority,
     color:color,
-    endDate:endDate
+    endDate:endDate,
+    user:user
   });
   }
+
+  updateChoiceUser(userId:string,user:string,tableparent:string,tablechild:string){
+    return this.db.object('users/'+ userId+'/'+this.kanban+'/'+tableparent+'/'+tablechild).update({user:user})
+  }
+
   writeTitleTable(userId: string,tablechild: string,title: string){
     firebase.database().ref('users/'+ userId+'/'+this.kanban+'/table/'+tablechild).set({
     title:title
@@ -154,10 +160,25 @@ export class DataService {
       message:message
     })
   }
-  tab=[]
   getMessage(ownerId:string,projectName:string){ 
  return  this.db.list('users/'+ownerId+'/chat/'+projectName,ref=>ref.orderByChild('data')).valueChanges()
-
+  }
+  writeMessageToFriends(myId:string,friendsId:string,myEmail:string,friendsEmail:string,data:string,message:string,userName:string){
+    this.random=Math.random().toString();
+    this.random=this.random.replace("0.","chatWitchFriend");
+    firebase.database().ref('users/'+myId+'/chat/'+friendsEmail+'/'+this.random).set({
+      data:data,
+      message:message,
+      email:userName
+    })
+    firebase.database().ref('users/'+friendsId+'/chat/'+myEmail+'/'+this.random).set({
+      data:data,
+      message:message,
+      email:userName
+    })
+  }
+  getMessageWitchFriend(myId:string,friendsEmail:string){
+    return this.db.list('users/'+myId+'/chat/'+friendsEmail,ref=>ref.orderByChild('data')).valueChanges()
   }
 
 

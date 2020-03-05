@@ -49,7 +49,27 @@ export class DashboardsComponent implements OnInit {
   allUser=[];
   myFriend=[];
   myInvities=[];
+  audioNewMessage= new Audio();
   scroll: ScrollToBottomDirective;
+  choiceUserForTask(user:string,tableParent:string,tableChild:string){
+    this.db.kanban=this.projectName;
+    this.db.updateChoiceUser(this.userId,user,tableParent,tableChild)
+  }
+  choiceText(user:string){
+    if(user=="") return "Choice user for task"
+    else return this.inreplece(user);
+  }
+  dontClose($event){
+    $event.stopPropagation();
+  }
+  sendMessageForFriend(message:string,formReset,id:string,email:string){
+    this.db.writeMessageToFriends(this.userId,id, this.replece(this.userInfo[0].email),email,this.getDate(),message,this.userInfo[0].email)
+    formReset.resetForm();
+  }
+  myMessageWitchFriend=[];
+  getMyFriendMessage(email:string){
+    this.db.getMessageWitchFriend(this.userId,email).subscribe(res=>this.myMessageWitchFriend=res)
+  }
   changeStatus(email){
     this.db.updateOnline(email,!this.checkStatus(email))
   }
@@ -158,6 +178,8 @@ return false;
       });
   }
   seeMyProject(projectName:string){
+    localStorage.setItem("share","");
+    this.settingShare=false;
     this.userId=this.auth.getUser().uid;
     this.db.kanban=projectName;
     localStorage.setItem("lastTable",projectName);
@@ -315,11 +337,6 @@ return false;
     this.db.share(item.friendsId,this.userId,projectName)
     this.db.kanban=localStorage.getItem("lastTable")
   }
-checkIfYou(email){ //nie dziala
-  if(this.userInfo[0].email==email)
-  return true
-  else return false;
-}
 checkShare(email,projectName){
   this.db.kanban=projectName
   for(let item of this.shareFriends){
@@ -341,18 +358,24 @@ stopShare(friends,projectName){
 settingShare=false;
 viewMessage=[]
 seeMyShareProject(item){
+  localStorage.setItem("share","true");
+  localStorage.setItem("userId",item.userId);
   this.settingShare=true;
   this.db.kanban=item.kanban;
   this.userId=item.userId;
   this.sharedInit();
   this.db.getShareFriends(this.userId).subscribe(res=>{this.shareFriends=res});
-  this.db.getMessage(this.userId,item.kanban).subscribe(res=>this.viewMessage=res)
+  this.db.getMessage(this.userId,item.kanban).subscribe(res=>{
+    this.viewMessage=res
+  })
+ 
   window.scrollTo()
 }
-sendMessage(message){
+sendMessage(message,formReset){
   this.db.kanban=this.projectName;
   this.db.writeMessage(this.userId,this.userInfo[0].email,this.db.kanban,this.getDate(),message)
   this.db.getMessage(this.userId,this.projectName).subscribe(res=>this.viewMessage=res)
+  formReset.resetForm();
 }
 shareFriends=[]
 shared=[]
@@ -396,6 +419,10 @@ sharedInit(){
   });
 }
   ngOnInit(){
+    console.log(localStorage.getItem("userId"))
+    this.audioNewMessage.src = "../../../assets/1.mp3";
+    this.audioNewMessage.load();
+    localStorage.setItem("menu","KanbanTable");
     this.db.getShare(this.userId).subscribe(res=>{
       this.shared=res
   })
@@ -469,6 +496,7 @@ sharedInit(){
     }
     return this.word;
   }
+  
   constructor(
     private auth:AuthService,
     private db:DataService,
@@ -559,14 +587,15 @@ sharedInit(){
           if(this.checkIfTaskTitleIsNotFree(this.title,tableName)) window.alert("Its task title dont free! Use next task title")
            else{
             this.db.kanban=this.projectName
-            this.db.writeUserTable(this.userId,tableName,this.replece(this.title),this.title,this.description,this.priority,this.color,this.endData);
+            this.db.writeUserTable(this.userId,tableName,this.replece(this.title),this.title,this.description,this.priority,this.color,this.endData,"");
            }
             this.db.logSave(this.userId,"logAddTask","add task","add task: "+this.title+" success")
         }
       }
     });
   }
-  editTask(title:string,description:string,priority:string,color:string,endDate,tableName:string):void {
+  editTask(title:string,description:string,priority:string,color:string,endDate,tableName:string,user:string):void {
+   this.db.kanban=this.projectName
     const dialogRef = this.dialog.open(EditTaskComponent, {
     width: '350px',
     data: {title: title, description: description, priority:priority,color:color,endDate:endDate}
@@ -601,14 +630,16 @@ sharedInit(){
             else this.endData=this.endDate.getDate()+'/'+(this.endDate.getMonth()+1)+'/'+this.endDate.getFullYear();
             if(this.endData=="/undefined/undefined") this.endData="";
           }
+            this.db.kanban=this.projectName
             this.db.removeTask(this.userId,tableName,this.replece(title));
-            this.db.writeUserTable(this.userId,tableName,this.replece(this.title),this.title,this.description,this.priority,this.color,this.endData);
+            this.db.writeUserTable(this.userId,tableName,this.replece(this.title),this.title,this.description,this.priority,this.color,this.endData,user);
             this.db.logSave(this.userId,"logEditTask","edit task","task "+title+" success")
         }
       }
     });
   }
   removeTask(removeTask: string,tableName:string):void{
+    this.db.kanban=this.projectName
     this.db.logSave(this.userId,"logRemoveTask","remove task","remove task: "+removeTask)
     this.db.removeTask(this.userId,tableName,this.replece(removeTask));
   }
@@ -687,45 +718,45 @@ sharedInit(){
     this.db.removeTable(this.auth.getUser().uid,this.table7);
     this.db.removeTable(this.auth.getUser().uid,this.table8);
     this.db.removeTable(this.auth.getUser().uid,this.table9);
-    for(let d of this.tableZero){
-      if(d.endDate==null) d.endDate="";
-      this.db.writeUserTable(this.userId,this.table0,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+    for(let task of this.tableZero){
+      if(task.endDate==null) task.endDate="";
+      this.db.writeUserTable(this.userId,this.table0,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);
     }
-    for(let d of this.tableOne){
-      if(d.endDate==null) d.endDate="";
-      this.db.writeUserTable(this.userId,this.table1,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+    for(let task of this.tableOne){
+      if(task.endDate==null) task.endDate="";
+      this.db.writeUserTable(this.userId,this.table1,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);
     }
-    for(let d of this.tableTwo){
-      if(d.endDate==null) d.endDate="";
-      this.db.writeUserTable(this.userId,this.table2,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+    for(let task of this.tableTwo){
+      if(task.endDate==null) task.endDate="";
+      this.db.writeUserTable(this.userId,this.table2,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);
     }
-    for(let d of this.tableThree){
-      if(d.endDate==null) d.endDate="";
-      this.db.writeUserTable(this.userId,this.table3,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+    for(let task of this.tableThree){
+      if(task.endDate==null) task.endDate="";
+      this.db.writeUserTable(this.userId,this.table3,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);
     }
-    for(let d of this.tableFour){
-      if(d.endDate==null) d.endDate="";
-      this.db.writeUserTable(this.userId,this.table4,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+    for(let task of this.tableFour){
+      if(task.endDate==null) task.endDate="";
+      this.db.writeUserTable(this.userId,this.table4,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);
     }
-    for(let d of this.tableFive){
-      if(d.endDate==null) d.endDate="";
-      this.db.writeUserTable(this.userId,this.table5,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+    for(let task of this.tableFive){
+      if(task.endDate==null) task.endDate="";
+      this.db.writeUserTable(this.userId,this.table5,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);
     }
-    for(let d of this.tableSix){
-      if(d.endDate==null) d.endDate="";
-      this.db.writeUserTable(this.userId,this.table6,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+    for(let task of this.tableSix){
+      if(task.endDate==null) task.endDate="";
+      this.db.writeUserTable(this.userId,this.table6,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);
     }
-    for(let d of this.tableSeven){
-      if(d.endDate==null) d.endDate="";
-      this.db.writeUserTable(this.userId,this.table7,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+    for(let task of this.tableSeven){
+      if(task.endDate==null) task.endDate="";
+      this.db.writeUserTable(this.userId,this.table7,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);
     }
-    for(let d of this.tableEight){
-      if(d.endDate==null) d.endDate="";
-      this.db.writeUserTable(this.userId,this.table8,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+    for(let task of this.tableEight){
+      if(task.endDate==null) task.endDate="";
+      this.db.writeUserTable(this.userId,this.table8,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);
     }
-    for(let d of this.tableNine){
-      if(d.endDate==null) d.endDate="";
-      this.db.writeUserTable(this.userId,this.table9,this.replece(d.title),d.title,d.description,d.priority,d.color,d.endDate);
+    for(let task of this.tableNine){
+      if(task.endDate==null) task.endDate="";
+      this.db.writeUserTable(this.userId,this.table9,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);
     }
   }
   checkPrio(priority: string):string{

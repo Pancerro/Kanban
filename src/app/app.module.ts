@@ -35,6 +35,8 @@ import { CreateNewKanbanComponent } from './modal/create-new-kanban/create-new-k
 import {MatMenuModule} from '@angular/material/menu';
 import { MenuComponent } from './dashboards/menu/menu.component'
 import { ScrollToBottomDirective } from './dashboards/scroll-to-bottom.directive/scroll-to-bottom.directive.component';
+import { GravatarModule } from  'ngx-gravatar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 @NgModule({
   entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent,AddCategoryComponent,EditCategoryComponent,CreateNewKanbanComponent],
   declarations: [
@@ -78,7 +80,9 @@ import { ScrollToBottomDirective } from './dashboards/scroll-to-bottom.directive
     ColorPickerModule,
     MatSortModule,
     MatSidenavModule,
-    MatMenuModule
+    MatMenuModule,
+    GravatarModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

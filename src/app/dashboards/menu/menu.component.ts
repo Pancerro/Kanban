@@ -1,15 +1,22 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/database.service';
 import { Router } from '@angular/router';
-import { StickyDirection } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent{
+export class MenuComponent  implements OnInit{
+  ngOnInit(): void {
+   if(localStorage.getItem("menu")=="Logi") this.logClicked=true;
+   if(localStorage.getItem("menu")=="UserSettings") this.userSettingClicked=true;
+   if(localStorage.getItem("menu")=="KanbanTable") this.kanbanClicked=true;
+  }
+logClicked:boolean=false;
+kanbanClicked:boolean=false;
+userSettingClicked:boolean=false;
 userId:string;
 word:string;
 constructor(

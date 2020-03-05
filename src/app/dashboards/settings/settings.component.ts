@@ -38,6 +38,7 @@ export class SettingsComponent implements OnInit {
     this.userId=auth.getUser().uid;
   }
   ngOnInit():void {
+    localStorage.setItem("menu","UserSettings");
     this.db.getDateUser(this.userId).subscribe(res => {
       this.userInfo = res;
     });
