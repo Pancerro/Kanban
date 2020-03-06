@@ -114,23 +114,58 @@
                 </div>
             </mat-sidenav>
             <mat-sidenav-content [style.background]="changeBackground()" [style.color]="changeFont()">
-                <button mat-stroked-button color="primary" class="myKanbanProject" (click)="sidenav.toggle()">My Kanban Project</button>
-                <button mat-stroked-button color="primary" class="friends" (click)="sidenavright.toggle()">Friends</button>
+                <button mat-stroked-button *ngIf="false" color="primary" class="myKanbanProject" (click)="sidenav.toggle()">My Kanban Project</button>
+                <button mat-stroked-button *ngIf="false" color="primary" class="friends" (click)="sidenavright.toggle()">Friends</button>
                 <app-menu></app-menu>
+                <br>
+                <h3> Welcome {{item.email}}</h3>
+                <h3>You project name: {{projectName}}</h3>
+                <h3>You see {{numbers[0].number}} tables</h3>
                 <div>
-
                     <div *ngIf="settingShare">
-                        <button mat-stroked-button color="primary" (click)="deleteShareProject(projectName)"><mat-icon>delete</mat-icon>Delete</button>
-                        <button mat-stroked-button color="primary" (click)="editShareProject(projectName)"><mat-icon>edit</mat-icon>Edit</button>
-                        <button mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Share</button>
-                        <br>
-                        <div *ngFor="let friend of myFriend">
-                            <div *ngIf="checkAccept(friend.friendsEmail)">
-                                {{inreplece(friend.friendsEmail)}}
-                                <button mat-stroked-button color="primary" *ngIf="!checkShare(friend.friendsEmail,projectName)" (click)="shareTable(friend,projectName)">Share project</button>
-                                <button mat-stroked-button color="primary" *ngIf="checkShare(friend.friendsEmail,projectName)" (click)="stopShare(friend,projectName)">Stop share project</button>
-                            </div>
+                        <div class="shareOption" *ngIf="checkIfOwner()">
+                            <button mat-stroked-button color="primary" (click)="deleteShareProject(projectName)"><mat-icon>delete</mat-icon>Delete</button>
+                            <button mat-stroked-button color="primary" (click)="editShareProject(projectName)"><mat-icon>edit</mat-icon>Edit</button>
+                            <button mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Share</button>
                             <br>
+                            <div class="shareShared">
+                                <h1>Shared</h1>
+                                <div *ngFor="let friend of shareFriends">
+                                    <div *ngIf="userInfo[0].email!=inreplece(friend.friendsEmail)">Email: {{inreplece(friend.friendsEmail)}} Role: {{friend.role}}
+                                        <form (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
+                                            <mat-form-field>
+                                                <mat-label>Edit role! </mat-label>
+                                                <mat-select name="role" [(ngModel)]="friend.role" [placeholder]="friend.role">
+                                                    <mat-option value="view">View</mat-option>
+                                                    <mat-option value="editor">Editor</mat-option>
+                                                    <mat-option value="owner">Owner</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <button type="submit" mat-stroked-button color="primary" [disabled]="roleForm.invalid">Edit role!</button>
+                                        </form>
+                                        <button mat-stroked-button color="primary" (click)="stopShare(friend,projectName)">Stop share project</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shareCan">
+                                <h1>Can Share</h1>
+                                <div *ngFor="let friend of myFriend">
+                                    <div *ngIf="!checkShare(friend.friendsEmail,projectName)">
+                                        Email: {{inreplece(friend.friendsEmail)}}
+                                        <form (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
+                                            <mat-form-field>
+                                                <mat-label>Choice role! </mat-label>
+                                                <mat-select name="role" [(ngModel)]="view" [placeholder]="view">
+                                                    <mat-option value="view">View</mat-option>
+                                                    <mat-option value="editor">Editor</mat-option>
+                                                    <mat-option value="owner">Owner</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <button type="submit" mat-stroked-button color="primary" [disabled]="roleForm.invalid">Share project!</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight">
 
@@ -157,29 +192,26 @@
                             </form>
                         </div>
                     </div>
-
-                    <h3> Welcome {{item.email}}</h3>
-                    <h3>You project name: {{projectName}}</h3>
-                    <h3>You see {{numbers[0].number}} tables</h3>
-                    <button mat-stroked-button color="primary" [disabled]="numbers[0].number==10" (click)="addNewTable()">Add new table</button>
-                    <button mat-stroked-button color="primary" [disabled]="numbers[0].number==0" (click)="deleteLastTable()">Delete last table</button>
+                    <p></p>
+                    <button mat-stroked-button color="primary" [disabled]="checkIfView()" [disabled]="numbers[0].number==10" (click)="addNewTable()">Add new table</button>
+                    <button mat-stroked-button color="primary" [disabled]="checkIfView()" [disabled]="numbers[0].number==0" (click)="deleteLastTable()">Delete last table</button>
                     <div cdkDropListGroup name="toName">
                         <div *ngIf="numbers[0].number>0" class="example-container">
                             <h2>{{tableTitle[0].title}}</h2>
-                            <button mat-stroked-button color="primary" (click)="addTask(table0)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" (click)="removeAllTask(table0)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" (click)="updateTableTitle(table0,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table0)"><mat-icon>add_circle</mat-icon></button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table0)">Remove all Task </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table0,false)">Edit Title Table </button>
                             <div cdkDropList [cdkDropListData]="tableZero" class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableZero" cdkDrag>
-                                    <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
-                                    <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table0,item.user)">Task title: {{item.title}}</button>
-                                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeTask(item.title,table0)"><mat-icon>delete</mat-icon></button><br>
+                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableZero" cdkDrag [cdkDragDisabled]="checkIfView()">
+                                    <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
+                                    <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table0,item.user)">Task title: {{item.title}}</button>
+                                    <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table0)"><mat-icon>delete</mat-icon></button><br>
                                     <br>
                                     <div class="choiceUser" *ngIf="settingShare">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table0,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
-                                                <mat-select name="user" ngModel>
+                                                <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                     <div *ngFor="let friend of myFriend">
                                                         <div *ngIf="checkAccept(friend.friendsEmail)">
                                                             <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -187,7 +219,7 @@
                                                     </div>
                                                 </mat-select>
                                             </mat-form-field>
-                                            <button type="submit" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                            <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
                                         </form>
                                     </div>
                                 </div>
@@ -195,19 +227,19 @@
                         </div>
                         <div *ngIf="numbers[0].number>1" class="example-container">
                             <h2>{{tableTitle[1].title}}</h2>
-                            <button mat-stroked-button color="primary" (click)="addTask(table1)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" (click)="removeAllTask(table1)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" (click)="updateTableTitle(table1,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table1)"><mat-icon>add_circle</mat-icon></button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table1)">Remove all Task </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table1,false)">Edit Title Table </button>
                             <div cdkDropList [cdkDropListData]="tableOne" class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableOne" cdkDrag>
-                                    <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
-                                    <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table1,item.user)">Task title: {{item.title}}</button>
-                                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeTask(item.title,table1)"><mat-icon>delete</mat-icon></button><br>
+                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableOne" cdkDrag [cdkDragDisabled]="checkIfView()">
+                                    <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
+                                    <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table1,item.user)">Task title: {{item.title}}</button>
+                                    <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table1)"><mat-icon>delete</mat-icon></button><br>
                                     <div class="choiceUser" *ngIf="settingShare">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table1,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
-                                                <mat-select name="user" ngModel>
+                                                <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                     <div *ngFor="let friend of myFriend">
                                                         <div *ngIf="checkAccept(friend.friendsEmail)">
                                                             <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -215,7 +247,7 @@
                                                     </div>
                                                 </mat-select>
                                             </mat-form-field>
-                                            <button type="submit" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                            <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
                                         </form>
                                     </div>
                                 </div>
@@ -223,19 +255,19 @@
                         </div>
                         <div *ngIf="numbers[0].number>2" class="example-container">
                             <h2>{{tableTitle[2].title}}</h2>
-                            <button mat-stroked-button color="primary" (click)="addTask(table2)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" (click)="removeAllTask(table2)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" (click)="updateTableTitle(table2,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table2)"><mat-icon>add_circle</mat-icon></button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table2)">Remove all Task </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table2,false)">Edit Title Table </button>
                             <div cdkDropList [cdkDropListData]="tableTwo" class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableTwo" cdkDrag>
-                                    <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
-                                    <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table2,item.user)">Task title: {{item.title}}</button>
-                                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeTask(item.title,table2)"><mat-icon>delete</mat-icon></button><br>
+                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableTwo" cdkDrag [cdkDragDisabled]="checkIfView()">
+                                    <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
+                                    <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table2,item.user)">Task title: {{item.title}}</button>
+                                    <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table2)"><mat-icon>delete</mat-icon></button><br>
                                     <div class="choiceUser" *ngIf="settingShare">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table2,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
-                                                <mat-select name="user" ngModel>
+                                                <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                     <div *ngFor="let friend of myFriend">
                                                         <div *ngIf="checkAccept(friend.friendsEmail)">
                                                             <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -243,7 +275,7 @@
                                                     </div>
                                                 </mat-select>
                                             </mat-form-field>
-                                            <button type="submit" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                            <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
                                         </form>
                                     </div>
                                 </div>
@@ -252,19 +284,19 @@
 
                         <div *ngIf="numbers[0].number>3" class="example-container">
                             <h2>{{tableTitle[3].title}}</h2>
-                            <button mat-stroked-button color="primary" (click)="addTask(table3)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" (click)="removeAllTask(table3)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" (click)="updateTableTitle(table3,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table3)"><mat-icon>add_circle</mat-icon></button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table3)">Remove all Task </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table3,false)">Edit Title Table </button>
                             <div cdkDropList [cdkDropListData]="tableThree" class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableThree" cdkDrag>
-                                    <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
-                                    <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table3,item.user)">Task title: {{item.title}}</button>
-                                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeTask(item.title,table3)"><mat-icon>delete</mat-icon></button><br>
+                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableThree" cdkDrag [cdkDragDisabled]="checkIfView()">
+                                    <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
+                                    <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table3,item.user)">Task title: {{item.title}}</button>
+                                    <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table3)"><mat-icon>delete</mat-icon></button><br>
                                     <div class="choiceUser" *ngIf="settingShare">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table3,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
-                                                <mat-select name="user" ngModel>
+                                                <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                     <div *ngFor="let friend of myFriend">
                                                         <div *ngIf="checkAccept(friend.friendsEmail)">
                                                             <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -272,7 +304,7 @@
                                                     </div>
                                                 </mat-select>
                                             </mat-form-field>
-                                            <button type="submit" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                            <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
                                         </form>
                                     </div>
                                 </div>
@@ -281,19 +313,19 @@
 
                         <div *ngIf="numbers[0].number>4" class="example-container">
                             <h2>{{tableTitle[4].title}}</h2>
-                            <button mat-stroked-button color="primary" (click)="addTask(table4)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" (click)="removeAllTask(table4)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" (click)="updateTableTitle(table4,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table4)"><mat-icon>add_circle</mat-icon></button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table4)">Remove all Task </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table4,false)">Edit Title Table </button>
                             <div cdkDropList [cdkDropListData]="tableFour" class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableFour" cdkDrag>
-                                    <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
-                                    <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table4,item.user)">Task title: {{item.title}}</button>
-                                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeTask(item.title,table4)"><mat-icon>delete</mat-icon></button><br>
+                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableFour" cdkDrag [cdkDragDisabled]="checkIfView()">
+                                    <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
+                                    <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table4,item.user)">Task title: {{item.title}}</button>
+                                    <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table4)"><mat-icon>delete</mat-icon></button><br>
                                     <div class="choiceUser" *ngIf="settingShare">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table4,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
-                                                <mat-select name="user" ngModel>
+                                                <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                     <div *ngFor="let friend of myFriend">
                                                         <div *ngIf="checkAccept(friend.friendsEmail)">
                                                             <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -301,7 +333,7 @@
                                                     </div>
                                                 </mat-select>
                                             </mat-form-field>
-                                            <button type="submit" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                            <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
                                         </form>
                                     </div>
                                 </div>
@@ -311,19 +343,19 @@
 
                         <div *ngIf="numbers[0].number>5" class="example-container">
                             <h2>{{tableTitle[5].title}}</h2>
-                            <button mat-stroked-button color="primary" (click)="addTask(table5)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" (click)="removeAllTask(table5)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" (click)="updateTableTitle(table5,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table5)"><mat-icon>add_circle</mat-icon></button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table5)">Remove all Task </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table5,false)">Edit Title Table </button>
                             <div cdkDropList [cdkDropListData]="tableFive" class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableFive" cdkDrag>
-                                    <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
-                                    <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table5,item.user)">Task title: {{item.title}}</button>
-                                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeTask(item.title,table5)"><mat-icon>delete</mat-icon></button><br>
+                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableFive" cdkDrag [cdkDragDisabled]="checkIfView()">
+                                    <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
+                                    <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table5,item.user)">Task title: {{item.title}}</button>
+                                    <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table5)"><mat-icon>delete</mat-icon></button><br>
                                     <div class="choiceUser" *ngIf="settingShare">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table5,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
-                                                <mat-select name="user" ngModel>
+                                                <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                     <div *ngFor="let friend of myFriend">
                                                         <div *ngIf="checkAccept(friend.friendsEmail)">
                                                             <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -331,7 +363,7 @@
                                                     </div>
                                                 </mat-select>
                                             </mat-form-field>
-                                            <button type="submit" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                            <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
                                         </form>
                                     </div>
                                 </div>
@@ -341,19 +373,19 @@
 
                         <div *ngIf="numbers[0].number>6" class="example-container">
                             <h2>{{tableTitle[6].title}}</h2>
-                            <button mat-stroked-button color="primary" (click)="addTask(table6)">	<mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" (click)="removeAllTask(table6)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" (click)="updateTableTitle(table6,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table6)">	<mat-icon>add_circle</mat-icon></button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table6)">Remove all Task </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table6,false)">Edit Title Table </button>
                             <div cdkDropList [cdkDropListData]="tableSix" class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableSix" cdkDrag>
-                                    <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
-                                    <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table6,item.user)">Task title: {{item.title}}</button>
-                                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeTask(item.title,table6)"><mat-icon>delete</mat-icon></button><br>
+                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableSix" cdkDrag [cdkDragDisabled]="checkIfView()">
+                                    <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
+                                    <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table6,item.user)">Task title: {{item.title}}</button>
+                                    <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table6)"><mat-icon>delete</mat-icon></button><br>
                                     <div class="choiceUser" *ngIf="settingShare">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table6,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
-                                                <mat-select name="user" ngModel>
+                                                <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                     <div *ngFor="let friend of myFriend">
                                                         <div *ngIf="checkAccept(friend.friendsEmail)">
                                                             <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -361,7 +393,7 @@
                                                     </div>
                                                 </mat-select>
                                             </mat-form-field>
-                                            <button type="submit" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                            <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
                                         </form>
                                     </div>
                                 </div>
@@ -371,19 +403,19 @@
 
                         <div *ngIf="numbers[0].number>7" class="example-container">
                             <h2>{{tableTitle[7].title}}</h2>
-                            <button mat-stroked-button color="primary" (click)="addTask(table7)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" (click)="removeAllTask(table7)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" (click)="updateTableTitle(table7,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table7)"><mat-icon>add_circle</mat-icon></button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table7)">Remove all Task </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table7,false)">Edit Title Table </button>
                             <div cdkDropList [cdkDropListData]="tableSeven" class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableSeven" cdkDrag>
-                                    <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
-                                    <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table7,item.user)">Task title: {{item.title}}</button>
-                                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeTask(item.title,table7)"><mat-icon>delete</mat-icon></button><br>
+                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableSeven" cdkDrag [cdkDragDisabled]="checkIfView()">
+                                    <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
+                                    <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table7,item.user)">Task title: {{item.title}}</button>
+                                    <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table7)"><mat-icon>delete</mat-icon></button><br>
                                     <div class="choiceUser" *ngIf="settingShare">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table7,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
-                                                <mat-select name="user" ngModel>
+                                                <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                     <div *ngFor="let friend of myFriend">
                                                         <div *ngIf="checkAccept(friend.friendsEmail)">
                                                             <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -391,7 +423,7 @@
                                                     </div>
                                                 </mat-select>
                                             </mat-form-field>
-                                            <button type="submit" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                            <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
                                         </form>
                                     </div>
                                 </div>
@@ -401,19 +433,19 @@
 
                         <div *ngIf="numbers[0].number>8" class="example-container">
                             <h2>{{tableTitle[8].title}}</h2>
-                            <button mat-stroked-button color="primary" (click)="addTask(table8)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" (click)="removeAllTask(table8)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" (click)="updateTableTitle(table8,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table8)"><mat-icon>add_circle</mat-icon></button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table8)">Remove all Task </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table8,false)">Edit Title Table </button>
                             <div cdkDropList [cdkDropListData]="tableEight" class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableEight" cdkDrag>
-                                    <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
-                                    <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table8,item.user)">Task title: {{item.title}}</button>
-                                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeTask(item.title,table8)"><mat-icon>delete</mat-icon></button><br>
+                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableEight" cdkDrag [cdkDragDisabled]="checkIfView()">
+                                    <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
+                                    <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table8,item.user)">Task title: {{item.title}}</button>
+                                    <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table8)"><mat-icon>delete</mat-icon></button><br>
                                     <div class="choiceUser" *ngIf="settingShare">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table8,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
-                                                <mat-select name="user" ngModel>
+                                                <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                     <div *ngFor="let friend of myFriend">
                                                         <div *ngIf="checkAccept(friend.friendsEmail)">
                                                             <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -421,7 +453,7 @@
                                                     </div>
                                                 </mat-select>
                                             </mat-form-field>
-                                            <button type="submit" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                            <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
                                         </form>
                                     </div>
                                 </div>
@@ -430,19 +462,19 @@
 
                         <div *ngIf="numbers[0].number>9" class="example-container">
                             <h2>{{tableTitle[9].title}}</h2>
-                            <button mat-stroked-button color="primary" (click)="addTask(table9)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" (click)="removeAllTask(table9)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" (click)="updateTableTitle(table9,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table9)"><mat-icon>add_circle</mat-icon></button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table9)">Remove all Task </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table9,false)">Edit Title Table </button>
                             <div cdkDropList [cdkDropListData]="tableNine" class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableNine" cdkDrag>
-                                    <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
-                                    <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table9,item.user)">Task title: {{item.title}}</button>
-                                    <button class="buttonRemove" mat-stroked-button color="primary" (click)="removeTask(item.title,table9)"><mat-icon>delete</mat-icon></button><br>
+                                <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableNine" cdkDrag [cdkDragDisabled]="checkIfView()">
+                                    <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
+                                    <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table9,item.user)">Task title: {{item.title}}</button>
+                                    <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table9)"><mat-icon>delete</mat-icon></button><br>
                                     <div class="choiceUser" *ngIf="settingShare">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table9,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
-                                                <mat-select name="user" ngModel>
+                                                <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                     <div *ngFor="let friend of myFriend">
                                                         <div *ngIf="checkAccept(friend.friendsEmail)">
                                                             <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -450,7 +482,7 @@
                                                     </div>
                                                 </mat-select>
                                             </mat-form-field>
-                                            <button type="submit" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                            <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
                                         </form>
                                     </div>
                                 </div>

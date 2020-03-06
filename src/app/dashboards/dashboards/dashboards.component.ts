@@ -45,12 +45,28 @@ import { ScrollToBottomDirective } from '../scroll-to-bottom.directive/scroll-to
     ]
 })
 export class DashboardsComponent implements OnInit {
+  view="view"
   projectName:string;
   allUser=[];
   myFriend=[];
   myInvities=[];
   audioNewMessage= new Audio();
   scroll: ScrollToBottomDirective;
+
+  checkRole(){
+    for(let item of this.shareFriends){
+      if(this.inreplece(item.friendsEmail)==this.userInfo[0].email) return item.role;
+    }
+    return false;
+  }
+  checkIfOwner(){
+    if(this.checkRole()=="owner") return true;
+    else return false;
+  }
+  checkIfView(){
+    if(this.checkRole()=="view") return true;
+    else return false;
+  }
   choiceUserForTask(user:string,tableParent:string,tableChild:string){
     this.db.kanban=this.projectName;
     this.db.updateChoiceUser(this.userId,user,tableParent,tableChild)
@@ -323,7 +339,7 @@ return false;
   shareProject(projectName){
     this.db.kanban=projectName;
     this.db.updateShare(this.userId,projectName,true);
-    this.db.writeShareFriends(this.userId,this.replece(this.userInfo[0].email),this.userId)
+    this.db.writeShareFriends(this.userId,this.replece(this.userInfo[0].email),this.userId,"owner")
     this.db.share(this.userId,this.userId,projectName);
     localStorage.setItem("lastTable","kanban")
     this.db.kanban=localStorage.getItem("lastTable");
@@ -331,9 +347,9 @@ return false;
     this.db.writeMessage(this.userId,projectName,projectName,this.getDate(),"Welcome to chat "+projectName)
   }
   
-  shareTable(item,projectName){
+  shareTable(item,projectName,role){
     this.db.kanban=projectName
-    this.db.writeShareFriends(this.userId,item.friendsEmail,item.friendsId);
+    this.db.writeShareFriends(this.userId,item.friendsEmail,item.friendsId,role);
     this.db.share(item.friendsId,this.userId,projectName)
     this.db.kanban=localStorage.getItem("lastTable")
   }
@@ -526,6 +542,8 @@ sharedInit(){
       }
   }
   addNewTable():void{
+    this.db.kanban=this.projectName;
+
     switch(this.numbers[0].number){
       case 0:this.updateTableTitle(this.table0,true);this.db.logSave(this.userId,"logAddNewTable","add new table",this.table0);break;
       case 1:this.updateTableTitle(this.table1,true);this.db.logSave(this.userId,"logAddNewTable","add new table",this.table1);break;
@@ -540,27 +558,28 @@ sharedInit(){
     }
   }
   deleteLastTable():void{
+    this.db.kanban=this.projectName;
     this.numbers[0].number--;
     switch(this.numbers[0].number){
-      case 0: this.db.removeTable(this.userId,this.table0);
+      case 0:this.db.removeTable(this.userId,this.table0);
       this.db.logSave(this.userId,"logDeleteLastTable","delete table",this.table0); this.db.writeTitleTable(this.userId,this.table0,"table1"); break;
-      case 1: this.db.removeTable(this.userId,this.table1);
+      case 1:this.db.removeTable(this.userId,this.table1);
       this.db.logSave(this.userId,"logDeleteLastTable","delete table",this.table1); this.db.writeTitleTable(this.userId,this.table1,"table2"); break;
-      case 2: this.db.removeTable(this.userId,this.table2);
+      case 2:this.db.removeTable(this.userId,this.table2);
       this.db.logSave(this.userId,"logDeleteLastTable","delete table",this.table2); this.db.writeTitleTable(this.userId,this.table2,"table3"); break;
-      case 3: this.db.removeTable(this.userId,this.table3);
+      case 3:this.db.removeTable(this.userId,this.table3);
       this.db.logSave(this.userId,"logDeleteLastTable","delete table",this.table3); this.db.writeTitleTable(this.userId,this.table3,"table4"); break;
-      case 4: this.db.removeTable(this.userId,this.table4);
+      case 4:this.db.removeTable(this.userId,this.table4);
       this.db.logSave(this.userId,"logDeleteLastTable","delete table",this.table4); this.db.writeTitleTable(this.userId,this.table4,"table5"); break;
-      case 5: this.db.removeTable(this.userId,this.table5);
+      case 5:this.db.removeTable(this.userId,this.table5);
       this.db.logSave(this.userId,"logDeleteLastTable","delete table",this.table5); this.db.writeTitleTable(this.userId,this.table5,"table6"); break;
-      case 6: this.db.removeTable(this.userId,this.table6);
+      case 6:this.db.removeTable(this.userId,this.table6);
       this.db.logSave(this.userId,"logDeleteLastTable","delete table",this.table6); this.db.writeTitleTable(this.userId,this.table6,"table7"); break;
-      case 7: this.db.removeTable(this.userId,this.table7);
+      case 7:this.db.removeTable(this.userId,this.table7);
       this.db.logSave(this.userId,"logDeleteLastTable","delete table",this.table7); this.db.writeTitleTable(this.userId,this.table7,"table8"); break;
-      case 8: this.db.removeTable(this.userId,this.table8);
+      case 8:this.db.removeTable(this.userId,this.table8);
       this.db.logSave(this.userId,"logDeleteLastTable","delete table",this.table8); this.db.writeTitleTable(this.userId,this.table8,"table9"); break;
-      case 9: this.db.removeTable(this.userId,this.table9);
+      case 9:this.db.removeTable(this.userId,this.table9);
       this.db.logSave(this.userId,"logDeleteLastTable","delete table",this.table9); this.db.writeTitleTable(this.userId,this.table9,"table10"); break;
     }
     this.db.writeUserNumber(this.userId,this.numbers[0].number)
@@ -671,7 +690,8 @@ sharedInit(){
           window.alert("Please correct all errors and resubmit add task");
         }
         else{
-          if(result){   
+          if(result){  
+            this.db.kanban=this.projectName; 
             if(addTable) {
               this.numbers[0].number++;
               this.db.writeUserNumber(this.userId,this.numbers[0].number);
@@ -679,6 +699,7 @@ sharedInit(){
             this.titleTable=result.value.titleTable.title;
             this.db.logSave(this.userId,"logUpdateTableTitle","update Table Title","update table "+title+" success")
             this.db.writeTitleTable(this.userId,title,this.titleTable);
+        
           }
         }
         }
@@ -707,6 +728,8 @@ sharedInit(){
     }
   }
   saveChanges():void{
+    this.db.kanban=this.projectName;
+    console.log(this.db.kanban)
     this.db.logSave(this.userId,"logSaveChanges","save changes","save changes")
     this.db.removeTable(this.auth.getUser().uid,this.table0);
     this.db.removeTable(this.auth.getUser().uid,this.table1);

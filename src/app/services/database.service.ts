@@ -118,10 +118,11 @@ export class DataService {
       });
   }
 //dla tego co sie dzieli
-  writeShareFriends(userId: string,friendsEmail:string,friendsId:string){
+  writeShareFriends(userId: string,friendsEmail:string,friendsId:string,role:string){
     firebase.database().ref('users/'+ userId+'/'+this.kanban+'/viewTables/share/'+friendsEmail).set({
     friendsEmail:friendsEmail,
-    friendsId:friendsId
+    friendsId:friendsId,
+    role:role
     });
   }
   removeShareFriends(userId:string,friendsEmail:string){
