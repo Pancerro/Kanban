@@ -49,7 +49,7 @@
                                 <mat-grid-list cols="5" rowHeight="1:1">
                                     <mat-grid-tile colspan="1"><img ngxGravatar [email]=inreplece(item.email)></mat-grid-tile>
                                     <mat-grid-tile colspan="3">{{inreplece(item.email)}}</mat-grid-tile>
-                                    <mat-grid-tile colspan="1"> <button mat-stroked-button color="primary" (click)="removeFriend(item.email)">x</button></mat-grid-tile>
+                                    <mat-grid-tile colspan="1"> <button mat-stroked-button color="primary" (click)="removeFriend(item)">x</button></mat-grid-tile>
                                 </mat-grid-list>
                                 </button>
                                 <mat-menu #mess="matMenu">
@@ -125,7 +125,7 @@
                     <div *ngIf="settingShare">
                         <div class="shareOption" *ngIf="checkIfOwner()">
                             <button mat-stroked-button color="primary" (click)="deleteShareProject(projectName)"><mat-icon>delete</mat-icon>Delete</button>
-                            <button mat-stroked-button color="primary" (click)="editShareProject(projectName)"><mat-icon>edit</mat-icon>Edit</button>
+                            <!-- <button mat-stroked-button color="primary" (click)="editShareProject(projectName)"><mat-icon>edit</mat-icon>Edit</button> -->
                             <button mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Share</button>
                             <br>
                             <div class="shareShared">

@@ -95,8 +95,10 @@ export class DashboardsComponent implements OnInit {
   dontAcceptInv(item){
     this.db.dontAcceptInvities(this.userId,item.friendsEmail,item.friendsId,this.replece(this.userInfo[0].email))
   }
-  removeFriend(email){
-    this.db.deleteFriends(this.userId,email);
+  removeFriend(item){
+    this.db.deleteFriends(this.userId,item.email);
+    this.db.deleteFriends(item.userId,this.replece(this.userInfo[0].email));
+    this.db.deleteAllMessage(this.userId,item.userId,this.replece(this.userInfo[0].email),item.email)
   }
   addFriend(result){
     if(this.checkUser(this.replece(result))){
@@ -227,10 +229,14 @@ return false;
               this.seeMyProject(localStorage.getItem("lastTable"));
               window.alert("Its name dont free! Use next name")
             }
-            else{
+            else{ 
+              console.log(this.db.kanban);
+              console.log(projectName);
               this.db.logSave(this.userId,"logEditKanbanProject","edit name kanban project","edit name kanban project: "+this.db.kanban+" success")
               this.db.removeKanbanTable(this.userId,this.replece(projectName));
               this.db.removeKanbanTableFromProject(this.userId,this.replece(projectName));
+              localStorage.setItem("lastTable",this.db.kanban)
+              console.log(this.db.kanban);
               this.db.writeKanbanTable(this.userId,this.replece(this.db.kanban))
               this.db.writeTitleTable(this.userId,"table0",this.tableTitle[0].title)
               this.db.writeTitleTable(this.userId,"table1",this.tableTitle[1].title)
@@ -243,8 +249,11 @@ return false;
               this.db.writeTitleTable(this.userId,"table8",this.tableTitle[8].title);
               this.db.writeTitleTable(this.userId,"table9",this.tableTitle[9].title);
               this.db.writeUserNumber(this.userId,this.numbers[0].number);
+              this.projectName=this.db.kanban;
+              console.log(this.db.kanban);
               this.saveChanges();
-              this.ngOnInit();
+             
+              this.ngOnInit();     
               this.seeMyProject(localStorage.getItem("lastTable"));
             }
           }
@@ -731,16 +740,16 @@ sharedInit(){
     this.db.kanban=this.projectName;
     console.log(this.db.kanban)
     this.db.logSave(this.userId,"logSaveChanges","save changes","save changes")
-    this.db.removeTable(this.auth.getUser().uid,this.table0);
-    this.db.removeTable(this.auth.getUser().uid,this.table1);
-    this.db.removeTable(this.auth.getUser().uid,this.table2);
-    this.db.removeTable(this.auth.getUser().uid,this.table3);
-    this.db.removeTable(this.auth.getUser().uid,this.table4);
-    this.db.removeTable(this.auth.getUser().uid,this.table5);
-    this.db.removeTable(this.auth.getUser().uid,this.table6);
-    this.db.removeTable(this.auth.getUser().uid,this.table7);
-    this.db.removeTable(this.auth.getUser().uid,this.table8);
-    this.db.removeTable(this.auth.getUser().uid,this.table9);
+    this.db.removeTable(this.userId,this.table0);
+    this.db.removeTable(this.userId,this.table1);
+    this.db.removeTable(this.userId,this.table2);
+    this.db.removeTable(this.userId,this.table3);
+    this.db.removeTable(this.userId,this.table4);
+    this.db.removeTable(this.userId,this.table5);
+    this.db.removeTable(this.userId,this.table6);
+    this.db.removeTable(this.userId,this.table7);
+    this.db.removeTable(this.userId,this.table8);
+    this.db.removeTable(this.userId,this.table9);
     for(let task of this.tableZero){
       if(task.endDate==null) task.endDate="";
       this.db.writeUserTable(this.userId,this.table0,this.replece(task.title),task.title,task.description,task.priority,task.color,task.endDate,task.user);

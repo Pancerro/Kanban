@@ -181,6 +181,10 @@ export class DataService {
   getMessageWitchFriend(myId:string,friendsEmail:string){
     return this.db.list('users/'+myId+'/chat/'+friendsEmail,ref=>ref.orderByChild('data')).valueChanges()
   }
+  deleteAllMessage(myId:string,friendsId:string,myEmail:string,friendsEmail:string){
+     this.db.list('users/'+myId+'/chat/').remove(friendsEmail)
+     this.db.list('users/'+friendsId+'/chat/').remove(myEmail)
+  }
 
 
 
