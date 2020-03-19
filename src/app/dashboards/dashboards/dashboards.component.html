@@ -15,14 +15,14 @@
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item (click)="removeProject(item.projectName)"><mat-icon>delete</mat-icon>Delete</button>
                                     <button mat-menu-item (click)="editProjectName(item.projectName)"><mat-icon>edit</mat-icon>Edit</button>
-                                    <button mat-menu-item (click)="shareProject(item.projectName)">Share</button>
+                                    <button *ngIf="false" mat-menu-item (click)="shareProject(item.projectName)">Share</button>
                                 </mat-menu>
                             </div>
                         </li>
                     </div>
                 </ol>
-                <p>Share Kanban Project Lists: </p>
-                <ol>
+                <p *ngIf="false">Share Kanban Project Lists: </p>
+                <ol *ngIf="false">
                     <div *ngFor="let item of shared">
                         <li>
                             <div class="example-box" [style.background]="changeBackground()" [style.color]="changeFont()">
@@ -115,7 +115,7 @@
             </mat-sidenav>
             <mat-sidenav-content [style.background]="changeBackground()" [style.color]="changeFont()">
                 <button mat-stroked-button color="primary" class="myKanbanProject" (click)="sidenav.toggle()">My Kanban Project</button>
-                <button mat-stroked-button color="primary" class="friends" (click)="sidenavright.toggle()">Friends</button>
+                <button mat-stroked-button *ngIf="false" color="primary" class="friends" (click)="sidenavright.toggle()">Friends</button>
                 <app-menu></app-menu>
                 <br>
                 <h3> Welcome {{item.email}}</h3>

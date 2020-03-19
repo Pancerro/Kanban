@@ -37,8 +37,20 @@ import { MenuComponent } from './dashboards/menu/menu.component'
 import { ScrollToBottomDirective } from './dashboards/scroll-to-bottom.directive/scroll-to-bottom.directive.component';
 import { GravatarModule } from  'ngx-gravatar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DeleteOptionComponent } from './modal/delete-option/delete-option.component';
+
 @NgModule({
-  entryComponents: [RegisterComponent,LoginComponent,AddTaskComponent,EditTaskComponent,EditTableNameComponent,AddCategoryComponent,EditCategoryComponent,CreateNewKanbanComponent],
+  entryComponents: [
+    RegisterComponent,
+    LoginComponent,
+    AddTaskComponent,
+    EditTaskComponent,
+    EditTableNameComponent,
+    AddCategoryComponent,
+    EditCategoryComponent,
+    CreateNewKanbanComponent,
+    DeleteOptionComponent
+  ],
   declarations: [
     AppComponent,
     WelcomePageComponent,
@@ -56,6 +68,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     CreateNewKanbanComponent,
     MenuComponent,
     ScrollToBottomDirective,
+    DeleteOptionComponent,
   ],
   imports: [
     BrowserModule,

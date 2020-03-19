@@ -9,6 +9,8 @@ import { EditTableNameComponent } from 'src/app/modal/edit-table-name/edit-table
 import { trigger, transition, style, animate} from '@angular/animations';
 import { CreateNewKanbanComponent } from 'src/app/modal/create-new-kanban/create-new-kanban.component';
 import { ScrollToBottomDirective } from '../scroll-to-bottom.directive/scroll-to-bottom.directive.component';
+import { DeleteOptionComponent } from 'src/app/modal/delete-option/delete-option.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboards',
@@ -204,10 +206,19 @@ return false;
     this.ngOnInit();
   }
   removeProject(projectName:string){
-    this.db.logSave(this.userId,"logRemoveProject","remove project","remove project: "+projectName)
-    this.db.removeKanbanTable(this.userId,this.replece(projectName));
-    this.db.removeKanbanTableFromProject(this.userId,this.replece(projectName));
-    if(projectName==this.db.kanban) this.seeMyProject("kanban")
+    const dialogRef = this.dialog.open(DeleteOptionComponent, {
+      width: '250px',
+      data: {name: projectName}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result==true){
+        this.db.logSave(this.userId,"logRemoveProject","remove project","remove project: "+projectName)
+        this.db.removeKanbanTable(this.userId,this.replece(projectName));
+        this.db.removeKanbanTableFromProject(this.userId,this.replece(projectName));
+        if(projectName==this.db.kanban) this.seeMyProject("kanban")
+      }
+    });
+  
   }
   editProjectName(projectName:string){
     this.db.kanban=projectName;
@@ -230,13 +241,10 @@ return false;
               window.alert("Its name dont free! Use next name")
             }
             else{ 
-              console.log(this.db.kanban);
-              console.log(projectName);
               this.db.logSave(this.userId,"logEditKanbanProject","edit name kanban project","edit name kanban project: "+this.db.kanban+" success")
               this.db.removeKanbanTable(this.userId,this.replece(projectName));
               this.db.removeKanbanTableFromProject(this.userId,this.replece(projectName));
               localStorage.setItem("lastTable",this.db.kanban)
-              console.log(this.db.kanban);
               this.db.writeKanbanTable(this.userId,this.replece(this.db.kanban))
               this.db.writeTitleTable(this.userId,"table0",this.tableTitle[0].title)
               this.db.writeTitleTable(this.userId,"table1",this.tableTitle[1].title)
@@ -444,7 +452,6 @@ sharedInit(){
   });
 }
   ngOnInit(){
-    console.log(localStorage.getItem("userId"))
     this.audioNewMessage.src = "../../../assets/1.mp3";
     this.audioNewMessage.load();
     localStorage.setItem("menu","KanbanTable");
@@ -507,6 +514,7 @@ sharedInit(){
       this.myInvities=res
     })
     this.projectName=this.db.kanban;
+    this.titleService.setTitle(this.projectName);
   }
   inreplece(replace:string):string{
     this.word="";
@@ -526,6 +534,7 @@ sharedInit(){
     private auth:AuthService,
     private db:DataService,
     public dialog: MatDialog,
+    private titleService: Title
   ) {
       this.userId=auth.getUser().uid;
     }
