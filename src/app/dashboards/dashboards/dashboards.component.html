@@ -10,7 +10,7 @@
                         <li *ngIf="!item.share">
                             <div class="example-box" [style.background]="changeBackground()" [style.color]="changeFont()">
 
-                                <button mat-stroked-button color="primary" class="buttonList" class="buttonList" [style.color]="changeFont()" (click)="seeMyProject(item.projectName)"> {{item.projectName}}</button>
+                                <button mat-stroked-button color="primary" class="buttonList" class="buttonList" [style.color]="changeFont()" (click)="seeMyProject(item.projectName)"> {{inreplece(item.projectName)}}</button>
                                 <button mat-button *ngIf="item.projectName!='kanban'" [matMenuTriggerFor]="menu">  <mat-icon aria-label="Menu">menu</mat-icon></button>
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item (click)="removeProject(item.projectName)"><mat-icon>delete</mat-icon>Delete</button>
@@ -119,7 +119,7 @@
                 <app-menu></app-menu>
                 <br>
                 <h3> Welcome {{item.email}}</h3>
-                <h3>You project name: {{projectName}}</h3>
+                <h3>You project name: {{inreplece(projectName)}}</h3>
                 <h3>You see {{numbers[0].number}} tables</h3>
                 <div>
                     <div *ngIf="settingShare">

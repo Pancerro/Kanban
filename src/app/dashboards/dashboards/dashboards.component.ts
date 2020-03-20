@@ -174,11 +174,12 @@ return false;
           }
           else{
             this.db.kanban=result.value.kanban.name;
-            if(this.checkIfProjectNameIsNotFree(this.db.kanban)){
-              window.alert("Its name dont free! Use next name")
+            if(this.checkIfProjectNameIsNotFree(this.replece(this.db.kanban))){
+              window.alert("This name is busy. Use another one")
             }
             else{
-            this.db.writeKanbanTable(this.userId,this.replece(this.db.kanban))
+            this.db.kanban=this.replece(this.db.kanban);
+            this.db.writeKanbanTable(this.userId,this.db.kanban)
             this.db.writeTitleTable(this.userId,"table0","to do")
             this.db.writeTitleTable(this.userId,"table1","doing")
             this.db.writeTitleTable(this.userId,"table2","done")
@@ -190,7 +191,7 @@ return false;
             this.db.writeTitleTable(this.userId,"table8","table9");
             this.db.writeTitleTable(this.userId,"table9","table10");
             this.db.writeUserNumber(this.userId,3);
-            this.db.logSave(this.userId,"logAddNewKanbanProject","add new kanban project","add new kanban project: "+this.title+" success")
+            this.db.logSave(this.userId,"logAddNewKanbanProject","add new kanban project","add new kanban project: "+this.db.kanban+" success")
             this.db.kanban=localStorage.getItem("lastTable")
           }
         }
@@ -258,9 +259,7 @@ return false;
               this.db.writeTitleTable(this.userId,"table9",this.tableTitle[9].title);
               this.db.writeUserNumber(this.userId,this.numbers[0].number);
               this.projectName=this.db.kanban;
-              console.log(this.db.kanban);
-              this.saveChanges();
-             
+              this.saveChanges();            
               this.ngOnInit();     
               this.seeMyProject(localStorage.getItem("lastTable"));
             }
@@ -514,19 +513,15 @@ sharedInit(){
       this.myInvities=res
     })
     this.projectName=this.db.kanban;
-    this.titleService.setTitle(this.projectName);
+    this.titleService.setTitle(this.inreplece(this.projectName));
   }
   inreplece(replace:string):string{
-    this.word="";
-    for(let letter of replace)
-    {
-      letter=letter.replace("1",".");
-      letter=letter.replace("2","#");      
-      letter=letter.replace("3","$");
-      letter=letter.replace("4","]");
-      letter=letter.replace("5","[");
-      this.word=this.word+letter;
-    }
+    this.word=replace
+      this.word=this.word.replace("@1@",".");
+      this.word=this.word.replace("@2@","#");      
+      this.word=this.word.replace("@3@","$");
+      this.word=this.word.replace("@4@","]");
+      this.word=this.word.replace("@5@","["); 
     return this.word;
   }
   
@@ -727,11 +722,11 @@ sharedInit(){
     this.word="";
     for(let letter of replace)
     {
-      letter=letter.replace(".","1");
-      letter=letter.replace("#","2");      
-      letter=letter.replace("$","3");
-      letter=letter.replace("[","4");
-      letter=letter.replace("]","5");
+      letter=letter.replace(".","@1@");
+      letter=letter.replace("#","@2@");      
+      letter=letter.replace("$","@3@");
+      letter=letter.replace("[","@4@");
+      letter=letter.replace("]","@5@");
       this.word=this.word+letter;
     }
     return this.word;
