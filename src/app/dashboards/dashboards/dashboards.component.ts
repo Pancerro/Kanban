@@ -519,7 +519,7 @@ sharedInit(){
     this.db.getInvities(this.userId).subscribe(res=>{
       this.myInvities=res
       if(res.length==0)  this.titleService.setTitle(this.inreplece(this.projectName));
-      else this.titleService.setTitle(this.inreplece(this.projectName)+" ("+res.length+")");
+      else this.titleService.setTitle(this.inreplece(this.projectName)+" ("+(res.length+this.notMess)+")");
       if(this.not<res.length){
         this.audioNewMessage.play();
         this.not=res.length;
@@ -527,10 +527,10 @@ sharedInit(){
     })
     this.db.getNewMassage(this.userId).subscribe(res=>{
     if(res.length>0){
-      this.titleService.setTitle("("+(res.length+this.not)+") "+ res[res.length-1].email+" write to you")
+      this.titleService.setTitle("("+(res.length+this.not)+") "+ this.checkEmail(res[res.length-1])+" write to you")
       if(res.length>=this.notMess){
          this.audioNewMessage.play() 
-         this.notMess=res.length;   
+         this.notMess=res.length;  
       } 
     } else this.titleService.setTitle(this.inreplece(this.projectName));
 
@@ -538,7 +538,13 @@ sharedInit(){
   }
   not:number=0;
   notMess:number=0;
-
+  checkEmail(emailItem){
+    for(let item of this.myFriend){
+      if(item.friendsEmail==this.replece(emailItem.email)){
+        return emailItem.email
+      }
+  }
+}
 
   constructor(
     private auth:AuthService,
