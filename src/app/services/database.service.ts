@@ -170,17 +170,32 @@ export class DataService {
     firebase.database().ref('users/'+myId+'/chat/'+friendsEmail+'/'+this.random).set({
       data:data,
       message:message,
-      email:userName
+      email:userName,
     })
     firebase.database().ref('users/'+friendsId+'/chat/'+myEmail+'/'+this.random).set({
       data:data,
       message:message,
-      email:userName
+      email:userName,
     })
+    this.deleteNewMesage(friendsId,myEmail);
+    this.newMessage(friendsId,myEmail,userName);
   }
   getMessageWitchFriend(myId:string,friendsEmail:string){
     return this.db.list('users/'+myId+'/chat/'+friendsEmail,ref=>ref.orderByChild('data')).valueChanges()
   }
+  //
+  newMessage(friendsId:string,myEmail:string,userName:string){
+    firebase.database().ref('users/'+friendsId+'/chatares/'+myEmail).set({
+      email:userName
+    })
+  }
+  deleteNewMesage(friendsId:string,myEmail:string){
+    this.db.list('users/'+friendsId+'/chatares/').remove(myEmail);
+  }
+  getNewMassage(myId:string){
+    return this.db.list('users/'+myId+'/chatares/').valueChanges();
+  }
+  //
   deleteAllMessage(myId:string,friendsId:string,myEmail:string,friendsEmail:string){
      this.db.list('users/'+myId+'/chat/').remove(friendsEmail)
      this.db.list('users/'+friendsId+'/chat/').remove(myEmail)

@@ -12,6 +12,7 @@ import { ScrollToBottomDirective } from '../scroll-to-bottom.directive/scroll-to
 import { DeleteOptionComponent } from 'src/app/modal/delete-option/delete-option.component';
 import { Title } from '@angular/platform-browser';
 import { IfStmt } from '@angular/compiler';
+import { timeoutWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboards',
@@ -83,11 +84,13 @@ export class DashboardsComponent implements OnInit {
   }
   sendMessageForFriend(message:string,formReset,id:string,email:string){
     this.db.writeMessageToFriends(this.userId,id, this.replece(this.userInfo[0].email),email,this.getDate(),message,this.userInfo[0].email)
+   
     formReset.resetForm();
   }
   myMessageWitchFriend=[];
   getMyFriendMessage(email:string){
-    this.db.getMessageWitchFriend(this.userId,email).subscribe(res=>this.myMessageWitchFriend=res)
+    this.db.getMessageWitchFriend(this.userId,email).subscribe(res=>this.myMessageWitchFriend=res) 
+    this.db.deleteNewMesage(this.userId,email);
   }
   changeStatus(email){
     this.db.updateOnline(email,!this.checkStatus(email))
@@ -521,12 +524,22 @@ sharedInit(){
         this.audioNewMessage.play();
         this.not=res.length;
       }
-    
     })
+    this.db.getNewMassage(this.userId).subscribe(res=>{
+    if(res.length>0){
+      this.titleService.setTitle("("+(res.length+this.not)+") "+ res[res.length-1].email+" write to you")
+      if(res.length>=this.notMess){
+         this.audioNewMessage.play() 
+         this.notMess=res.length;   
+      } 
+    } else this.titleService.setTitle(this.inreplece(this.projectName));
 
-  
+    })
   }
   not:number=0;
+  notMess:number=0;
+
+
   constructor(
     private auth:AuthService,
     private db:DataService,
