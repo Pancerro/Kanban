@@ -183,6 +183,7 @@ export class WelcomePageComponent  implements OnInit {
         this.db.writeCategory(this.userId,"school","white");
         this.db.writeUserNumber(this.userId,3);
         this.db.writeKanbanTable(this.userId,this.db.kanban)
+        this.db.updateOnline(this.replece(this.email),true);
       }
     });
   this.db.updateOnline(this.replece(this.email),true);
@@ -193,13 +194,14 @@ replece(replace:string):string{
   this.word="";
   for(let letter of replace)
   {
-    letter=letter.replace(".","1");
-    letter=letter.replace("#","2");      
-    letter=letter.replace("$","3");
-    letter=letter.replace("[","4");
-    letter=letter.replace("]","5");
+    letter=letter.replace(".","@1@");
+    letter=letter.replace("#","@2@");      
+    letter=letter.replace("$","@3@");
+    letter=letter.replace("[","@4@");
+    letter=letter.replace("]","@5@");
     this.word=this.word+letter;
   }
   return this.word;
 }
+
 }

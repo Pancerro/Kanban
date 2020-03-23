@@ -11,6 +11,7 @@ import { CreateNewKanbanComponent } from 'src/app/modal/create-new-kanban/create
 import { ScrollToBottomDirective } from '../scroll-to-bottom.directive/scroll-to-bottom.directive.component';
 import { DeleteOptionComponent } from 'src/app/modal/delete-option/delete-option.component';
 import { Title } from '@angular/platform-browser';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-dashboards',
@@ -131,6 +132,7 @@ export class DashboardsComponent implements OnInit {
 
 checkStatus(email){
   for(let item of this.allUser){
+    
     if(item.email==email){
       if(item.online) return true;
       else return false;
@@ -149,6 +151,7 @@ return false;
 checkFriend(email){
   for(let item of this.myFriend){
     if(item.friendsEmail==email){
+      if(item.friendsEmail==this.replece(this.userInfo[0].email)) return false
       return true;
     }
 }
@@ -451,7 +454,7 @@ sharedInit(){
   });
 }
   ngOnInit(){
-    this.audioNewMessage.src = "../../../assets/1.mp3";
+    this.audioNewMessage.src = "assets/2.mp3";
     this.audioNewMessage.load();
     localStorage.setItem("menu","KanbanTable");
     this.db.getShare(this.userId).subscribe(res=>{
@@ -508,23 +511,22 @@ sharedInit(){
     })
     this.db.getAllMyFriends(this.userId).subscribe(res=>{
       this.myFriend=res;
-    })
+    })    
+    this.projectName=this.db.kanban;
     this.db.getInvities(this.userId).subscribe(res=>{
       this.myInvities=res
+      if(res.length==0)  this.titleService.setTitle(this.inreplece(this.projectName));
+      else this.titleService.setTitle(this.inreplece(this.projectName)+" ("+res.length+")");
+      if(this.not<res.length){
+        this.audioNewMessage.play();
+        this.not=res.length;
+      }
+    
     })
-    this.projectName=this.db.kanban;
-    this.titleService.setTitle(this.inreplece(this.projectName));
-  }
-  inreplece(replace:string):string{
-    this.word=replace
-      this.word=this.word.replace("@1@",".");
-      this.word=this.word.replace("@2@","#");      
-      this.word=this.word.replace("@3@","$");
-      this.word=this.word.replace("@4@","]");
-      this.word=this.word.replace("@5@","["); 
-    return this.word;
-  }
+
   
+  }
+  not:number=0;
   constructor(
     private auth:AuthService,
     private db:DataService,
@@ -729,6 +731,16 @@ sharedInit(){
       letter=letter.replace("]","@5@");
       this.word=this.word+letter;
     }
+    return this.word;
+  }
+
+  inreplece(replace:string):string{
+    this.word=replace
+      this.word=this.word.replace("@1@",".");
+      this.word=this.word.replace("@2@","#");      
+      this.word=this.word.replace("@3@","$");
+      this.word=this.word.replace("@4@","]");
+      this.word=this.word.replace("@5@","["); 
     return this.word;
   }
   drop(event: CdkDragDrop<string[]>) {

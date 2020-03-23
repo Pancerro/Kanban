@@ -172,16 +172,15 @@ export class SettingsComponent implements OnInit {
     .then(()=> this.auth.deleteUser())
     
   }
-
   replece(replace:string):string{
     this.word="";
     for(let letter of replace)
     {
-      letter=letter.replace(".","1");
-      letter=letter.replace("#","2");      
-      letter=letter.replace("$","3");
-      letter=letter.replace("[","4");
-      letter=letter.replace("]","5");
+      letter=letter.replace(".","@1@");
+      letter=letter.replace("#","@2@");      
+      letter=letter.replace("$","@3@");
+      letter=letter.replace("[","@4@");
+      letter=letter.replace("]","@5@");
       this.word=this.word+letter;
     }
     return this.word;
