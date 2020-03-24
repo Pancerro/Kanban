@@ -80,11 +80,31 @@
                     <div *ngIf="checkFriend(item.email)">
                         <div *ngIf="checkAccept(item.email)">
                             <p *ngIf="!item.online">
+                                <button mat-button class="mess" (click)="getMyFriendMessage(item.email)" [matMenuTriggerFor]="mess">
                                 <mat-grid-list cols="4" rowHeight="1:1">
                                     <mat-grid-tile colspan="3">{{inreplece(item.email)}}</mat-grid-tile>
                                     <mat-grid-tile colspan="1"> <button mat-stroked-button color="primary" (click)="removeFriend(item.email)">x</button></mat-grid-tile>
                                 </mat-grid-list>
+                                </button>
+                                <mat-menu #mess="matMenu">
+                                    <div (click)="dontClose($event)">
+                                        <div class="chatWitchFriend" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                                            <div *ngFor="let mess of myMessageWitchFriend">
+                                                <img ngxGravatar [email]=mess.email> {{mess.email}}
+                                                <p>{{mess.message}}</p>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <form (ngSubmit)="sendMessageForFriend(sendMessageForm.value.message,sendMessageForm,item.userId,item.email)" #sendMessageForm="ngForm">
 
+                                            <div>
+                                                <mat-form-field>
+                                                    <input matInput type="text" placeholder="Message" required name="message" ngModel>
+                                                </mat-form-field>
+                                                <button type="submit" mat-stroked-button color="primary" [disabled]="sendMessageForm.invalid">Send</button></div>
+                                        </form>
+                                    </div>
+                                </mat-menu>
                         </div>
                     </div>
                 </div>

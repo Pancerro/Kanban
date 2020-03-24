@@ -355,7 +355,7 @@ return false;
   currentDate:string
   getDate(){
     this.date=new Date;
-    this.currentDate=(this.date.getDate()+'/'+this.db.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.db.zero(this.date.getHours())+this.date.getHours()+':'+this.db.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.db.zero(this.date.getSeconds())+this.date.getSeconds());
+    this.currentDate=(this.date.getDate()+'/'+this.db.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.db.zero(this.date.getHours())+this.date.getHours()+':'+this.db.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.db.zero(this.date.getSeconds())+this.date.getSeconds()+':'+this.db.zero(this.date.getMilliseconds())+ this.date.getMilliseconds());
     return this.currentDate;
   }
   shareProject(projectName){
@@ -519,7 +519,7 @@ sharedInit(){
     this.db.getInvities(this.userId).subscribe(res=>{
       this.myInvities=res
       if(res.length==0)  this.titleService.setTitle(this.inreplece(this.projectName));
-      else this.titleService.setTitle(this.inreplece(this.projectName)+" ("+(res.length+this.notMess)+")");
+      else this.titleService.setTitle(this.inreplece(this.projectName)+" ("+res.length+") invitations");
       if(this.not<res.length){
         this.audioNewMessage.play();
         this.not=res.length;
@@ -527,7 +527,7 @@ sharedInit(){
     })
     this.db.getNewMassage(this.userId).subscribe(res=>{
     if(res.length>0){
-      this.titleService.setTitle("("+(res.length+this.not)+") "+ this.checkEmail(res[res.length-1])+" write to you")
+      this.titleService.setTitle("("+res.length+") "+ this.checkEmail(res[res.length-1])+" write to you")
       if(res.length>=this.notMess){
          this.audioNewMessage.play() 
          this.notMess=res.length;  
@@ -754,7 +754,7 @@ sharedInit(){
   }
 
   inreplece(replace:string):string{
-    this.word=replace
+      this.word=replace
       this.word=this.word.replace("@1@",".");
       this.word=this.word.replace("@2@","#");      
       this.word=this.word.replace("@3@","$");
