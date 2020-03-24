@@ -18,35 +18,6 @@ import { timeoutWith } from 'rxjs/operators';
   selector: 'app-dashboards',
   templateUrl: './dashboards.component.html',
   styleUrls: ['./dashboards.component.css'],
-  animations: [
-    trigger('itemAnim', [
-      transition(':enter', [
-        style({transform: 'translateX(-200%)',
-        backgroundColor: 'green'}),
-        animate(350)
-      ]),
-      transition(':leave', [
-      style({
-      backgroundColor: 'red',
-      opacity: 1}),
-      animate('0.5s ease-in')
-      ])
-      ]),
-      trigger('itemTaskAnim', [
-        transition(':enter', [
-          style({
-          opacity:1,
-          backgroundColor: 'green'}),
-          animate('0.1s ease-in')
-        ]),
-        transition(':leave', [
-        style({
-        backgroundColor: 'red',
-        opacity: 1}),
-        animate('0.1s ease-out')
-        ])
-        ])
-    ]
 })
 export class DashboardsComponent implements OnInit {
   view="view"
@@ -84,7 +55,6 @@ export class DashboardsComponent implements OnInit {
   }
   sendMessageForFriend(message:string,formReset,id:string,email:string){
     this.db.writeMessageToFriends(this.userId,id, this.replece(this.userInfo[0].email),email,this.getDate(),message,this.userInfo[0].email)
-   
     formReset.resetForm();
   }
   myMessageWitchFriend=[];
@@ -97,23 +67,27 @@ export class DashboardsComponent implements OnInit {
   }
   acceptInv(item){
     this.db.acceptInvities(this.userId,item.friendsEmail,item.friendsId,this.replece(this.userInfo[0].email))
+    this.db.logSave(this.userId,"inv","accept","accept inv for "+item.friendsEmail);
   }
   dontAcceptInv(item){
     this.db.dontAcceptInvities(this.userId,item.friendsEmail,item.friendsId,this.replece(this.userInfo[0].email))
+    this.db.logSave(this.userId,"inv","dont-accept","dont-accept inv for "+item.friendsEmail);
   }
   removeFriend(item){
     this.db.deleteFriends(this.userId,item.email);
     this.db.deleteFriends(item.userId,this.replece(this.userInfo[0].email));
     this.db.deleteAllMessage(this.userId,item.userId,this.replece(this.userInfo[0].email),item.email)
+    this.db.logSave(this.userId,"delete friend","delete","delete"+item.Email);
   }
   addFriend(result){
     if(this.checkUser(this.replece(result))){
     if(!this.checkFriend(this.replece(result))){
      this.db.writeMyFriends(this.userId,this.replece(result),this.getFriendsId(this.replece(result)),false);
      this.db.sendInvities(this.getFriendsId(this.replece(result)),this.replece(this.userInfo[0].email),this.userId,false);
+     this.db.logSave(this.userId,"inv","send","send inv for "+result);
     } else window.alert("User is your friend")
     }
-    else window.alert("Dont have user who use this email")
+    else window.alert("This email adress is incorrect")
   }
   checkAccept(email){
     for(let item of this.myFriend){
@@ -181,7 +155,7 @@ return false;
           else{
             this.db.kanban=result.value.kanban.name;
             if(this.checkIfProjectNameIsNotFree(this.replece(this.db.kanban))){
-              window.alert("This name is busy. Use another one")
+              window.alert("This name is already taken. Please enter different one")
             }
             else{
             this.db.kanban=this.replece(this.db.kanban);
@@ -210,6 +184,7 @@ return false;
     this.userId=this.auth.getUser().uid;
     this.db.kanban=projectName;
     localStorage.setItem("lastTable",projectName);
+    this.db.logSave(this.userId,"See project","see","See"+projectName);
     this.ngOnInit();
   }
   removeProject(projectName:string){
@@ -332,6 +307,7 @@ return false;
   deleteShareProject(projectName){
     this.stopShareProject(projectName)
      this.removeProject(projectName)
+     this.db.logSave(this.userId,"Delete share project","Delete","Delete "+projectName);
      window.location.reload();
   }
 
@@ -348,7 +324,9 @@ return false;
     for(let item of this.shareFriends){
       this.db.removeShare(item.friendsId,projectName); 
       this.db.removeShareFriends(this.userId,item.friendsEmail)
+      
     }  
+    this.db.logSave(this.userId,"Stop share","share","stop share project "+projectName);
     this.settingShare=false;
   }
   date:Date;
@@ -365,6 +343,7 @@ return false;
     this.db.share(this.userId,this.userId,projectName);
     localStorage.setItem("lastTable","kanban")
     this.db.kanban=localStorage.getItem("lastTable");
+    this.db.logSave(this.userId,"Start share","share","Start share project "+projectName);
     this.ngOnInit()
     this.db.writeMessage(this.userId,projectName,projectName,this.getDate(),"Welcome to chat "+projectName)
   }
@@ -374,6 +353,7 @@ return false;
     this.db.writeShareFriends(this.userId,item.friendsEmail,item.friendsId,role);
     this.db.share(item.friendsId,this.userId,projectName)
     this.db.kanban=localStorage.getItem("lastTable")
+    this.db.logSave(this.userId,"Start share project","share","Start share project "+projectName+" for "+item.friendsEmail);
   }
 checkShare(email,projectName){
   this.db.kanban=projectName
@@ -392,6 +372,7 @@ stopShare(friends,projectName){
   this.db.removeShareFriends(this.userId,friends.friendsEmail);
   this.db.removeShare(friends.friendsId,projectName)
   this.db.kanban=localStorage.getItem("lastTable")
+  this.db.logSave(this.userId,"Stop share project","share","Stop share project "+projectName+" for "+friends.friendsEmail);
 }
 settingShare=false;
 viewMessage=[]
@@ -401,6 +382,7 @@ seeMyShareProject(item){
   this.settingShare=true;
   this.db.kanban=item.kanban;
   this.userId=item.userId;
+  this.db.logSave(this.userId,"See share project","see","see share project "+item.kanban);
   this.sharedInit();
   this.db.getShareFriends(this.userId).subscribe(res=>{this.shareFriends=res});
   this.db.getMessage(this.userId,item.kanban).subscribe(res=>{
@@ -414,6 +396,7 @@ sendMessage(message,formReset){
   this.db.writeMessage(this.userId,this.userInfo[0].email,this.db.kanban,this.getDate(),message)
   this.db.getMessage(this.userId,this.projectName).subscribe(res=>this.viewMessage=res)
   formReset.resetForm();
+  this.db.logSave(this.userId,"Send message","chat","send message");
 }
 shareFriends=[]
 shared=[]
@@ -637,7 +620,7 @@ sharedInit(){
           this.endDate=result.value.task.endDate;
           if(this.endDate) this.endData=this.endDate.getDate()+'/'+(this.endDate.getMonth()+1)+'/'+this.endDate.getFullYear();
           else this.endData=null;
-          if(this.checkIfTaskTitleIsNotFree(this.title,tableName)) window.alert("Its task title dont free! Use next task title")
+          if(this.checkIfTaskTitleIsNotFree(this.title,tableName)) window.alert("This task name is already taken. Please enter different one")
            else{
             this.db.kanban=this.projectName
             this.db.writeUserTable(this.userId,tableName,this.replece(this.title),this.title,this.description,this.priority,this.color,this.endData,"");

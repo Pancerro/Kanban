@@ -19,7 +19,7 @@ export class LogiComponent implements OnInit {
   userInfo=[];
   fontColor:string;
   background:string;
-  displayedColumns: string[] = ['operation', 'data','description'];
+  displayedColumns: string[] = ['action', 'data','description'];
   dataLogs: MatTableDataSource<Log>;
   constructor(
     private auth:AuthService,
@@ -62,7 +62,7 @@ export class LogiComponent implements OnInit {
     this.dataLogs.filter = filterValue.trim().toLowerCase();
   }
   sortO=true ;
-  sortByOperation(){
+  sortByAction(){
     this.dataLogs=new MatTableDataSource(this.logs)
     if(this.sortO){
     this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.type<b.type?-1:1))
