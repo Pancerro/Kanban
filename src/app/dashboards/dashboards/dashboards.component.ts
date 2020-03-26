@@ -510,7 +510,7 @@ sharedInit(){
     })
     this.db.getNewMassage(this.userId).subscribe(res=>{
     if(res.length>0){
-      this.titleService.setTitle("("+res.length+") "+ this.checkEmail(res[res.length-1])+" write to you")
+      this.titleService.setTitle("("+res.length+") "+ this.checkEmail(res[res.length-1])+"sent you a message")
       if(res.length>=this.notMess){
          this.audioNewMessage.play() 
          this.notMess=res.length;  

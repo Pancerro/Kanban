@@ -87,7 +87,7 @@
                                 </mat-grid-list>
                                 </button>
                                 <mat-menu #mess="matMenu">
-                                    <div (click)="dontClose($event)">
+                                    <div (click)="dontClose($event)" class="chatMenu">
                                         <div class="chatWitchFriend" #scrollMe [scrollTop]="scrollMe.scrollHeight">
                                             <div *ngFor="let mess of myMessageWitchFriend">
                                                 <img ngxGravatar [email]=mess.email> {{mess.email}}
