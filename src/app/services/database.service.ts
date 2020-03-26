@@ -3,6 +3,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import Timestamp = firebase.firestore.Timestamp;
 @Injectable({
   providedIn: 'root'
 })
@@ -10,6 +11,7 @@ export class DataService {
   date:Date= new Date();
   currentDate:string;
   random:string;
+  x:Timestamp
   kanban=localStorage.getItem("lastTable");
   constructor(public db:AngularFireDatabase,
     public auth:AuthService) {}
@@ -168,12 +170,12 @@ export class DataService {
     this.random=Math.random().toString();
     this.random=this.random.replace("0.","chatWitchFriend");
     firebase.database().ref('users/'+myId+'/chat/'+friendsEmail+'/'+this.random).set({
-      data:data,
+      data:firebase.database.ServerValue.TIMESTAMP,
       message:message,
       email:userName,
     })
     firebase.database().ref('users/'+friendsId+'/chat/'+myEmail+'/'+this.random).set({
-      data:data,
+      data:firebase.database.ServerValue.TIMESTAMP,
       message:message,
       email:userName,
     })
