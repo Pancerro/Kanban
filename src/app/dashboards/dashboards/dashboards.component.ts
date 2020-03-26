@@ -510,7 +510,7 @@ sharedInit(){
     })
     this.db.getNewMassage(this.userId).subscribe(res=>{
     if(res.length>0){
-      this.titleService.setTitle("("+res.length+") "+ this.checkEmail(res[res.length-1])+"sent you a message")
+      this.titleService.setTitle("("+res.length+") "+ this.checkEmail(res[res.length-1])+" sent you a message")
       if(res.length>=this.notMess){
          this.audioNewMessage.play() 
          this.notMess=res.length;  
@@ -738,11 +738,13 @@ sharedInit(){
 
   inreplece(replace:string):string{
       this.word=replace
+      for(let letter of replace){
       this.word=this.word.replace("@1@",".");
       this.word=this.word.replace("@2@","#");      
       this.word=this.word.replace("@3@","$");
       this.word=this.word.replace("@4@","]");
       this.word=this.word.replace("@5@","["); 
+      }
     return this.word;
   }
   drop(event: CdkDragDrop<string[]>) {
@@ -756,7 +758,6 @@ sharedInit(){
   }
   saveChanges():void{
     this.db.kanban=this.projectName;
-    console.log(this.db.kanban)
     this.db.logSave(this.userId,"logSaveChanges","save changes","save changes")
     this.db.removeTable(this.userId,this.table0);
     this.db.removeTable(this.userId,this.table1);
