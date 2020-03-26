@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/database.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-menu',
@@ -23,10 +24,12 @@ constructor(
   private auth:AuthService,
   private db:DataService,
   private router: Router,
+  private titleService: Title
 ) {
     this.userId=auth.getUser().uid;
   }
   logout():void{
+    this.titleService.setTitle("You are logout");
     this.db.logSave(this.userId,"logOut","log out","log out")
     this.db.updateOnline(this.replece(this.auth.getUser().email),false);
     this.auth.logout().then(() => this.router.navigate(['/welcome-page']));

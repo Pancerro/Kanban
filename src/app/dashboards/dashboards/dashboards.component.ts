@@ -82,9 +82,11 @@ export class DashboardsComponent implements OnInit {
   addFriend(result){
     if(this.checkUser(this.replece(result))){
     if(!this.checkFriend(this.replece(result))){
+      if(result!=this.userInfo[0].email){
      this.db.writeMyFriends(this.userId,this.replece(result),this.getFriendsId(this.replece(result)),false);
      this.db.sendInvities(this.getFriendsId(this.replece(result)),this.replece(this.userInfo[0].email),this.userId,false);
      this.db.logSave(this.userId,"inv","send","send inv for "+result);
+    } else window.alert("This is your email")
     } else window.alert("User is your friend")
     }
     else window.alert("This email adress is incorrect, or is not in database")
