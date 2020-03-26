@@ -87,7 +87,7 @@ export class DashboardsComponent implements OnInit {
      this.db.logSave(this.userId,"inv","send","send inv for "+result);
     } else window.alert("User is your friend")
     }
-    else window.alert("This email adress is incorrect")
+    else window.alert("This email adress is incorrect, or is not in database")
   }
   checkAccept(email){
     for(let item of this.myFriend){

@@ -38,7 +38,7 @@
                 <h3><input type="button" class="onlineStatus" *ngIf="checkStatus(replece(item.email))" (click)="changeStatus(replece(item.email))">
                     <input type="button" class="offlineStatus" *ngIf="!checkStatus(replece(item.email))" (click)="changeStatus(replece(item.email))"> {{item.email}}
                 </h3>
-                <h4>My Friends lists:</h4>
+                <h4>My Friends list:</h4>
                 <h4>Online:</h4>
                 <div *ngFor="let item of allUser">
                     <div *ngIf="checkFriend(item.email)">
@@ -247,8 +247,8 @@
                         <div *ngIf="numbers[0].number>1" class="example-container">
                             <h2>{{tableTitle[1].title}}</h2>
                             <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table1)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table1)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table1,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table1)">Remove all tasks </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table1,false)">Edit Table title </button>
                             <div cdkDropList [cdkDropListData]="tableOne" class="example-list" (cdkDropListDropped)="drop($event)">
                                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableOne" cdkDrag [cdkDragDisabled]="checkIfView()">
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
@@ -275,8 +275,8 @@
                         <div *ngIf="numbers[0].number>2" class="example-container">
                             <h2>{{tableTitle[2].title}}</h2>
                             <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table2)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table2)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table2,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table2)">Remove all tasks </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table2,false)">Edit Table title </button>
                             <div cdkDropList [cdkDropListData]="tableTwo" class="example-list" (cdkDropListDropped)="drop($event)">
                                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableTwo" cdkDrag [cdkDragDisabled]="checkIfView()">
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
@@ -304,8 +304,8 @@
                         <div *ngIf="numbers[0].number>3" class="example-container">
                             <h2>{{tableTitle[3].title}}</h2>
                             <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table3)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table3)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table3,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table3)">Remove all tasks </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table3,false)">Edit Table title </button>
                             <div cdkDropList [cdkDropListData]="tableThree" class="example-list" (cdkDropListDropped)="drop($event)">
                                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableThree" cdkDrag [cdkDragDisabled]="checkIfView()">
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
@@ -333,8 +333,8 @@
                         <div *ngIf="numbers[0].number>4" class="example-container">
                             <h2>{{tableTitle[4].title}}</h2>
                             <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table4)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table4)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table4,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table4)">Remove all tasks </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table4,false)">Edit Table title </button>
                             <div cdkDropList [cdkDropListData]="tableFour" class="example-list" (cdkDropListDropped)="drop($event)">
                                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableFour" cdkDrag [cdkDragDisabled]="checkIfView()">
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
@@ -363,8 +363,8 @@
                         <div *ngIf="numbers[0].number>5" class="example-container">
                             <h2>{{tableTitle[5].title}}</h2>
                             <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table5)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table5)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table5,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table5)">Remove all tasks</button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table5,false)">Edit Table title </button>
                             <div cdkDropList [cdkDropListData]="tableFive" class="example-list" (cdkDropListDropped)="drop($event)">
                                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableFive" cdkDrag [cdkDragDisabled]="checkIfView()">
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
@@ -393,8 +393,8 @@
                         <div *ngIf="numbers[0].number>6" class="example-container">
                             <h2>{{tableTitle[6].title}}</h2>
                             <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table6)">	<mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table6)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table6,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table6)">Remove all tasks </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table6,false)">Edit Table title </button>
                             <div cdkDropList [cdkDropListData]="tableSix" class="example-list" (cdkDropListDropped)="drop($event)">
                                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableSix" cdkDrag [cdkDragDisabled]="checkIfView()">
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
@@ -423,8 +423,8 @@
                         <div *ngIf="numbers[0].number>7" class="example-container">
                             <h2>{{tableTitle[7].title}}</h2>
                             <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table7)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table7)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table7,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table7)">Remove all tasks </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table7,false)">Edit Table title </button>
                             <div cdkDropList [cdkDropListData]="tableSeven" class="example-list" (cdkDropListDropped)="drop($event)">
                                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableSeven" cdkDrag [cdkDragDisabled]="checkIfView()">
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
@@ -453,8 +453,8 @@
                         <div *ngIf="numbers[0].number>8" class="example-container">
                             <h2>{{tableTitle[8].title}}</h2>
                             <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table8)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table8)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table8,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table8)">Remove all tasks </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table8,false)">Edit Table title </button>
                             <div cdkDropList [cdkDropListData]="tableEight" class="example-list" (cdkDropListDropped)="drop($event)">
                                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableEight" cdkDrag [cdkDragDisabled]="checkIfView()">
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
@@ -482,8 +482,8 @@
                         <div *ngIf="numbers[0].number>9" class="example-container">
                             <h2>{{tableTitle[9].title}}</h2>
                             <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="addTask(table9)"><mat-icon>add_circle</mat-icon></button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table9)">Remove all Task </button>
-                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table9,false)">Edit Title Table </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="removeAllTask(table9)">Remove all tasks </button>
+                            <button mat-stroked-button color="primary" [disabled]="checkIfView()" (click)="updateTableTitle(table9,false)">Edit Table title </button>
                             <div cdkDropList [cdkDropListData]="tableNine" class="example-list" (cdkDropListDropped)="drop($event)">
                                 <div class="example-box" [style.backgroundColor]="item.color" *ngFor="let item of tableNine" cdkDrag [cdkDragDisabled]="checkIfView()">
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
