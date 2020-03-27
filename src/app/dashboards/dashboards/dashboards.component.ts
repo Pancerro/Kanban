@@ -87,7 +87,7 @@ export class DashboardsComponent implements OnInit {
      this.db.sendInvities(this.getFriendsId(this.replece(result)),this.replece(this.userInfo[0].email),this.userId,false);
      this.db.logSave(this.userId,"inv","send","send inv for "+result);
     } else window.alert("This is your email")
-    } else window.alert("User is your friend")
+    } else window.alert("This user is already your friend")
     }
     else window.alert("This email adress is incorrect, or is not in database")
   }
