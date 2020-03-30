@@ -110,10 +110,18 @@ export class DashboardsComponent implements OnInit {
     this.db.logSave(this.userId,"inv","dont-accept","dont-accept inv for "+item.friendsEmail);
   }
   removeFriend(item){
-    this.db.deleteFriends(this.userId,item.email);
-    this.db.deleteFriends(item.userId,this.replece(this.userInfo[0].email));
-    this.db.deleteAllMessage(this.userId,item.userId,this.replece(this.userInfo[0].email),item.email)
-    this.db.logSave(this.userId,"delete friend","delete","delete"+item.Email);
+    const dialogRef = this.dialog.open(DeleteOptionComponent, {
+      width: '250px',
+      data: {name: item.email}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result==true){
+        this.db.deleteFriends(this.userId,item.email);
+        this.db.deleteFriends(item.userId,this.replece(this.userInfo[0].email));
+        this.db.deleteAllMessage(this.userId,item.userId,this.replece(this.userInfo[0].email),item.email)
+        this.db.logSave(this.userId,"delete friend","delete","delete"+item.Email);
+      }
+    });
   }
   addFriend(result,addForm){
     if(this.checkUser(this.replece(result))){
@@ -239,7 +247,6 @@ return false;
         if(projectName==this.db.kanban) this.seeMyProject("kanban")
       }
     });
-  
   }
   editProjectName(projectName:string){
     this.db.kanban=projectName;
@@ -545,7 +552,7 @@ sharedInit(){
       else this.titleService.setTitle(this.inreplece(this.projectName)+" ("+res.length+") invitations");
       if(this.not<res.length){
         this.audioNewMessage.play();
-        this.not=res.length;
+        this.not=res.length-1;
       }
     })
     this.db.getNewMassage(this.userId).subscribe(res=>{
