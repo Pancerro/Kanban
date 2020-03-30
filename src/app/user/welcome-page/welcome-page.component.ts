@@ -56,12 +56,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
   ]
 })
 
-export class WelcomePageComponent  implements OnInit {
-  ngOnInit(): void {
-    this.audio.src = "../../../assets/1.mp3";
-    this.audio.load();
-    this.audio.play();
-  }
+export class WelcomePageComponent  {
   constructor(public dialog: MatDialog,
     private router: Router,
     public auth:AuthService,

@@ -223,9 +223,26 @@
 }
 
 .sideNavRight {
-    width: auto;
+    width: auto+10px;
 }
 
 .sidenavleft {
     width: auto;
+}
+
+.offline {
+    color: grey;
+}
+
+.label {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.addFriend {
+    margin-left: 30px;
+}
+
+.text {
+    white-space: pre-wrap;
 }

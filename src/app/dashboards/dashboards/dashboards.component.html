@@ -15,14 +15,14 @@
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item (click)="removeProject(item.projectName)"><mat-icon>delete</mat-icon>Delete</button>
                                     <button mat-menu-item (click)="editProjectName(item.projectName)"><mat-icon>edit</mat-icon>Edit</button>
-                                    <button *ngIf="false" mat-menu-item (click)="shareProject(item.projectName)">Share</button>
+                                    <button mat-menu-item (click)="shareProject(item.projectName)">Share</button>
                                 </mat-menu>
                             </div>
                         </li>
                     </div>
                 </ol>
-                <p *ngIf="false">Share Kanban Project Lists: </p>
-                <ol *ngIf="false">
+                <p>Share Kanban Project Lists: </p>
+                <ol>
                     <div *ngFor="let item of shared">
                         <li>
                             <div class="example-box" [style.background]="changeBackground()" [style.color]="changeFont()">
@@ -39,85 +39,112 @@
                     <input type="button" class="offlineStatus" *ngIf="!checkStatus(replece(item.email))" (click)="changeStatus(replece(item.email))"> {{item.email}}
                 </h3>
                 <h4>My Friends list:</h4>
-                <h4>Online:</h4>
-                <div *ngFor="let item of allUser">
-                    <div *ngIf="checkFriend(item.email)">
-                        <div *ngIf="checkAccept(item.email)">
-                            <p *ngIf="item.online">
-                                <button mat-button class="mess" (click)="getMyFriendMessage(item.email)" [matMenuTriggerFor]="mess">
-                        
+                <div class="label">
+                    <mat-grid-list cols="1" rowHeight="1:0.1">
+                        <mat-grid-tile colspan="1">
+                            <h4>Online:</h4>
+                            <button class="buttonChoice" mat-stroked-button color="primary" (click)="onlineB()">{{textOnline}}</button>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </div>
+                <div *ngIf="online">
+                    <div *ngFor="let item of allUser">
+                        <div *ngIf="checkFriend(item.email)">
+                            <div *ngIf="checkAccept(item.email)">
+                                <p *ngIf="item.online">
+                                    <button mat-button class="mess" (click)="getMyFriendMessage(item.email)" [matMenuTriggerFor]="mess">
                                 <mat-grid-list cols="5" rowHeight="1:1">
                                     <mat-grid-tile colspan="1"><img ngxGravatar [email]=inreplece(item.email)></mat-grid-tile>
-                                    <mat-grid-tile colspan="3">{{inreplece(item.email)}}</mat-grid-tile>
+                                    <mat-grid-tile colspan="3" class="text"> {{checkLength(inreplece(item.email))}}  {{checkByNewMessage(inreplece(item.email))}} </mat-grid-tile>
                                     <mat-grid-tile colspan="1"> <button mat-stroked-button color="primary" (click)="removeFriend(item)">x</button></mat-grid-tile>
-                                </mat-grid-list>
-                                </button>
-                                <mat-menu #mess="matMenu">
-                                    <div (click)="dontClose($event)">
-                                        <div class="chatWitchFriend" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-                                            <div *ngFor="let mess of myMessageWitchFriend">
-                                                <img ngxGravatar [email]=mess.email> {{mess.email}}
-                                                <p>{{mess.message}}</p>
-                                                <hr>
+                                    </mat-grid-list>
+                                    </button>
+                                    <mat-menu #mess="matMenu">
+                                        <div (click)="dontClose($event)">
+                                            <div class="chatWitchFriend" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                                                <div *ngFor="let mess of myMessageWitchFriend">
+                                                    <img ngxGravatar [email]=mess.email> {{mess.email}}
+                                                    <p>{{mess.message}}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <form (ngSubmit)="sendMessageForFriend(sendMessageForm.value.message,sendMessageForm,item.userId,item.email)" #sendMessageForm="ngForm">
+                                            <form (ngSubmit)="sendMessageForFriend(sendMessageForm.value.message,sendMessageForm,item.userId,item.email)" #sendMessageForm="ngForm">
 
-                                            <div>
-                                                <mat-form-field>
-                                                    <input matInput type="text" placeholder="Message" required name="message" ngModel>
-                                                </mat-form-field>
-                                                <button type="submit" mat-stroked-button color="primary" [disabled]="sendMessageForm.invalid">Send</button></div>
-                                        </form>
-                                    </div>
-                                </mat-menu>
-                            </p>
+                                                <div>
+                                                    <mat-form-field>
+                                                        <input matInput type="text" placeholder="Message" required name="message" ngModel>
+                                                    </mat-form-field>
+                                                    <button type="submit" mat-stroked-button color="primary" [disabled]="sendMessageForm.invalid">Send</button></div>
+                                            </form>
+                                        </div>
+                                    </mat-menu>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <h4>Offline:</h4>
-                <div *ngFor="let item of allUser">
-                    <div *ngIf="checkFriend(item.email)">
-                        <div *ngIf="checkAccept(item.email)">
-                            <p *ngIf="!item.online">
-                                <button mat-button class="mess" (click)="getMyFriendMessage(item.email)" [matMenuTriggerFor]="mess">
-                                <mat-grid-list cols="4" rowHeight="1:1">
-                                    <mat-grid-tile colspan="3">{{inreplece(item.email)}}</mat-grid-tile>
-                                    <mat-grid-tile colspan="1"> <button mat-stroked-button color="primary" (click)="removeFriend(item.email)">x</button></mat-grid-tile>
-                                </mat-grid-list>
-                                </button>
-                                <mat-menu #mess="matMenu">
-                                    <div (click)="dontClose($event)" class="chatMenu">
-                                        <div class="chatWitchFriend" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-                                            <div *ngFor="let mess of myMessageWitchFriend">
-                                                <img ngxGravatar [email]=mess.email> {{mess.email}}
-                                                <p>{{mess.message}}</p>
-                                                <hr>
+                <div class="label">
+                    <mat-grid-list cols="1" rowHeight="1:0.1">
+                        <mat-grid-tile colspan="1">
+                            <h4>Offline:</h4>
+                            <button class="buttonChoice" mat-stroked-button color="primary" (click)="offlineB()">{{textOffline}}</button>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </div>
+                <div *ngIf="offline">
+                    <div class="offline" *ngFor="let item of allUser">
+                        <div *ngIf="checkFriend(item.email)">
+                            <div *ngIf="checkAccept(item.email)">
+                                <p *ngIf="!item.online">
+                                    <button mat-button class="mess" (click)="getMyFriendMessage(item.email)" [matMenuTriggerFor]="mess">
+                                    <mat-grid-list cols="5" rowHeight="1:1">
+                                        <mat-grid-tile colspan="1"><img ngxGravatar [email]=inreplece(item.email)></mat-grid-tile>
+                                        <mat-grid-tile colspan="3">{{inreplece(item.email)}}  {{checkByNewMessage(inreplece(item.email))}}</mat-grid-tile>
+                                        <mat-grid-tile colspan="1"> <button mat-stroked-button color="primary" (click)="removeFriend(item)">x</button></mat-grid-tile>
+                                    </mat-grid-list>
+                                    </button>
+                                    <mat-menu #mess="matMenu">
+                                        <div (click)="dontClose($event)" class="chatMenu">
+                                            <div class="chatWitchFriend" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                                                <div *ngFor="let mess of myMessageWitchFriend">
+                                                    <img ngxGravatar [email]=mess.email> {{mess.email}}
+                                                    <p>{{mess.message}}</p>
+                                                    <hr>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <form (ngSubmit)="sendMessageForFriend(sendMessageForm.value.message,sendMessageForm,item.userId,item.email)" #sendMessageForm="ngForm">
+                                            <form (ngSubmit)="sendMessageForFriend(sendMessageForm.value.message,sendMessageForm,item.userId,item.email)" #sendMessageForm="ngForm">
 
-                                            <div>
-                                                <mat-form-field>
-                                                    <input matInput type="text" placeholder="Message" required name="message" ngModel>
-                                                </mat-form-field>
-                                                <button type="submit" mat-stroked-button color="primary" [disabled]="sendMessageForm.invalid">Send</button></div>
-                                        </form>
-                                    </div>
-                                </mat-menu>
+                                                <div>
+                                                    <mat-form-field>
+                                                        <input matInput type="text" placeholder="Message" required name="message" ngModel>
+                                                    </mat-form-field>
+                                                    <button type="submit" mat-stroked-button color="primary" [disabled]="sendMessageForm.invalid">Send</button></div>
+                                            </form>
+                                        </div>
+                                    </mat-menu>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <h4>Invities:</h4>
-                <div *ngFor="let item of myInvities">
-                    <p>{{inreplece(item.friendsEmail)}}
-                        <button mat-stroked-button color="primary" (click)="acceptInv(item)"><mat-icon>done</mat-icon></button>
-                        <button mat-stroked-button color="primary" (click)="dontAcceptInv(item)">-</button></p>
+                <div class="label">
+                    <mat-grid-list cols="1" rowHeight="1:0.1">
+                        <mat-grid-tile colspan="1">
+                            <h4>Invities:</h4>
+                            <button class="buttonChoice" mat-stroked-button color="primary" (click)="invitiesB()">{{textInvities}}</button>
+                        </mat-grid-tile>
+                    </mat-grid-list>
                 </div>
-                <form (ngSubmit)="addFriend(addFriendForm.value.emailFriend)" #addFriendForm="ngForm">
+                <div *ngIf="invities">
+                    <div *ngFor="let item of myInvities">
+                        <p>{{inreplece(item.friendsEmail)}}
+                            <button mat-stroked-button color="primary" (click)="acceptInv(item)"><mat-icon>done</mat-icon></button>
+                            <button mat-stroked-button color="primary" (click)="dontAcceptInv(item)">X</button></p>
+                    </div>
+                </div>
+
+                <form (ngSubmit)="addFriend(addFriendForm.value.emailFriend,addFriendForm)" #addFriendForm="ngForm">
                     <div class="addFriend">
-                        <mat-form-field class="form">
+                        <mat-form-field>
                             <input matInput type="text" placeholder="Friend's Email Addres" required name="emailFriend" ngModel>
                             <mat-error>Email friend is Mandatory</mat-error>
                         </mat-form-field>
@@ -143,51 +170,56 @@
                 <div>
                     <div *ngIf="settingShare">
                         <div class="shareOption" *ngIf="checkIfOwner()">
-                            <button mat-stroked-button color="primary" (click)="deleteShareProject(projectName)"><mat-icon>delete</mat-icon>Delete</button>
+                            <button *ngIf="false" mat-stroked-button color="primary" (click)="deleteShareProject(projectName)"><mat-icon>delete</mat-icon>Delete</button>
                             <!-- <button mat-stroked-button color="primary" (click)="editShareProject(projectName)"><mat-icon>edit</mat-icon>Edit</button> -->
-                            <button mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Share</button>
+                            <button *ngIf="false" mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Share</button>
                             <br>
-                            <div class="shareShared">
-                                <h1>Shared</h1>
-                                <div *ngFor="let friend of shareFriends">
-                                    <div *ngIf="userInfo[0].email!=inreplece(friend.friendsEmail)">Email: {{inreplece(friend.friendsEmail)}} Role: {{friend.role}}
-                                        <form (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
-                                            <mat-form-field>
-                                                <mat-label>Edit role! </mat-label>
-                                                <mat-select name="role" [(ngModel)]="friend.role" [placeholder]="friend.role">
-                                                    <mat-option value="view">View</mat-option>
-                                                    <mat-option value="editor">Editor</mat-option>
-                                                    <mat-option value="owner">Owner</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <button type="submit" mat-stroked-button color="primary" [disabled]="roleForm.invalid">Edit role!</button>
-                                        </form>
-                                        <button mat-stroked-button color="primary" (click)="stopShare(friend,projectName)">Stop share project</button>
+                            <h1>Shared option <button mat-stroked-button color="primary" (click)="shareOptionB()">{{textShareOption}}</button></h1>
+                            <div *ngIf="shareOption">
+                                <div class="shareShared">
+                                    <h1>Shared</h1>
+                                    <div *ngFor="let friend of shareFriends">
+                                        <div *ngIf="userInfo[0].email!=inreplece(friend.friendsEmail)">Email: {{inreplece(friend.friendsEmail)}}
+                                            <!--Role: {{friend.role}}-->
+                                            <form *ngIf="false" (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
+                                                <mat-form-field>
+                                                    <mat-label>Edit role! </mat-label>
+                                                    <mat-select name="role" [(ngModel)]="friend.role" [placeholder]="friend.role">
+                                                        <mat-option value="view">View</mat-option>
+                                                        <mat-option value="editor">Editor</mat-option>
+                                                        <mat-option value="owner">Owner</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <button type="submit" mat-stroked-button color="primary" [disabled]="roleForm.invalid">Edit role!</button>
+                                            </form>
+                                            <button *ngIf="false" mat-stroked-button color="primary" (click)="stopShare(friend,projectName)">Stop share project</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="shareCan">
-                                <h1>Can Share</h1>
-                                <div *ngFor="let friend of myFriend">
-                                    <div *ngIf="!checkShare(friend.friendsEmail,projectName)">
-                                        Email: {{inreplece(friend.friendsEmail)}}
-                                        <form (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
-                                            <mat-form-field>
-                                                <mat-label>Choice role! </mat-label>
-                                                <mat-select name="role" [(ngModel)]="view" [placeholder]="view">
-                                                    <mat-option value="view">View</mat-option>
-                                                    <mat-option value="editor">Editor</mat-option>
-                                                    <mat-option value="owner">Owner</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <button type="submit" mat-stroked-button color="primary" [disabled]="roleForm.invalid">Share project!</button>
-                                        </form>
+                                <div class="shareCan">
+                                    <h1>Can Share</h1>
+                                    <div *ngFor="let friend of myFriend">
+                                        <div *ngIf="!checkShare(friend.friendsEmail,projectName)">
+                                            <div *ngIf="friend.accept">
+                                                Email: {{inreplece(friend.friendsEmail)}} {{friend.accept}}
+                                                <form *ngIf="false" (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
+                                                    <mat-form-field>
+                                                        <mat-label>Choice role! </mat-label>
+                                                        <mat-select name="role" [(ngModel)]="view" [placeholder]="view">
+                                                            <mat-option value="view">View</mat-option>
+                                                            <mat-option value="editor">Editor</mat-option>
+                                                            <mat-option value="owner">Owner</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <button type="submit" mat-stroked-button color="primary" [disabled]="roleForm.invalid">Share project!</button>
+                                                </form>
+                                                <button mat-stroked-button color="primary" (click)="shareTable(friend,projectName,'owner')">Share project</button></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-
+                        <div *ngIf="false" class="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight">
                             <div *ngFor="let mes of viewMessage">
                                 <div class="myKanbanProject">
                                     <img ngxGravatar [email]=inreplece(mes.email)>
@@ -200,7 +232,7 @@
                                 <hr>
                             </div>
                         </div>
-                        <div class="sendToChat">
+                        <div *ngIf="false" class="sendToChat">
                             <form (ngSubmit)="sendMessage(sendMessageForm.value.message,sendMessageForm)" #sendMessageForm="ngForm">
                                 <div class="sendMessage">
                                     <mat-form-field class="form">
@@ -226,7 +258,7 @@
                                     <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table0,item.user)">Task title: {{item.title}}</button>
                                     <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table0)"><mat-icon>delete</mat-icon></button><br>
                                     <br>
-                                    <div class="choiceUser" *ngIf="settingShare">
+                                    <div class="choiceUser" *ngIf="false">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table0,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
@@ -254,7 +286,7 @@
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                     <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table1,item.user)">Task title: {{item.title}}</button>
                                     <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table1)"><mat-icon>delete</mat-icon></button><br>
-                                    <div class="choiceUser" *ngIf="settingShare">
+                                    <div class="choiceUser" *ngIf="false">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table1,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
@@ -282,7 +314,7 @@
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                     <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table2,item.user)">Task title: {{item.title}}</button>
                                     <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table2)"><mat-icon>delete</mat-icon></button><br>
-                                    <div class="choiceUser" *ngIf="settingShare">
+                                    <div class="choiceUser" *ngIf="false">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table2,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
@@ -311,7 +343,7 @@
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                     <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table3,item.user)">Task title: {{item.title}}</button>
                                     <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table3)"><mat-icon>delete</mat-icon></button><br>
-                                    <div class="choiceUser" *ngIf="settingShare">
+                                    <div class="choiceUser" *ngIf="false">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table3,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
@@ -340,7 +372,7 @@
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                     <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table4,item.user)">Task title: {{item.title}}</button>
                                     <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table4)"><mat-icon>delete</mat-icon></button><br>
-                                    <div class="choiceUser" *ngIf="settingShare">
+                                    <div class="choiceUser" *ngIf="false">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table4,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
@@ -370,7 +402,7 @@
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                     <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table5,item.user)">Task title: {{item.title}}</button>
                                     <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table5)"><mat-icon>delete</mat-icon></button><br>
-                                    <div class="choiceUser" *ngIf="settingShare">
+                                    <div class="choiceUser" *ngIf="false">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table5,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
@@ -400,7 +432,7 @@
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                     <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table6,item.user)">Task title: {{item.title}}</button>
                                     <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table6)"><mat-icon>delete</mat-icon></button><br>
-                                    <div class="choiceUser" *ngIf="settingShare">
+                                    <div class="choiceUser" *ngIf="false">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table6,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
@@ -430,7 +462,7 @@
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                     <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table7,item.user)">Task title: {{item.title}}</button>
                                     <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table7)"><mat-icon>delete</mat-icon></button><br>
-                                    <div class="choiceUser" *ngIf="settingShare">
+                                    <div class="choiceUser" *ngIf="false">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table7,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
@@ -460,7 +492,7 @@
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                     <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table8,item.user)">Task title: {{item.title}}</button>
                                     <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table8)"><mat-icon>delete</mat-icon></button><br>
-                                    <div class="choiceUser" *ngIf="settingShare">
+                                    <div class="choiceUser" *ngIf="false">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table8,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>
@@ -489,7 +521,7 @@
                                     <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                     <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table9,item.user)">Task title: {{item.title}}</button>
                                     <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table9)"><mat-icon>delete</mat-icon></button><br>
-                                    <div class="choiceUser" *ngIf="settingShare">
+                                    <div class="choiceUser" *ngIf="false">
                                         <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table9,item.title)" #choiceUser="ngForm">
                                             <mat-form-field>
                                                 <mat-label>{{choiceText(item.user)}} </mat-label>

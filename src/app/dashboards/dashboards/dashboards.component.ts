@@ -6,13 +6,10 @@ import { AddTaskComponent } from 'src/app/modal/add-task/add-task.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { EditTaskComponent } from 'src/app/modal/edit-task/edit-task.component';
 import { EditTableNameComponent } from 'src/app/modal/edit-table-name/edit-table-name.component';
-import { trigger, transition, style, animate} from '@angular/animations';
 import { CreateNewKanbanComponent } from 'src/app/modal/create-new-kanban/create-new-kanban.component';
 import { ScrollToBottomDirective } from '../scroll-to-bottom.directive/scroll-to-bottom.directive.component';
 import { DeleteOptionComponent } from 'src/app/modal/delete-option/delete-option.component';
 import { Title } from '@angular/platform-browser';
-import { IfStmt } from '@angular/compiler';
-import { timeoutWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboards',
@@ -27,7 +24,46 @@ export class DashboardsComponent implements OnInit {
   myInvities=[];
   audioNewMessage= new Audio();
   scroll: ScrollToBottomDirective;
-
+  checkLength(email:string){
+    if(email.length>20){
+      return email.substr(0,email.length/2)+"\n"+email.substr(email.length/2,email.length);
+    }
+    return email
+  }
+  checkByNewMessage(email){
+    for(let item of this.newMess)
+    {
+      if(item.email==email) return "(+1)";
+    }
+  }
+  shareOption:boolean=false;
+  textShareOption:string="Discover";
+  shareOptionB(){
+    this.shareOption=!this.shareOption;
+    if(!this.shareOption) this.textShareOption="Discover"
+    else this.textShareOption="Hide"
+  }
+  online:boolean=false;
+  textOnline:string="Discover";
+  offline:boolean=false;
+  textOffline:string="Discover";
+  invities:boolean=false;
+  textInvities:string="Discover";
+  onlineB(){
+    this.online=!this.online;
+    if(!this.online) this.textOnline="Discover"
+    else this.textOnline="Hide"
+  }
+  offlineB(){
+    this.offline=!this.offline;
+    if(!this.offline) this.textOffline="Discover"
+    else this.textOffline="Hide"
+  }
+  invitiesB(){
+    this.invities=!this.invities;
+    if(!this.invities) this.textInvities="Discover"
+    else this.textInvities="Hide"
+  }
   checkRole(){
     for(let item of this.shareFriends){
       if(this.inreplece(item.friendsEmail)==this.userInfo[0].email) return item.role;
@@ -79,12 +115,13 @@ export class DashboardsComponent implements OnInit {
     this.db.deleteAllMessage(this.userId,item.userId,this.replece(this.userInfo[0].email),item.email)
     this.db.logSave(this.userId,"delete friend","delete","delete"+item.Email);
   }
-  addFriend(result){
+  addFriend(result,addForm){
     if(this.checkUser(this.replece(result))){
     if(!this.checkFriend(this.replece(result))){
       if(result!=this.userInfo[0].email){
      this.db.writeMyFriends(this.userId,this.replece(result),this.getFriendsId(this.replece(result)),false);
      this.db.sendInvities(this.getFriendsId(this.replece(result)),this.replece(this.userInfo[0].email),this.userId,false);
+     addForm.resetForm();
      this.db.logSave(this.userId,"inv","send","send inv for "+result);
     } else window.alert("This is your email")
     } else window.alert("This user is already your friend")
@@ -351,6 +388,7 @@ return false;
   }
   
   shareTable(item,projectName,role){
+    //edit
     this.db.kanban=projectName
     this.db.writeShareFriends(this.userId,item.friendsEmail,item.friendsId,role);
     this.db.share(item.friendsId,this.userId,projectName)
@@ -511,6 +549,7 @@ sharedInit(){
       }
     })
     this.db.getNewMassage(this.userId).subscribe(res=>{
+      this.newMess=res
     if(res.length>0){
       this.titleService.setTitle("("+res.length+") "+ this.checkEmail(res[res.length-1])+" sent you a message")
       if(res.length>=this.notMess){
@@ -521,6 +560,7 @@ sharedInit(){
 
     })
   }
+  newMess=[];
   not:number=0;
   notMess:number=0;
   checkEmail(emailItem){
