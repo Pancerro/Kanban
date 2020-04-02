@@ -21,7 +21,7 @@
                         </li>
                     </div>
                 </ol>
-                <p>Share Kanban Project Lists: </p>
+                <p>Shared Kanban Projects: </p>
                 <ol>
                     <div *ngFor="let item of shared">
                         <li>
@@ -174,10 +174,10 @@
                             <!-- <button mat-stroked-button color="primary" (click)="editShareProject(projectName)"><mat-icon>edit</mat-icon>Edit</button> -->
                             <button *ngIf="false" mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Share</button>
                             <br>
-                            <h1>Shared option <button mat-stroked-button color="primary" (click)="shareOptionB()">{{textShareOption}}</button></h1>
+                            <h1>Sharing options <button mat-stroked-button color="primary" (click)="shareOptionB()">{{textShareOption}}</button></h1>
                             <div *ngIf="shareOption">
                                 <div class="shareShared">
-                                    <h1>Shared</h1>
+                                    <h1>Shared with</h1>
                                     <div *ngFor="let friend of shareFriends">
                                         <div *ngIf="userInfo[0].email!=inreplece(friend.friendsEmail)">Email: {{inreplece(friend.friendsEmail)}}
                                             <!--Role: {{friend.role}}-->
@@ -197,7 +197,7 @@
                                     </div>
                                 </div>
                                 <div class="shareCan">
-                                    <h1>Can Share</h1>
+                                    <h1>Share with</h1>
                                     <div *ngFor="let friend of myFriend">
                                         <div *ngIf="!checkShare(friend.friendsEmail,projectName)">
                                             <div *ngIf="friend.accept">

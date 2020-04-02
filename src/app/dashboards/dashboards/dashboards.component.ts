@@ -37,31 +37,31 @@ export class DashboardsComponent implements OnInit {
     }
   }
   shareOption:boolean=false;
-  textShareOption:string="Discover";
+  textShareOption:string="Show";
   shareOptionB(){
     this.shareOption=!this.shareOption;
-    if(!this.shareOption) this.textShareOption="Discover"
+    if(!this.shareOption) this.textShareOption="Show"
     else this.textShareOption="Hide"
   }
   online:boolean=false;
-  textOnline:string="Discover";
+  textOnline:string="Show";
   offline:boolean=false;
-  textOffline:string="Discover";
+  textOffline:string="Show";
   invities:boolean=false;
-  textInvities:string="Discover";
+  textInvities:string="Show";
   onlineB(){
     this.online=!this.online;
-    if(!this.online) this.textOnline="Discover"
+    if(!this.online) this.textOnline="Show"
     else this.textOnline="Hide"
   }
   offlineB(){
     this.offline=!this.offline;
-    if(!this.offline) this.textOffline="Discover"
+    if(!this.offline) this.textOffline="Show"
     else this.textOffline="Hide"
   }
   invitiesB(){
     this.invities=!this.invities;
-    if(!this.invities) this.textInvities="Discover"
+    if(!this.invities) this.textInvities="Show"
     else this.textInvities="Hide"
   }
   checkRole(){
