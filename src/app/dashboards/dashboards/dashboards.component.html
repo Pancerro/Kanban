@@ -26,7 +26,7 @@
                     <div *ngFor="let item of shared">
                         <li>
                             <div class="example-box" [style.background]="changeBackground()" [style.color]="changeFont()">
-                                <button mat-stroked-button color="primary" class="buttonList" class="buttonList" [style.color]="changeFont()" (click)="seeMyShareProject(item)"> {{item.kanban}}</button>
+                                <button mat-stroked-button color="primary" class="buttonList" class="buttonList" [style.color]="changeFont()" (click)="seeMyShareProject(item)"> {{inreplece(item.kanban)}}</button>
                             </div>
                         </li>
                     </div>

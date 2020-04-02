@@ -112,7 +112,7 @@ export class DashboardsComponent implements OnInit {
   removeFriend(item){
     const dialogRef = this.dialog.open(DeleteOptionComponent, {
       width: '250px',
-      data: {name: item.email}
+      data: {name: this.inreplece(item.email)}
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result==true){
