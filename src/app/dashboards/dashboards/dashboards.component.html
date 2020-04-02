@@ -162,7 +162,7 @@
             </mat-sidenav>
             <mat-sidenav-content [style.background]="changeBackground()" [style.color]="changeFont()">
                 <button mat-stroked-button color="primary" class="myKanbanProject" (click)="sidenav.toggle()">My Kanban Project</button>
-                <button mat-stroked-button color="primary" class="friends" (click)="sidenavright.toggle()">Friends</button>
+                <button mat-stroked-button color="primary" class="friends" (click)="sidenavright.toggle()">Friends {{newNot()}}</button>
                 <app-menu></app-menu>
                 <br>
                 <h3> Welcome {{item.email}}</h3>

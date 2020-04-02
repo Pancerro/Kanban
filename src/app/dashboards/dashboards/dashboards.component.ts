@@ -567,6 +567,11 @@ sharedInit(){
 
     })
   }
+  newNot(){
+    if(this.not>0 || this.notMess>0){
+      return "(+1)";
+    }
+  }
   newMess=[];
   not:number=0;
   notMess:number=0;
