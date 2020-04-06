@@ -52,7 +52,7 @@ export class DashboardsComponent implements OnInit {
   textShare:string="Show";
   textShared:string="Show";
   textChat:string="Show";
-  chatButton:boolean=false;
+  chatButton:boolean=true;
   shareButton:boolean=false;
   sharedButton:boolean=false;
   
@@ -456,6 +456,7 @@ seeMyShareProject(item){
   this.db.getShareFriends(this.userId).subscribe(res=>{this.shareFriends=res});
   this.db.getMessage(this.userId,item.kanban).subscribe(res=>{
     this.viewMessage=res
+    if(res[res.length-1]!=this.userInfo[0].email) console.log("Nowa wiadomosc")
   })
  
   window.scrollTo()
