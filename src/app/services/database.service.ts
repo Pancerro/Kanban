@@ -159,7 +159,7 @@ export class DataService {
     firebase.database().ref('users/'+ownerId+'/chat/'+projectName+'/'+this.random).set({
       projectName:projectName,
       email:email,
-      data:data,
+      data:firebase.database.ServerValue.TIMESTAMP,
       message:message
     })
   }
@@ -197,7 +197,6 @@ export class DataService {
   getNewMassage(myId:string){
     return this.db.list('users/'+myId+'/chatares/').valueChanges();
   }
-  //
   deleteAllMessage(myId:string,friendsId:string,myEmail:string,friendsEmail:string){
      this.db.list('users/'+myId+'/chat/').remove(friendsEmail)
      this.db.list('users/'+friendsId+'/chat/').remove(myEmail)

@@ -49,6 +49,28 @@ export class DashboardsComponent implements OnInit {
   textOffline:string="Show";
   invities:boolean=false;
   textInvities:string="Show";
+  textShare:string="Show";
+  textShared:string="Show";
+  textChat:string="Show";
+  chatButton:boolean=false;
+  shareButton:boolean=false;
+  sharedButton:boolean=false;
+  
+  chatHide(){
+    this.chatButton=!this.chatButton;
+    if(!this.chatButton) this.textChat="Show"
+    else this.textChat="Hide"
+  }
+  shareHide(){
+    this.shareButton=!this.shareButton;
+    if(!this.shareButton) this.textShare="Show"
+    else this.textShare="Hide"
+  }
+  sharedHide(){
+    this.sharedButton=!this.sharedButton;
+    if(!this.sharedButton) this.textShared="Show"
+    else this.textShared="Hide"
+  }
   onlineB(){
     this.online=!this.online;
     if(!this.online) this.textOnline="Show"

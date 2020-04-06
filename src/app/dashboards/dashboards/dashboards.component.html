@@ -141,16 +141,17 @@
                             <button mat-stroked-button color="primary" (click)="dontAcceptInv(item)">X</button></p>
                     </div>
                 </div>
+                <div class="addFriend">
+                    <form (ngSubmit)="addFriend(addFriendForm.value.emailFriend,addFriendForm)" #addFriendForm="ngForm">
 
-                <form (ngSubmit)="addFriend(addFriendForm.value.emailFriend,addFriendForm)" #addFriendForm="ngForm">
-                    <div class="addFriend">
                         <mat-form-field>
                             <input matInput type="text" placeholder="Friend's Email Addres" required name="emailFriend" ngModel>
                             <mat-error>Email friend is Mandatory</mat-error>
                         </mat-form-field>
 
-                        <button type="submit" mat-stroked-button color="primary" [disabled]="addFriendForm.invalid">Send invite</button></div>
-                </form>
+                        <button type="submit" mat-stroked-button color="primary" [disabled]="addFriendForm.invalid">Send invite</button>
+                    </form>
+                </div>
                 <h4>Sent Invities:</h4>
                 <div *ngFor="let item of allUser">
                     <div *ngIf="checkFriend(item.email)">
@@ -170,17 +171,18 @@
                 <div>
                     <div *ngIf="settingShare">
                         <div class="shareOption" *ngIf="checkIfOwner()">
-                            <button *ngIf="false" mat-stroked-button color="primary" (click)="deleteShareProject(projectName)"><mat-icon>delete</mat-icon>Delete</button>
-                            <!-- <button mat-stroked-button color="primary" (click)="editShareProject(projectName)"><mat-icon>edit</mat-icon>Edit</button> -->
-                            <button *ngIf="false" mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Share</button>
+
                             <br>
-                            <h1>Sharing options <button mat-stroked-button color="primary" (click)="shareOptionB()">{{textShareOption}}</button></h1>
+                            <h1>Sharing options <button mat-stroked-button color="primary" class="buttonChoice" (click)="shareOptionB()">{{textShareOption}}</button></h1>
                             <div *ngIf="shareOption">
-                                <div class="shareShared">
-                                    <h1>Shared with</h1>
+                                <button mat-stroked-button color="primary" (click)="deleteShareProject(projectName)"><mat-icon>delete</mat-icon>Delete Project</button>
+                                <!-- <button mat-stroked-button color="primary" (click)="editShareProject(projectName)"><mat-icon>edit</mat-icon>Edit</button> -->
+                                <button mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Share Project</button>
+                                <h1>Shared with <button mat-stroked-button color="primary" class="buttonChoice" (click)="sharedHide()">{{textShared}}</button></h1>
+                                <div *ngIf="sharedButton" class="shareShared">
                                     <div *ngFor="let friend of shareFriends">
                                         <div *ngIf="userInfo[0].email!=inreplece(friend.friendsEmail)">Email: {{inreplece(friend.friendsEmail)}}
-                                            <!--Role: {{friend.role}}-->
+                                            <!--  Role: {{friend.role}} -->
                                             <form *ngIf="false" (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
                                                 <mat-form-field>
                                                     <mat-label>Edit role! </mat-label>
@@ -192,16 +194,17 @@
                                                 </mat-form-field>
                                                 <button type="submit" mat-stroked-button color="primary" [disabled]="roleForm.invalid">Edit role!</button>
                                             </form>
-                                            <button *ngIf="false" mat-stroked-button color="primary" (click)="stopShare(friend,projectName)">Stop share project</button>
+                                            <button mat-stroked-button color="primary" (click)="stopShare(friend,projectName)">Stop share project</button>
+
                                         </div>
-                                    </div>
+                                    </div> <br>
                                 </div>
-                                <div class="shareCan">
-                                    <h1>Share with</h1>
+                                <h1>Share with <button mat-stroked-button color="primary" class="buttonChoice" (click)="shareHide()">{{textShare}}</button></h1>
+                                <div *ngIf="shareButton" class="shareCan">
                                     <div *ngFor="let friend of myFriend">
                                         <div *ngIf="!checkShare(friend.friendsEmail,projectName)">
                                             <div *ngIf="friend.accept">
-                                                Email: {{inreplece(friend.friendsEmail)}} {{friend.accept}}
+                                                Email: {{inreplece(friend.friendsEmail)}}
                                                 <form *ngIf="false" (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
                                                     <mat-form-field>
                                                         <mat-label>Choice role! </mat-label>
@@ -219,20 +222,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="false" class="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                        <h1>Chat <button mat-stroked-button color="primary" class="buttonChoice" (click)="chatHide()">{{textChat}}</button></h1>
+                        <div *ngIf="chatButton" class="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight">
                             <div *ngFor="let mes of viewMessage">
                                 <div class="myKanbanProject">
                                     <img ngxGravatar [email]=inreplece(mes.email)>
                                 </div>
-                                <div class="friends">
-                                    {{mes.data}}
-                                </div>
-                                <p> {{mes.email}} </p>
-                                <p>{{mes.message}}</p>
+
+                                <p> {{inreplece(mes.email)}} </p>
+                                <p>{{inreplece(mes.message)}}</p>
                                 <hr>
                             </div>
                         </div>
-                        <div *ngIf="false" class="sendToChat">
+                        <div *ngIf="chatButton" class="sendToChat">
                             <form (ngSubmit)="sendMessage(sendMessageForm.value.message,sendMessageForm)" #sendMessageForm="ngForm">
                                 <div class="sendMessage">
                                     <mat-form-field class="form">

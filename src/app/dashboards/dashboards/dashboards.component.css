@@ -240,7 +240,8 @@
 }
 
 .addFriend {
-    margin-left: 30px;
+    background-color: chartreuse;
+    width: 100%;
 }
 
 .text {
