@@ -167,7 +167,7 @@
                 <app-menu></app-menu>
                 <br>
                 <div *ngIf="!checkIfDelete()">
-                    <h3>Welcome {{item.email}} {{numbers[0].number}} </h3>
+                    <h3>Welcome {{item.email}} </h3>
                     <h3>Project: {{inreplece(projectName)}}</h3>
                     <div>
                         <div *ngIf="settingShare">
@@ -178,7 +178,7 @@
                                 <div *ngIf="shareOption">
                                     <!--   <button mat-stroked-button color="primary" (click)="deleteShareProject(projectName)"><mat-icon>delete</mat-icon>Delete Project</button>-->
                                     <!-- <button mat-stroked-button color="primary" (click)="editShareProject(projectName)"><mat-icon>edit</mat-icon>Edit</button> -->
-                                    <button mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Share Project</button>
+                                    <button mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Sharing Project</button>
                                     <h1>Shared with <button mat-stroked-button color="primary" class="buttonChoice" (click)="sharedHide()">{{textShared}}</button></h1>
                                     <div *ngIf="sharedButton" class="shareShared">
                                         <div *ngFor="let friend of shareFriends">
@@ -546,7 +546,8 @@
                     </div>
                 </div>
                 <div *ngIf="checkIfDelete()">
-                    <h1>Sorry you dont access to kanban project</h1>
+                    <h1>Sorry, you can't access this kanban project anymore.</h1>
+                    {{clear()}}
                 </div>
             </mat-sidenav-content>
         </mat-sidenav-container>

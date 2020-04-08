@@ -38,7 +38,6 @@ import { ScrollToBottomDirective } from './dashboards/scroll-to-bottom.directive
 import { GravatarModule } from  'ngx-gravatar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeleteOptionComponent } from './modal/delete-option/delete-option.component';
-
 @NgModule({
   entryComponents: [
     RegisterComponent,
@@ -95,7 +94,7 @@ import { DeleteOptionComponent } from './modal/delete-option/delete-option.compo
     MatSidenavModule,
     MatMenuModule,
     GravatarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

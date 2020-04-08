@@ -18,6 +18,13 @@ import { Title } from '@angular/platform-browser';
 })
 export class DashboardsComponent implements OnInit {
   deleteFromShare=[];
+  clear(){
+    console.log("clear")
+    setInterval(() => {
+       window.location.reload();
+    }, 5500);
+    
+  }
   delete(){
     for(let item of this.deleteFromShare){
       if(this.inreplece(item.friendsEmail)==this.userInfo[0].email) return item.role;
@@ -25,7 +32,10 @@ export class DashboardsComponent implements OnInit {
     return false;
   }
   checkIfDelete(){
-    if(this.delete()=="delete") return true;
+    if(this.delete()=="delete"){
+      this.deleteAudio.play();
+       return true;
+    }
     else return false;
   }
  
@@ -36,6 +46,7 @@ export class DashboardsComponent implements OnInit {
   myFriend=[];
   myInvities=[];
   audioNewMessage= new Audio();
+  deleteAudio=new Audio();
   scroll: ScrollToBottomDirective;
   checkLength(email:string){
     if(email.length>20){
@@ -266,6 +277,7 @@ return false;
     this.userId=this.auth.getUser().uid;
     this.db.kanban=projectName;
     localStorage.setItem("lastTable",projectName);
+    this.deleteFromShare=[];
     this.db.logSave(this.userId,"See project","see","See"+projectName);
     this.ngOnInit();
   }
@@ -480,6 +492,7 @@ stopShare(friends,projectName){
 settingShare=false;
 viewMessage=[]
 seeMyShareProject(item){
+  this.deleteFromShare=[];
   this.settingShare=true;
   this.db.kanban=item.kanban;
   this.userId=item.userId;
@@ -536,13 +549,15 @@ sharedInit(){
   this.db.getTask(this.userId,"table").subscribe(res => {
      this.tableTitle = res;
   });
-  this.db.getUserNumber(this.userId).subscribe(res => {   console.log(res)
+  this.db.getUserNumber(this.userId).subscribe(res => { 
     this.numbers = res;
   });
 }
   ngOnInit(){
     this.audioNewMessage.src = "assets/2.mp3";
     this.audioNewMessage.load();
+    this.deleteAudio.src = "assets/1.mp3";
+    this.deleteAudio.load();
     localStorage.setItem("menu","KanbanTable");
     this.db.getShare(this.userId).subscribe(res=>{
       this.shared=res
@@ -585,7 +600,6 @@ sharedInit(){
        this.tableTitle = res;
     });
     this.db.getUserNumber(this.userId).subscribe(res => {
-      console.log(res)
       this.numbers = res;
     });
     this.db.getDateUser(this.userId).subscribe(res => {
