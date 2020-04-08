@@ -48,7 +48,7 @@ export class DataService {
     });
   }
   writeUserNumber(userId: string,number: number){
-    firebase.database().ref('users/'+ userId+'/'+this.kanban+'/viewTables/numbers').set({
+    firebase.database().ref('users/'+ userId+'/'+this.kanban+'/viewTables/numbers/number').set({
     number:number
     });
   }
@@ -76,7 +76,7 @@ export class DataService {
     return this.db.list('/users/'+userId+'/userInfo/').valueChanges();
   }
   getUserNumber(userId:string):Observable<any[]>{
-    return this.db.list('/users/'+userId+'/'+this.kanban+'/viewTables').valueChanges();
+    return this.db.list('/users/'+userId+'/'+this.kanban+'/viewTables/numbers').valueChanges();
   }
   getTask(userId:string,tableparent:string):Observable<any[]>{
     return this.db.list('/users/'+userId+'/'+this.kanban+'/'+tableparent).valueChanges();
@@ -135,6 +135,25 @@ export class DataService {
     return this.db.list('users/'+userId+'/'+this.kanban+'/viewTables/share/').valueChanges();
   }
 
+
+  ///
+  writeDelete(userId: string,friendsEmail:string,friendsId:string){
+    firebase.database().ref('users/'+ userId+'/'+this.kanban+'/viewTables/delete/'+friendsEmail).set({
+    friendsEmail:friendsEmail,
+    friendsId:friendsId,
+    role:"delete"
+    });
+  }
+  removeDelete(userId:string,friendsEmail:string){
+    return this.db.list('users/'+ userId+'/'+this.kanban+'/viewTables/delete/').remove(friendsEmail)
+  }
+
+  getDelete(userId:string){
+    return this.db.list('users/'+userId+'/'+this.kanban+'/viewTables/delete/').valueChanges();
+  }
+
+  ///
+ 
   updateShare(userId:string,projectName:string,share:boolean){
     return this.db.object('users/'+userId+'/project/'+projectName).update({share:share})
   }
@@ -165,6 +184,9 @@ export class DataService {
   }
   getMessage(ownerId:string,projectName:string){ 
  return  this.db.list('users/'+ownerId+'/chat/'+projectName,ref=>ref.orderByChild('data')).valueChanges()
+  }
+  deleteChatMesage(ownerId:string,projectName:string){
+  return this.db.list('users/'+ownerId+'/chat/').remove(projectName);
   }
   writeMessageToFriends(myId:string,friendsId:string,myEmail:string,friendsEmail:string,data:string,message:string,userName:string){
     this.random=Math.random().toString();
@@ -201,10 +223,6 @@ export class DataService {
      this.db.list('users/'+myId+'/chat/').remove(friendsEmail)
      this.db.list('users/'+friendsId+'/chat/').remove(myEmail)
   }
-
-
-
-
   updateAccept(friendsId,email:string){
     return this.db.object('users/'+friendsId+'/myFriends/'+email).update({accept:true})
   }

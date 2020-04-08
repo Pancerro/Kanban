@@ -17,6 +17,19 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./dashboards.component.css'],
 })
 export class DashboardsComponent implements OnInit {
+  deleteFromShare=[];
+  delete(){
+    for(let item of this.deleteFromShare){
+      if(this.inreplece(item.friendsEmail)==this.userInfo[0].email) return item.role;
+    }
+    return false;
+  }
+  checkIfDelete(){
+    if(this.delete()=="delete") return true;
+    else return false;
+  }
+ 
+
   view="view"
   projectName:string;
   allUser=[];
@@ -51,7 +64,7 @@ export class DashboardsComponent implements OnInit {
   textInvities:string="Show";
   textShare:string="Show";
   textShared:string="Show";
-  textChat:string="Show";
+  textChat:string="Hide";
   chatButton:boolean=true;
   shareButton:boolean=false;
   sharedButton:boolean=false;
@@ -86,7 +99,7 @@ export class DashboardsComponent implements OnInit {
     if(!this.invities) this.textInvities="Show"
     else this.textInvities="Hide"
   }
-  checkRole(){
+   checkRole(){
     for(let item of this.shareFriends){
       if(this.inreplece(item.friendsEmail)==this.userInfo[0].email) return item.role;
     }
@@ -373,27 +386,39 @@ return false;
 
 
   deleteShareProject(projectName){
-    this.stopShareProject(projectName)
-     this.removeProject(projectName)
-     this.db.logSave(this.userId,"Delete share project","Delete","Delete "+projectName);
-     window.location.reload();
+    const dialogRef = this.dialog.open(DeleteOptionComponent, {
+      width: '250px',
+      data: {name: projectName}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result==true){
+        this.stopShareProject(projectName)
+        this.db.removeKanbanTable(this.userId,this.replece(projectName));
+        this.db.removeKanbanTableFromProject(this.userId,this.replece(projectName));  
+        this.db.logSave(this.userId,"Delete share project","Delete","Delete "+projectName);  
+         window.location.reload();
+        if(projectName==this.db.kanban) this.seeMyProject("kanban")
+      }
+    }); 
   }
 
   editShareProject(projectName){// ni dziala
-
     this.stopShareProject(projectName);
     this.editProjectName(projectName);
     this.shareProject(projectName);
-
   }
   stopShareProject(projectName){
+    this.db.deleteChatMesage(this.userId,projectName);
+    this.db.kanban=projectName; 
     this.db.getShareFriends(this.userId).subscribe(res=>{this.shareFriends=res});
-    this.db.updateShare(this.userId,projectName,false);
     for(let item of this.shareFriends){
+      if(item.friendsEmail==this.replece(this.userInfo[0].email)) console.log("")
+      else this.db.writeDelete(this.userId,item.friendsEmail,item.friendsId);      
       this.db.removeShare(item.friendsId,projectName); 
-      this.db.removeShareFriends(this.userId,item.friendsEmail)
-      
-    }  
+      this.db.removeShareFriends(this.userId,item.friendsEmail) 
+      this.db.updateShare(this.userId,projectName,false);
+    } 
+    this.db.kanban=localStorage.getItem("lastTable")
     this.db.logSave(this.userId,"Stop share","share","stop share project "+projectName);
     this.settingShare=false;
   }
@@ -404,10 +429,17 @@ return false;
     this.currentDate=(this.date.getDate()+'/'+this.db.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.db.zero(this.date.getHours())+this.date.getHours()+':'+this.db.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.db.zero(this.date.getSeconds())+this.date.getSeconds()+':'+this.db.zero(this.date.getMilliseconds())+ this.date.getMilliseconds());
     return this.currentDate;
   }
+
   shareProject(projectName){
     this.db.kanban=projectName;
     this.db.updateShare(this.userId,projectName,true);
     this.db.writeShareFriends(this.userId,this.replece(this.userInfo[0].email),this.userId,"owner")
+    this.db.getDelete(this.userId).subscribe(res=>{
+    this.deleteFromShare=res;
+    for(let item of this.deleteFromShare){
+      this.db.removeDelete(this.userId,item.friendsEmail)
+    }
+    })
     this.db.share(this.userId,this.userId,projectName);
     localStorage.setItem("lastTable","kanban")
     this.db.kanban=localStorage.getItem("lastTable");
@@ -420,7 +452,8 @@ return false;
     //edit
     this.db.kanban=projectName
     this.db.writeShareFriends(this.userId,item.friendsEmail,item.friendsId,role);
-    this.db.share(item.friendsId,this.userId,projectName)
+    this.db.share(item.friendsId,this.userId,projectName)   
+    this.db.removeDelete(this.userId,item.friendsEMail);
     this.db.kanban=localStorage.getItem("lastTable")
     this.db.logSave(this.userId,"Start share project","share","Start share project "+projectName+" for "+item.friendsEmail);
   }
@@ -439,6 +472,7 @@ return false;
 stopShare(friends,projectName){
   this.db.kanban=projectName;
   this.db.removeShareFriends(this.userId,friends.friendsEmail);
+  this.db.writeDelete(this.userId,friends.friendsEmail,friends.friendsId)
   this.db.removeShare(friends.friendsId,projectName)
   this.db.kanban=localStorage.getItem("lastTable")
   this.db.logSave(this.userId,"Stop share project","share","Stop share project "+projectName+" for "+friends.friendsEmail);
@@ -446,19 +480,16 @@ stopShare(friends,projectName){
 settingShare=false;
 viewMessage=[]
 seeMyShareProject(item){
-  localStorage.setItem("share","true");
-  localStorage.setItem("userId",item.userId);
   this.settingShare=true;
   this.db.kanban=item.kanban;
   this.userId=item.userId;
   this.db.logSave(this.userId,"See share project","see","see share project "+item.kanban);
   this.sharedInit();
+  this.db.getDelete(this.userId).subscribe(res=>this.deleteFromShare=res)
   this.db.getShareFriends(this.userId).subscribe(res=>{this.shareFriends=res});
   this.db.getMessage(this.userId,item.kanban).subscribe(res=>{
     this.viewMessage=res
-    if(res[res.length-1]!=this.userInfo[0].email) console.log("Nowa wiadomosc")
   })
- 
   window.scrollTo()
 }
 sendMessage(message,formReset){
@@ -505,7 +536,7 @@ sharedInit(){
   this.db.getTask(this.userId,"table").subscribe(res => {
      this.tableTitle = res;
   });
-  this.db.getUserNumber(this.userId).subscribe(res => {
+  this.db.getUserNumber(this.userId).subscribe(res => {   console.log(res)
     this.numbers = res;
   });
 }
@@ -554,6 +585,7 @@ sharedInit(){
        this.tableTitle = res;
     });
     this.db.getUserNumber(this.userId).subscribe(res => {
+      console.log(res)
       this.numbers = res;
     });
     this.db.getDateUser(this.userId).subscribe(res => {
@@ -580,14 +612,13 @@ sharedInit(){
     })
     this.db.getNewMassage(this.userId).subscribe(res=>{
       this.newMess=res
-    if(res.length>0){
+      if(res.length>0){
       this.titleService.setTitle("("+res.length+") "+ this.checkEmail(res[res.length-1])+" sent you a message")
       if(res.length>=this.notMess){
          this.audioNewMessage.play() 
          this.notMess=res.length;  
       } 
     } else this.titleService.setTitle(this.inreplece(this.projectName));
-
     })
   }
   newNot(){
