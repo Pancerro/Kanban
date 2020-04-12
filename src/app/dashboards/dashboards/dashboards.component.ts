@@ -38,7 +38,6 @@ export class DashboardsComponent implements OnInit {
     }
     else return false;
   }
- 
 
   view="view"
   projectName:string;
@@ -457,7 +456,7 @@ return false;
     this.db.kanban=localStorage.getItem("lastTable");
     this.db.logSave(this.userId,"Start share","share","Start share project "+projectName);
     this.ngOnInit()
-    this.db.writeMessage(this.userId,projectName,projectName,this.getDate(),"Welcome to chat "+projectName)
+    this.db.writeMessage(this.userId,this.replece(this.userInfo[0].email), projectName,this.getDate(),"Welcome to chat "+projectName)
   }
   
   shareTable(item,projectName,role){
@@ -470,6 +469,7 @@ return false;
     this.db.logSave(this.userId,"Start share project","share","Start share project "+projectName+" for "+item.friendsEmail);
   }
 checkShare(email,projectName){
+  
   this.db.kanban=projectName
   for(let item of this.shareFriends){
     if(item.friendsEmail==email){

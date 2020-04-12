@@ -247,3 +247,7 @@
 .text {
     white-space: pre-wrap;
 }
+
+.dontShare {
+    text-decoration: line-through;
+}

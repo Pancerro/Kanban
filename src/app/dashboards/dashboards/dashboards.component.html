@@ -228,10 +228,11 @@
                                     <div class="myKanbanProject">
                                         <img ngxGravatar [email]=inreplece(mes.email)>
                                     </div>
-
-                                    <p> {{inreplece(mes.email)}} </p>
-                                    <p>{{inreplece(mes.message)}}</p>
-                                    <hr>
+                                    <div>
+                                        <p [ngClass]="checkShare(replece(mes.email))?'share':'dontShare'"> {{inreplece(mes.email)}} </p>
+                                        <p>{{inreplece(mes.message)}}</p>
+                                        <hr>
+                                    </div>
                                 </div>
                             </div>
                             <div *ngIf="chatButton" class="sendToChat">
@@ -263,7 +264,7 @@
                                         <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table0,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label>{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
