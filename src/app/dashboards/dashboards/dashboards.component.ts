@@ -128,7 +128,7 @@ export class DashboardsComponent implements OnInit {
     this.db.updateChoiceUser(this.userId,user,tableParent,tableChild)
   }
   choiceText(user:string){
-    if(user=="") return "Choice user for task"
+    if(user=="") return ""
     else return this.inreplece(user);
   }
   dontClose($event){

@@ -229,7 +229,7 @@
                                         <img ngxGravatar [email]=inreplece(mes.email)>
                                     </div>
                                     <div>
-                                        <p [ngClass]="checkShare(replece(mes.email))?'share':'dontShare'"> {{inreplece(mes.email)}} </p>
+                                        <p [ngClass]="checkShare(replece(mes.email),projectName)?'share':'dontShare'"> {{inreplece(mes.email)}} </p>
                                         <p>{{inreplece(mes.message)}}</p>
                                         <hr>
                                     </div>
@@ -264,7 +264,7 @@
                                         <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table0,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label [ngClass]="checkShare(item.user)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
@@ -292,7 +292,7 @@
                                         <div class="choiceUser" *ngIf="false">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table1,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label>{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
@@ -320,7 +320,7 @@
                                         <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table2,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label>{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
@@ -349,7 +349,7 @@
                                         <div class="choiceUser" *ngIf="false">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table3,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label>{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
@@ -378,7 +378,7 @@
                                         <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table4,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label>{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
@@ -408,7 +408,7 @@
                                         <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table5,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label>{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
@@ -438,7 +438,7 @@
                                         <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table6,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label>{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
@@ -468,7 +468,7 @@
                                         <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table7,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label>{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
@@ -498,7 +498,7 @@
                                         <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table8,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label>{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
@@ -527,7 +527,7 @@
                                         <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table9,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
-                                                    <mat-label>{{choiceText(item.user)}} </mat-label>
+                                                    <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
