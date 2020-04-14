@@ -266,6 +266,7 @@
                                                 <mat-form-field>
                                                     <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
+                                                        <mat-option value="-">-</mat-option>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
                                                                 <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -289,11 +290,12 @@
                                         <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                         <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table1,item.user)">Task title: {{item.title}}</button>
                                         <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table1)"><mat-icon>delete</mat-icon></button><br>
-                                        <div class="choiceUser" *ngIf="false">
+                                        <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table1,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
                                                     <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
+                                                        <mat-option value="-">-</mat-option>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
                                                                 <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -322,6 +324,7 @@
                                                 <mat-form-field>
                                                     <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
+                                                        <mat-option value="-">-</mat-option>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
                                                                 <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -346,11 +349,12 @@
                                         <button class="buttonPriority" [disabled]="checkIfView()" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button><br>
                                         <button class="buttonList" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table3,item.user)">Task title: {{item.title}}</button>
                                         <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table3)"><mat-icon>delete</mat-icon></button><br>
-                                        <div class="choiceUser" *ngIf="false">
+                                        <div class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table3,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>
                                                     <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
+                                                        <mat-option value="-">-</mat-option>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
                                                                 <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -380,6 +384,7 @@
                                                 <mat-form-field>
                                                     <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
+                                                        <mat-option value="-">-</mat-option>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
                                                                 <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -410,7 +415,9 @@
                                                 <mat-form-field>
                                                     <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
+                                                        <mat-option value="-">-</mat-option>
                                                         <div *ngFor="let friend of myFriend">
+
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
                                                                 <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
                                                             </div>
@@ -440,6 +447,7 @@
                                                 <mat-form-field>
                                                     <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
+                                                        <mat-option value="-">-</mat-option>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
                                                                 <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -470,6 +478,7 @@
                                                 <mat-form-field>
                                                     <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
+                                                        <mat-option value="-">-</mat-option>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
                                                                 <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -500,6 +509,7 @@
                                                 <mat-form-field>
                                                     <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
+                                                        <mat-option value="-">-</mat-option>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
                                                                 <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
@@ -529,6 +539,7 @@
                                                 <mat-form-field>
                                                     <mat-label [ngClass]="checkShare(item.user,projectName)?'share':'dontShare'">{{choiceText(item.user)}} </mat-label>
                                                     <mat-select [disabled]="checkIfView()" name="user" ngModel>
+                                                        <mat-option value="-">-</mat-option>
                                                         <div *ngFor="let friend of myFriend">
                                                             <div *ngIf="checkAccept(friend.friendsEmail)">
                                                                 <mat-option *ngIf="checkShare(friend.friendsEmail,projectName)" value={{friend.friendsEmail}}>{{inreplece(friend.friendsEmail)}}</mat-option>
