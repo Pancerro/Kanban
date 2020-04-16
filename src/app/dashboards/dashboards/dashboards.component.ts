@@ -39,8 +39,8 @@ export class DashboardsComponent implements OnInit {
     else return false;
   }
 
-  view="view"
-  projectName:string;
+  view="Viewer"
+  projectName:string
   allUser=[];
   myFriend=[];
   myInvities=[];
@@ -120,7 +120,7 @@ export class DashboardsComponent implements OnInit {
     else return false;
   }
   checkIfView(){
-    if(this.checkRole()=="view") return true;
+    if(this.checkRole()=="viewer") return true;
     else return false;
   }
   choiceUserForTask(user:string,tableParent:string,tableChild:string){
@@ -242,7 +242,7 @@ return false;
         if(result!=undefined){
           if(result.invalid){
             window.alert("Please correct all errors and resubmit add task");
-            this.db.logSave(this.userId,"logAddNewKanbanProjectFailed","add new kanban project","add new kanban project failed")
+            this.db.logSave(this.auth.getUser().uid,"logAddNewKanbanProjectFailed","add new kanban project","add new kanban project failed")
           }
           else{
             this.db.kanban=result.value.kanban.name;
@@ -251,19 +251,19 @@ return false;
             }
             else{
             this.db.kanban=this.replece(this.db.kanban);
-            this.db.writeKanbanTable(this.userId,this.db.kanban)
-            this.db.writeTitleTable(this.userId,"table0","to do")
-            this.db.writeTitleTable(this.userId,"table1","doing")
-            this.db.writeTitleTable(this.userId,"table2","done")
-            this.db.writeTitleTable(this.userId,"table3","table4");
-            this.db.writeTitleTable(this.userId,"table4","table5");
-            this.db.writeTitleTable(this.userId,"table5","table6");
-            this.db.writeTitleTable(this.userId,"table6","table7");
-            this.db.writeTitleTable(this.userId,"table7","table8");
-            this.db.writeTitleTable(this.userId,"table8","table9");
-            this.db.writeTitleTable(this.userId,"table9","table10");
-            this.db.writeUserNumber(this.userId,3);
-            this.db.logSave(this.userId,"logAddNewKanbanProject","add new kanban project","add new kanban project: "+this.db.kanban+" success")
+            this.db.writeKanbanTable(this.auth.getUser().uid,this.db.kanban)
+            this.db.writeTitleTable(this.auth.getUser().uid,"table0","to do")
+            this.db.writeTitleTable(this.auth.getUser().uid,"table1","doing")
+            this.db.writeTitleTable(this.auth.getUser().uid,"table2","done")
+            this.db.writeTitleTable(this.auth.getUser().uid,"table3","table4");
+            this.db.writeTitleTable(this.auth.getUser().uid,"table4","table5");
+            this.db.writeTitleTable(this.auth.getUser().uid,"table5","table6");
+            this.db.writeTitleTable(this.auth.getUser().uid,"table6","table7");
+            this.db.writeTitleTable(this.auth.getUser().uid,"table7","table8");
+            this.db.writeTitleTable(this.auth.getUser().uid,"table8","table9");
+            this.db.writeTitleTable(this.auth.getUser().uid,"table9","table10");
+            this.db.writeUserNumber(this.auth.getUser().uid,3);
+            this.db.logSave(this.auth.getUser().uid,"logAddNewKanbanProject","add new kanban project","add new kanban project: "+this.db.kanban+" success")
             this.db.kanban=localStorage.getItem("lastTable")
           }
         }

@@ -187,7 +187,7 @@
                                                     <mat-form-field>
                                                         <mat-label>Edit role! </mat-label>
                                                         <mat-select name="role" [(ngModel)]="friend.role" [placeholder]="friend.role">
-                                                            <mat-option value="view">View</mat-option>
+                                                            <mat-option value="viewer">Viewer</mat-option>
                                                             <mat-option value="editor">Editor</mat-option>
                                                             <!--<mat-option value="owner">Owner</mat-option>-->
                                                         </mat-select>
@@ -207,9 +207,9 @@
                                                     Email: {{inreplece(friend.friendsEmail)}}
                                                     <form (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
                                                         <mat-form-field>
-                                                            <mat-label>Choice role! </mat-label>
+                                                            <mat-label>Select role! </mat-label>
                                                             <mat-select name="role" [(ngModel)]="view" [placeholder]="view">
-                                                                <mat-option value="view">View</mat-option>
+                                                                <mat-option value="viewer">Viewer</mat-option>
                                                                 <mat-option value="editor">Editor</mat-option>
                                                                 <!--  <mat-option value="owner">Owner</mat-option>-->
                                                             </mat-select>
@@ -274,7 +274,7 @@
                                                         </div>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Select!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -303,7 +303,7 @@
                                                         </div>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Select!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -332,7 +332,7 @@
                                                         </div>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Select!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -362,7 +362,7 @@
                                                         </div>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Select!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -392,7 +392,7 @@
                                                         </div>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Select!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -424,7 +424,7 @@
                                                         </div>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Select!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -455,7 +455,7 @@
                                                         </div>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Select!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -486,7 +486,7 @@
                                                         </div>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Select!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -517,7 +517,7 @@
                                                         </div>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Select!</button>
                                             </form>
                                         </div>
                                     </div>
@@ -547,7 +547,7 @@
                                                         </div>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Choice!</button>
+                                                <button type="submit" [disabled]="checkIfView()" class="buttonChoice" mat-stroked-button color="primary" [disabled]="choiceUser.invalid">Select!</button>
                                             </form>
                                         </div>
                                     </div>
