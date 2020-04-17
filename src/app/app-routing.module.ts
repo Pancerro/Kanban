@@ -6,6 +6,7 @@ import { AuthGuard } from './services/auth.guard';
 import { LogiComponent } from './dashboards/logi/logi.component';
 import { SettingsComponent } from './dashboards/settings/settings.component';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import { SharingOptionComponent } from './dashboards/sharing-option/sharing-option.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome-page', pathMatch: 'full'},
@@ -27,6 +28,11 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'sharing-option/:projectName',
+    component: SharingOptionComponent,
     canActivate: [AuthGuard],
   }
   ];

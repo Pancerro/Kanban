@@ -1,0 +1,52 @@
+<div class="shareOption">
+    <app-menu></app-menu>
+    <button mat-flat-button color="primary">Sharing options</button>
+
+    <br>
+    <h1>Project {{projectName}}</h1>
+    <div>
+
+        <button mat-stroked-button color="primary" (click)="stopShareProject(projectName)">Stop Sharing Project</button>
+        <h1>Shared with </h1>
+        <div class="shareShared">
+            <div *ngFor="let friend of shareFriends">
+                <div *ngIf="userInfo[0].email!=inreplece(friend.friendsEmail)">Email: {{inreplece(friend.friendsEmail)}} Role: {{friend.role}}
+                    <form (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
+                        <mat-form-field>
+                            <mat-label>Edit role! </mat-label>
+                            <mat-select name="role" [(ngModel)]="friend.role" [placeholder]="friend.role">
+                                <mat-option value="viewer">Viewer</mat-option>
+                                <mat-option value="editor">Editor</mat-option>
+                                <!--<mat-option value="owner">Owner</mat-option>-->
+                            </mat-select>
+                        </mat-form-field>
+                        <button type="submit" mat-stroked-button color="primary" [disabled]="roleForm.invalid">Edit role!</button>
+                    </form>
+                    <button mat-stroked-button color="primary" (click)="stopShare(friend,projectName)">Stop share project</button>
+
+                </div>
+            </div> <br>
+        </div>
+        <h1>Share with</h1>
+        <div class="shareCan">
+            <div *ngFor="let friend of myFriend">
+                <div *ngIf="!checkShare(friend.friendsEmail,projectName)">
+                    <div *ngIf="friend.accept">
+                        Email: {{inreplece(friend.friendsEmail)}}
+                        <form (ngSubmit)="shareTable(friend,projectName,roleForm.value.role)" #roleForm="ngForm">
+                            <mat-form-field>
+                                <mat-label>Select role! </mat-label>
+                                <mat-select name="role" [(ngModel)]="view" [placeholder]="view">
+                                    <mat-option value="viewer">Viewer</mat-option>
+                                    <mat-option value="editor">Editor</mat-option>
+                                    <!--  <mat-option value="owner">Owner</mat-option>-->
+                                </mat-select>
+                            </mat-form-field>
+                            <button type="submit" mat-stroked-button color="primary" [disabled]="roleForm.invalid">Share project!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

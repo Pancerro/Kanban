@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/database.service';
-import { MatDialog} from '@angular/material';
+import { MatDialog, MatBottomSheetRef, MatBottomSheet} from '@angular/material';
 import { AddTaskComponent } from 'src/app/modal/add-task/add-task.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { EditTaskComponent } from 'src/app/modal/edit-task/edit-task.component';
@@ -10,6 +10,8 @@ import { CreateNewKanbanComponent } from 'src/app/modal/create-new-kanban/create
 import { ScrollToBottomDirective } from '../scroll-to-bottom.directive/scroll-to-bottom.directive.component';
 import { DeleteOptionComponent } from 'src/app/modal/delete-option/delete-option.component';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-dashboards',
@@ -17,6 +19,21 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./dashboards.component.css'],
 })
 export class DashboardsComponent implements OnInit {
+
+  openChat(): void {
+    this._bottomSheet.open(ChatComponent,{
+      data: {projectName: this.projectName, userId:this.userId}
+    });
+  }
+
+  sharingOption(){
+    if(this.checkIfOwner()){
+    localStorage.setItem("lastTable",this.projectName);
+    localStorage.setItem("share","true"); 
+    this.router.navigate(['/sharing-option/'+this.projectName]);
+    } else window.alert("Sorry, you dont have access to sharing option")
+   
+  }
   deleteFromShare=[];
   clear(){
     console.log("clear")
@@ -39,7 +56,7 @@ export class DashboardsComponent implements OnInit {
     else return false;
   }
 
-  view="Viewer"
+  view="viewer"
   projectName:string
   allUser=[];
   myFriend=[];
@@ -503,6 +520,7 @@ seeMyShareProject(item){
   this.db.getMessage(this.userId,item.kanban).subscribe(res=>{
     this.viewMessage=res
   })
+  this.titleService.setTitle(this.projectName);
   window.scrollTo()
 }
 sendMessage(message,formReset){
@@ -554,6 +572,8 @@ sharedInit(){
   });
 }
   ngOnInit(){
+ 
+    if(localStorage.getItem("share")) this.settingShare=true;
     this.audioNewMessage.src = "assets/2.mp3";
     this.audioNewMessage.load();
     this.deleteAudio.src = "assets/1.mp3";
@@ -655,7 +675,9 @@ sharedInit(){
     private auth:AuthService,
     private db:DataService,
     public dialog: MatDialog,
-    private titleService: Title
+    private router: Router,
+    private titleService: Title,
+    private _bottomSheet: MatBottomSheet
   ) {
       this.userId=auth.getUser().uid;
     }
@@ -756,7 +778,7 @@ sharedInit(){
    this.db.kanban=this.projectName
     const dialogRef = this.dialog.open(EditTaskComponent, {
     width: '350px',
-    data: {title: title, description: description, priority:priority,color:color,endDate:endDate}
+    data: {title: title, description: description, priority:priority,color:color,endDate:endDate,checkView:this.checkIfView}
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result!=undefined)

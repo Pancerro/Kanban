@@ -1,0 +1,23 @@
+<h1>Chat {{projectName}} </h1>
+<div class="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    <div *ngFor="let mes of viewMessage">
+        <div class="myKanbanProject">
+            <img ngxGravatar [email]=inreplece(mes.email)>
+        </div>
+        <div>
+            <p [ngClass]="checkShare(replece(mes.email),projectName)?'share':'dontShare'"> {{inreplece(mes.email)}} </p>
+            <p>{{inreplece(mes.message)}}</p>
+            <hr>
+        </div>
+    </div>
+</div>
+<div class="sendToChat">
+    <form (ngSubmit)="sendMessage(sendMessageForm.value.message,sendMessageForm)" #sendMessageForm="ngForm">
+        <div class="sendMessage">
+            <mat-form-field class="form">
+                <input matInput type="text" placeholder="Message" required name="message" ngModel>
+            </mat-form-field>
+            <button type="submit" class="button" color="primary" [disabled]="sendMessageForm.invalid">Send</button>
+        </div>
+    </form>
+</div>

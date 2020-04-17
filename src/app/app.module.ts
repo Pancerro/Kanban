@@ -38,6 +38,9 @@ import { ScrollToBottomDirective } from './dashboards/scroll-to-bottom.directive
 import { GravatarModule } from  'ngx-gravatar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeleteOptionComponent } from './modal/delete-option/delete-option.component';
+import { SharingOptionComponent } from './dashboards/sharing-option/sharing-option.component';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import { ChatComponent } from './dashboards/chat/chat.component';
 @NgModule({
   entryComponents: [
     RegisterComponent,
@@ -48,7 +51,8 @@ import { DeleteOptionComponent } from './modal/delete-option/delete-option.compo
     AddCategoryComponent,
     EditCategoryComponent,
     CreateNewKanbanComponent,
-    DeleteOptionComponent
+    DeleteOptionComponent,
+    ChatComponent
   ],
   declarations: [
     AppComponent,
@@ -68,6 +72,8 @@ import { DeleteOptionComponent } from './modal/delete-option/delete-option.compo
     MenuComponent,
     ScrollToBottomDirective,
     DeleteOptionComponent,
+    SharingOptionComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,6 +100,7 @@ import { DeleteOptionComponent } from './modal/delete-option/delete-option.compo
     MatSidenavModule,
     MatMenuModule,
     GravatarModule,
+    MatBottomSheetModule,
     MatCheckboxModule,
   ],
   providers: [],

@@ -1,0 +1,15 @@
+.chat {
+    width: 100%;
+    height: 300px;
+}
+
+.myKanbanProject {
+    float: left;
+    width: auto;
+    overflow: hidden;
+}
+
+.sendToChat {
+    width: 100%;
+    height: 10px;
+}

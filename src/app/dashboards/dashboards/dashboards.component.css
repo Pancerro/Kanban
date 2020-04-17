@@ -6,8 +6,8 @@
     height: 50px;
     position: absolute;
     text-align: center;
-    margin-top: 23px;
-    margin-left: 40px;
+    margin-top: 30px;
+    margin-left: 100px;
 }
 
 .myKanbanProject {
@@ -150,6 +150,7 @@
     cursor: move;
     background: white;
     font-size: 14px;
+    height: 100px;
 }
 
 .cdk-drag-preview {
@@ -183,17 +184,16 @@
 
 .buttonRemove {
     color: black;
-    width: 10%;
-    height: 100%;
+    width: 5%;
+    height: auto;
     border: none;
 }
 
 .buttonPriority {
     padding-left: 1%;
     color: black;
-    width: auto;
+    width: 5%;
     height: 100%;
-    border: solid 4px;
 }
 
 .best {

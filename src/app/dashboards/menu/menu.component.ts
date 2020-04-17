@@ -18,6 +18,7 @@ export class MenuComponent  implements OnInit{
 logClicked:boolean=false;
 kanbanClicked:boolean=false;
 userSettingClicked:boolean=false;
+sharingClicked:boolean=false;
 userId:string;
 word:string;
 constructor(
@@ -33,6 +34,10 @@ constructor(
     this.db.logSave(this.userId,"logOut","log out","log out")
     this.db.updateOnline(this.replece(this.auth.getUser().email),false);
     this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
+  }
+
+  sharingOption(){
+    this.router.navigate(['/sharing-option']);
   }
   logs():void{
     this.router.navigate(['/logi']);
