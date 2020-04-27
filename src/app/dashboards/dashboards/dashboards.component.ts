@@ -288,6 +288,7 @@ return false;
       });
   }
   seeMyProject(projectName:string){
+    this.shareFriends=[];
     localStorage.setItem("share","");
     this.settingShare=false;
     this.userId=this.auth.getUser().uid;
@@ -307,7 +308,10 @@ return false;
         this.db.logSave(this.userId,"logRemoveProject","remove project","remove project: "+projectName)
         this.db.removeKanbanTable(this.userId,this.replece(projectName));
         this.db.removeKanbanTableFromProject(this.userId,this.replece(projectName));
+        console.log(projectName)
+        console.log(this.db.kanban)
         if(projectName==this.db.kanban) this.seeMyProject("kanban")
+        else this.seeMyProject(this.db.kanban)
       }
     });
   }
