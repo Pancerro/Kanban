@@ -1,10 +1,10 @@
 import { Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { RegisterComponent } from 'src/app/modal/register/register.component';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoginComponent } from 'src/app/modal/login/login.component';
 import { Router } from '@angular/router';
-import { DataService } from 'src/app/services/database.service';
+import { DataService } from 'src/app/services/database/database.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 @Component({
   selector: 'app-welcome-page',

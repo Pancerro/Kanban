@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { WelcomePageComponent } from 'src/app/user/welcome-page/welcome-page.component';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { DataService } from 'src/app/services/database.service';
+import { DataService } from 'src/app/services/database/database.service';
 
 @Component({
   selector: 'app-login',

@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DashboardsComponent } from 'src/app/dashboards/dashboards/dashboards.component';
-import { AuthService } from 'src/app/services/auth.service';
-import { DataService } from 'src/app/services/database.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { DataService } from 'src/app/services/database/database.service';
 
 @Component({
   selector: 'app-edit-task',

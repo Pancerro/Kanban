@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { DataService } from 'src/app/services/database.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { DataService } from 'src/app/services/database/database.service';
 import { MatDialog, MatBottomSheetRef, MatBottomSheet} from '@angular/material';
 import { AddTaskComponent } from 'src/app/modal/add-task/add-task.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';

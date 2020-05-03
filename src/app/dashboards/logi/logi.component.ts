@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { DataService } from 'src/app/services/database.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { DataService } from 'src/app/services/database/database.service';
 import { Router } from '@angular/router';
 import {  MatTableDataSource } from '@angular/material';
 export interface Log {

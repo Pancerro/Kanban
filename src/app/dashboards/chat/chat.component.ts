@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { DashboardsComponent } from '../dashboards/dashboards.component';
-import { AuthService } from 'src/app/services/auth.service';
-import { DataService } from 'src/app/services/database.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { DataService } from 'src/app/services/database/database.service';
 
 @Component({
   selector: 'app-chat',

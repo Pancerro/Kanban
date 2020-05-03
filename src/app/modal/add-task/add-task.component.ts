@@ -1,6 +1,6 @@
 import { Component,  OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { DataService } from 'src/app/services/database.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { DataService } from 'src/app/services/database/database.service';
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',

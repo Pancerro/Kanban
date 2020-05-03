@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from 'src/app/services/database.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { DataService } from 'src/app/services/database/database.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { MatTableDataSource, MatDialog} from '@angular/material';
 import { EditCategoryComponent } from 'src/app/modal/edit-category/edit-category.component';
 import { AddCategoryComponent } from 'src/app/modal/add-category/add-category.component';
