@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/database/database.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Log } from 'src/app/class/log/log';
+import { AllUser } from 'src/app/class/allUser/all-user';
 
 @Component({
   selector: 'app-menu',
@@ -31,8 +33,8 @@ constructor(
   }
   logout():void{
     this.titleService.setTitle("You are logout");
-    this.db.logSave(this.userId,"logOut","log out","log out")
-    this.db.updateOnline(this.replece(this.auth.getUser().email),false);
+    this.db.logSave(new Log(this.userId,"logOut","log out","log out"))
+    this.db.updateOnline(new AllUser(this.userId,this.replece(this.auth.getUser().email),false));
     this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
   }
 

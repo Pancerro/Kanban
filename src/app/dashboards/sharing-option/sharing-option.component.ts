@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/database/database.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Log } from 'src/app/class/log/log';
+import { StopShareUser } from 'src/app/class/stopShareUser/stop-share-user';
+import { ShareFriend } from 'src/app/class/shareFriend/share-friend';
+import { ShareFor } from 'src/app/class/shareFor/share-for';
+import { Project } from 'src/app/class/project/project';
 
 
 @Component({
@@ -68,28 +73,28 @@ replece(replace:string):string{
 }
 
 stopShareProject(projectName){
-  this.db.deleteChatMesage(this.userId,projectName);
+  this.db.deleteChatMesage(new Project(this.userId,projectName,null));
   this.db.kanban=projectName; 
   this.db.getShareFriends(this.userId).subscribe(res=>{this.shareFriends=res});
   for(let item of this.shareFriends){
     if(item.friendsEmail==this.replece(this.userInfo[0].email)) console.log("")
-    else this.db.writeDelete(this.userId,item.friendsEmail,item.friendsId);      
+    else this.db.writeDelete(new StopShareUser(this.userId,item.friendsEmail,item.friendsId));      
     this.db.removeShare(item.friendsId,projectName); 
     this.db.removeShareFriends(this.userId,item.friendsEmail) 
-    this.db.updateShare(this.userId,projectName,false);
+    this.db.updateShare(new Project(this.userId,projectName,false));
   } 
   this.db.kanban=localStorage.getItem("lastTable")
-  this.db.logSave(this.userId,"Stop share","share","stop share project "+projectName);
+  this.db.logSave(new Log(this.userId,"Stop share","share","stop share project "+projectName));
 }
 
 shareTable(item,projectName,role){
   //edit
   this.db.kanban=projectName
-  this.db.writeShareFriends(this.userId,item.friendsEmail,item.friendsId,role);
-  this.db.share(item.friendsId,this.userId,projectName)   
+  this.db.writeShareFriends(new ShareFriend( this.userId,item.friendsEmail,item.friendsId,role) );
+  this.db.share(new ShareFor(item.friendsId,this.userId,projectName))   
   this.db.removeDelete(this.userId,item.friendsEMail);
   this.db.kanban=localStorage.getItem("lastTable")
-  this.db.logSave(this.userId,"Start share project","share","Start share project "+projectName+" for "+item.friendsEmail);
+  this.db.logSave(new Log(this.userId,"Start share project","share","Start share project "+projectName+" for "+item.friendsEmail)  );
 }
 checkShare(email,projectName){
 
@@ -107,10 +112,10 @@ return false;
 stopShare(friends,projectName){
   this.db.kanban=projectName;
   this.db.removeShareFriends(this.userId,friends.friendsEmail);
-  this.db.writeDelete(this.userId,friends.friendsEmail,friends.friendsId)
+  this.db.writeDelete(new StopShareUser(this.userId,friends.friendsEmail,friends.friendsId))
   this.db.removeShare(friends.friendsId,projectName)
   this.db.kanban=localStorage.getItem("lastTable")
-  this.db.logSave(this.userId,"Stop share project","share","Stop share project "+projectName+" for "+friends.friendsEmail);
+  this.db.logSave( new Log(this.userId,"Stop share project","share","Stop share project "+projectName+" for "+friends.friendsEmail));
 }
 
 }

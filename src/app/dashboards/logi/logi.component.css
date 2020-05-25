@@ -28,4 +28,29 @@ table {
     width: 100%;
     height: 100%;
     border: none;
+    background-color: white;
+}
+
+.button:hover {
+    background-color: red;
+}
+
+img {
+    width: 25px;
+    height: 25px;
+}
+
+.titleType {
+    width: 25%;
+    height: 30px;
+}
+
+.titleData {
+    width: 25%;
+    height: 30px;
+}
+
+.titleDesc {
+    width: 40%;
+    height: 30px;
 }

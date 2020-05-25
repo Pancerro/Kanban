@@ -6,6 +6,15 @@ import { LoginComponent } from 'src/app/modal/login/login.component';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/database/database.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { Log } from 'src/app/class/log/log';
+import { MyFriend } from 'src/app/class/myFriend/my-friend';
+import { AllUser } from 'src/app/class/allUser/all-user';
+import { UserDate } from 'src/app/class/userDate/user-date';
+import { TableTitle } from 'src/app/class/tableTitle/table-title';
+import { Category } from 'src/app/class/category/category';
+import { NumberSeeTable } from 'src/app/class/numberSeeTable/number-see-table';
+import { Project } from 'src/app/class/project/project';
+import { Task } from 'src/app/class/task/task';
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
@@ -58,7 +67,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 
 export class WelcomePageComponent  {
   constructor(public dialog: MatDialog,
-    private router: Router,
+    public router: Router,
     public auth:AuthService,
     public db:DataService) {}
   captcha:boolean=false;
@@ -85,30 +94,30 @@ export class WelcomePageComponent  {
             this.auth.register(result.value.register.email,result.value.register.password)
             .then(()=>{this.info="You can login now ";
             this.userId=this.auth.getUser().uid
-            this.db.writeMyFriends(this.userId,this.replece(this.email),this.userId,true);
+            this.db.writeMyFriends(new MyFriend(this.userId,this.replece(this.email),this.userId,true));
             localStorage.setItem("lastTable","kanban");
             localStorage.setItem("userId",this.userId);
             localStorage.setItem("share","");
             this.db.kanban=localStorage.getItem("lastTable")
-            this.db.writeUser(this.userId,this.replece(this.email),false);
-            this.db.writeTitleTable(this.userId,"table0","to do")
-            this.db.writeTitleTable(this.userId,"table1","doing")
-            this.db.writeTitleTable(this.userId,"table2","done")
-            this.db.writeTitleTable(this.userId,"table3","table4")
-            this.db.writeTitleTable(this.userId,"table4","table5")
-            this.db.writeTitleTable(this.userId,"table5","table6")
-            this.db.writeTitleTable(this.userId,"table6","table7")
-            this.db.writeTitleTable(this.userId,"table7","table8")
-            this.db.writeTitleTable(this.userId,"table8","table9")
-            this.db.writeTitleTable(this.userId,"table9","table10")
-            this.db.writeUserNumber(this.userId,3)
-            this.db.logSave(this.userId,"logRegister","create Account","create Account")
-            this.db.writeCategory(this.userId,"date","pink");
-            this.db.writeCategory(this.userId,"shop","green");
-            this.db.writeCategory(this.userId,"cars","red");
-            this.db.writeCategory(this.userId,"school","white");
-            this.db.writeUserData(this.userId,this.email,this.thema,false);
-            this.db.writeKanbanTable(this.userId,this.db.kanban)
+            this.db.writeUser(new AllUser(this.userId,this.replece(this.email),false));
+            this.db.writeTitleTable(new TableTitle(this.userId,"table0","to do"))
+            this.db.writeTitleTable(new TableTitle(this.userId,"table1","doing"))
+            this.db.writeTitleTable(new TableTitle(this.userId,"table2","done"))
+            this.db.writeTitleTable(new TableTitle(this.userId,"table3","table4"))
+            this.db.writeTitleTable(new TableTitle(this.userId,"table4","table5"))
+            this.db.writeTitleTable(new TableTitle(this.userId,"table5","table6"))
+            this.db.writeTitleTable(new TableTitle(this.userId,"table6","table7"))
+            this.db.writeTitleTable(new TableTitle(this.userId,"table7","table8"))
+            this.db.writeTitleTable(new TableTitle(this.userId,"table8","table9"))
+            this.db.writeTitleTable(new TableTitle(this.userId,"table9","table10"))
+            this.db.writeUserNumber(new NumberSeeTable(this.userId,3))
+            this.db.logSave(new Log(this.userId,"logRegister","create Account","create Account"))
+            this.db.writeCategory(new Category(this.userId,"date","pink"));
+            this.db.writeCategory(new Category(this.userId,"shop","green"));
+            this.db.writeCategory(new Category(this.userId,"cars","red"));
+            this.db.writeCategory(new Category(this.userId,"school","white"));
+            this.db.writeUserData(new UserDate(this.userId,this.email,this.thema,false));
+            this.db.writeKanbanTable(new Project(this.userId,this.db.kanban,false))
     })}}}});
   }
   loginUser(): void {
@@ -119,9 +128,9 @@ export class WelcomePageComponent  {
       if(result!=undefined){
       if(result==false) this.numberOfTests++;
       else{
-        this.db.updateOnline(this.replece(result.email),true);
+        this.db.updateOnline(new AllUser(null,this.replece(result.email),true));
         this.auth.login(result.email,result.password).then(() => this.router.navigate(['/dashboard'])).catch(err => this.loginError())
-        .then(()=> this.db.logSave(this.userId,"logIn","log in","log in"))
+        .then(()=> this.db.logSave(new Log(this.userId,"logIn","log in","log in")))
       }
     }else this.numberOfTests++;
   });
@@ -147,41 +156,41 @@ export class WelcomePageComponent  {
 }
 
   loginWithGoogle():void{
-  this.auth.googleAuth().then(()=>{
+    this.auth.googleAuth().then(()=>{
     this.userId=this.auth.getUser().uid;
     this.email=this.auth.getUser().email;
-    this.db.updateOnline(this.replece(this.email),true);
-    this.db.logSave(this.userId,"logLoginWitchGoogle","log in","with google")
-    this.db.getTask(this.userId,"table").subscribe(res => {
+    this.db.updateOnline(new AllUser(this.userId,this.replece(this.email),true));
+    this.db.logSave(new Log(  this.userId,"logLoginWitchGoogle","log in","with google"))
+    this.db.getTask(new Task(this.userId,"table",null,null,null,null,null,null,null)).subscribe(res => {
       if(res.length==0) 
       {
-        this.db.writeMyFriends(this.userId,this.replece(this.email),this.userId,true);
+        this.db.writeMyFriends(new MyFriend( this.userId,this.replece(this.email),this.userId,true) );
         localStorage.setItem("lastTable","kanban");
         localStorage.setItem("userId",this.userId);
         localStorage.setItem("share","");
         this.db.kanban=localStorage.getItem("lastTable")
-        this.db.writeUser(this.userId,this.replece(this.email),false);
-        this.db.writeUserData(this.userId,this.email,"",true);
-        this.db.writeTitleTable(this.userId,"table0","to do");
-        this.db.writeTitleTable(this.userId,"table1","doing");
-        this.db.writeTitleTable(this.userId,"table2","done");
-        this.db.writeTitleTable(this.userId,"table3","table4");
-        this.db.writeTitleTable(this.userId,"table4","table5");
-        this.db.writeTitleTable(this.userId,"table5","table6");
-        this.db.writeTitleTable(this.userId,"table6","table7");
-        this.db.writeTitleTable(this.userId,"table7","table8");
-        this.db.writeTitleTable(this.userId,"table8","table9");
-        this.db.writeTitleTable(this.userId,"table9","table10");
-        this.db.writeCategory(this.userId,"date","pink");
-        this.db.writeCategory(this.userId,"shop","green");
-        this.db.writeCategory(this.userId,"cars","red");
-        this.db.writeCategory(this.userId,"school","white");
-        this.db.writeUserNumber(this.userId,3);
-        this.db.writeKanbanTable(this.userId,this.db.kanban)
-        this.db.updateOnline(this.replece(this.email),true);
+        this.db.writeUser(new AllUser( this.userId,this.replece(this.email),false));
+        this.db.writeUserData(new UserDate( this.userId,this.email,"",true));
+        this.db.writeTitleTable(new TableTitle( this.userId,"table0","to do"));
+        this.db.writeTitleTable(new TableTitle(this.userId,"table1","doing"));
+        this.db.writeTitleTable(new TableTitle(this.userId,"table2","done"));
+        this.db.writeTitleTable(new TableTitle(this.userId,"table3","table4"));
+        this.db.writeTitleTable(new TableTitle(this.userId,"table4","table5"));
+        this.db.writeTitleTable(new TableTitle(this.userId,"table5","table6"));
+        this.db.writeTitleTable(new TableTitle(this.userId,"table6","table7"));
+        this.db.writeTitleTable(new TableTitle(this.userId,"table7","table8"));
+        this.db.writeTitleTable(new TableTitle(this.userId,"table8","table9"));
+        this.db.writeTitleTable(new TableTitle(this.userId,"table9","table10"));
+        this.db.writeCategory(new Category(this.userId,"date","pink"));
+        this.db.writeCategory(new Category(this.userId,"shop","green"));
+        this.db.writeCategory(new Category(this.userId,"cars","red"));
+        this.db.writeCategory(new Category(this.userId,"school","white"));
+        this.db.writeUserNumber(new NumberSeeTable(this.userId,3));
+        this.db.writeKanbanTable(new Project(this.userId,this.db.kanban,false))
+        this.db.updateOnline(new AllUser(this.userId,this.replece(this.email),true));
       }
     });
-  this.db.updateOnline(this.replece(this.email),true);
+  this.db.updateOnline(new AllUser(this.userId,this.replece(this.email),true));
  this.router.navigate(['/dashboard'])
 })
 }

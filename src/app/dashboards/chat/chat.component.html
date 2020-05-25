@@ -5,7 +5,7 @@
             <img ngxGravatar [email]=inreplece(mes.email)>
         </div>
         <div>
-            <p [ngClass]="checkShare(replece(mes.email),projectName)?'share':'dontShare'"> {{inreplece(mes.email)}} </p>
+            <p [ngClass]="checkShare(db.replece(mes.email),projectName)?'share':'dontShare'"> {{inreplece(mes.email)}} </p>
             <p>{{inreplece(mes.message)}}</p>
             <hr>
         </div>

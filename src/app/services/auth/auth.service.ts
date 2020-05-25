@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/index';
 @Injectable({providedIn: 'root'})
 export class AuthService {
   user = this.fireAuth.auth.currentUser;
-  
   readonly authState$: Observable<User | null> = this.fireAuth.authState;
   constructor(private fireAuth: AngularFireAuth) {}
   getUser(): User | null {

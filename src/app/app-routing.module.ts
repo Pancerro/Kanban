@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { WelcomePageComponent } from './user/welcome-page/welcome-page.component';
+import { WelcomePageComponent } from './website-starter/welcome-page/welcome-page.component';
 import { DashboardsComponent } from './dashboards/dashboards/dashboards.component';
 import { AuthGuard } from './services/guard/auth.guard';
 import { LogiComponent } from './dashboards/logi/logi.component';
 import { SettingsComponent } from './dashboards/settings/settings.component';
-import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import { ResetPasswordComponent } from './website-starter/reset-password/reset-password.component';
 import { SharingOptionComponent } from './dashboards/sharing-option/sharing-option.component';
 
 const routes: Routes = [

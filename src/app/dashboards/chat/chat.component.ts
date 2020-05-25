@@ -3,6 +3,9 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { DashboardsComponent } from '../dashboards/dashboards.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/database/database.service';
+import { Log } from 'src/app/class/log/log';
+import { AllChat } from 'src/app/class/allChat/all-chat';
+import { Project } from 'src/app/class/project/project';
 
 @Component({
   selector: 'app-chat',
@@ -13,15 +16,13 @@ export class ChatComponent implements OnInit {
   word:string;
   projectName:string;
   userId:string;
-  userInfo=[];
-  date:Date; 
-  currentDate:string;
+  userInfo=[]; 
   viewMessage=[];
   shareFriends=[];
 
   constructor(private _bottomSheetRef: MatBottomSheetRef<DashboardsComponent>,
     private auth:AuthService,
-    private db:DataService,
+    public db:DataService,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
      }
   
@@ -31,15 +32,14 @@ export class ChatComponent implements OnInit {
     this.db.getDateUser(this.auth.getUser().uid).subscribe(res => {
       this.userInfo = res;
     });
-    this.db.getMessage(this.userId,this.projectName).subscribe(res=>{
-      console.log("1")
+    this.db.getMessage(new Project(this.userId,this.projectName,null)).subscribe(res=>{
       this.viewMessage=res
     })
     this.db.getShareFriends(this.userId).subscribe(res=>this.shareFriends=res);
     
   
   }
-  inreplece(replace:string):string{
+public inreplece(replace:string):string{
     this.word=replace
     for(let letter of replace){
     this.word=this.word.replace("@1@",".");
@@ -50,20 +50,8 @@ export class ChatComponent implements OnInit {
     }
   return this.word;
 }
-replece(replace:string):string{
-  this.word="";
-  for(let letter of replace)
-  {
-    letter=letter.replace(".","@1@");
-    letter=letter.replace("#","@2@");      
-    letter=letter.replace("$","@3@");
-    letter=letter.replace("[","@4@");
-    letter=letter.replace("]","@5@");
-    this.word=this.word+letter;
-  }
-  return this.word;
-}
-checkShare(email,projectName){
+
+public checkShare(email:string,projectName:string){
   
   this.db.kanban=projectName
   for(let item of this.shareFriends){
@@ -73,16 +61,11 @@ checkShare(email,projectName){
     }
 }
 }
-sendMessage(message,formReset){
+public sendMessage(message:string,formReset){
   this.db.kanban=this.projectName;
-  this.db.writeMessage(this.userId,this.userInfo[0].email,this.db.kanban,this.getDate(),message)
-  this.db.getMessage(this.userId,this.projectName).subscribe(res=>this.viewMessage=res)
+  this.db.writeMessage(new AllChat(this.userId,this.userInfo[0].email,this.db.kanban,"DATA",message));
+  this.db.getMessage(new Project(this.userId,this.projectName,null)).subscribe(res=>this.viewMessage=res);
   formReset.resetForm();
-  this.db.logSave(this.userId,"Send message","chat","send message");
-}
-getDate(){
-  this.date=new Date;
-  this.currentDate=(this.date.getDate()+'/'+this.db.zero((this.date.getMonth()+1))+(this.date.getMonth()+1)+'/'+this.date.getFullYear()+" "+this.db.zero(this.date.getHours())+this.date.getHours()+':'+this.db.zero(this.date.getMinutes())+this.date.getMinutes()+':'+this.db.zero(this.date.getSeconds())+this.date.getSeconds()+':'+this.db.zero(this.date.getMilliseconds())+ this.date.getMilliseconds());
-  return this.currentDate;
+  this.db.logSave(new Log(this.userId,"Send message","chat","send message"));
 }
 }

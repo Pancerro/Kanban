@@ -1,0 +1,33 @@
+import { Injectable } from '@angular/core';
+import {UserDate} from '../../service/userDate/user-date';
+import {Observable} from 'rxjs';
+import {UserDate as Ud} from 'src/app/class/userDate/user-date';
+import * as firebase from 'firebase';
+import {AngularFireDatabase} from '@angular/fire/database';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserDateService implements UserDate {
+
+  constructor(private db: AngularFireDatabase) { }
+  public writeUserData(userData: Ud): void {
+    firebase.database().ref('users/' + userData.getUserId() + '/userInfo/info').set({
+      email: userData.getEmail(),
+      thema: userData.getThema(),
+      google: userData.getGoogle()
+    });
+  }
+  getDateUser(userId: string): Observable<any[]> {
+    return this.db.list('/users/' + userId + '/userInfo/').valueChanges();
+  }
+  updateEmail(userData: Ud):Promise<void> {
+    return  this.db.object('/users/' + userData.getUserId() + '/userInfo/info').update({ email: userData.getEmail() })
+  }
+  updateThema(userData: Ud):Promise<void> {
+    return this.db.object('/users/' + userData.getUserId()  + '/userInfo/info').update({ thema: userData.getThema() })
+  }
+  deleteUser(userId: string):Promise<void> {
+    return this.db.list('users/').remove(userId);
+  }
+}

@@ -1,99 +1,104 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/database/database.service';
-import { Router } from '@angular/router';
-import {  MatTableDataSource } from '@angular/material';
-export interface Log {
-  type: string;
-  data:string;
-  description:string;
-}
+import { MatTableDataSource } from '@angular/material';
+import { Log } from 'src/app/class/log/log';
+import { UserDate } from 'src/app/class/userDate/user-date';
+import { Subscription } from 'rxjs';
+import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-logi',
   templateUrl: './logi.component.html',
   styleUrls: ['./logi.component.css']
 })
 export class LogiComponent implements OnInit {
-  userId:string;
-  logs:Log[]=[];
-  userInfo=[];
-  fontColor:string;
-  background:string;
-  displayedColumns: string[] = ['action', 'data','description'];
-  dataLogs: MatTableDataSource<Log>;
+  private subsrciption: Subscription = new Subscription();
+  private userId: string;
+  public logs: Log[] = [];
+  public fontColor: string;
+  public background: string;
+  public displayedColumns: string[] = ['type', 'data', 'description'];
+  public dataLogs: MatTableDataSource<Log>;
+  public sort: Boolean[] = [true, true, true];
+  public imgSort: string[] = ["", "", ""];
   constructor(
-    private auth:AuthService,
-    private db:DataService,
-    private router: Router) { 
-      this.userId=auth.getUser().uid;
-  } 
-  ngOnInit():void {
-    localStorage.setItem("menu","Logi");
-    this.db.getLogs(this.userId).subscribe(res => {
-      this.logs = res;
-      this.dataLogs=new MatTableDataSource(this.logs);
-    });
-    this.db.getDateUser(this.userId).subscribe(res => {
-      this.userInfo = res;
-    });
-  } 
-  changeFont():string
-  {
-    if(this.userInfo[0].thema=="gray"){
-      this.fontColor="white";
-      return this.fontColor;
-    }
-    if(this.userInfo[0].thema=="black"){
-      this.fontColor="white";
-      return this.fontColor;
-    }
+    private titleService: Title,
+    private auth: AuthService,
+    private db: DataService) {
+    this.userId = auth.getUser().uid;
   }
-  changeBackground():string{
-    if(this.userInfo[0].thema=="gray"){
-      this.background="gray";
-      return this.background;
-    }
-    if(this.userInfo[0].thema=="black"){
-      this.background="black";
-      return this.background;
-    }
+  public ngOnInit(): void {
+    this.titleService.setTitle("Logs");
+    localStorage.setItem("menu", "Logi");
+    this.subsrciption.add(this.db.getLogs(this.userId).subscribe((log: Log[]) => {
+      this.dataLogs = new MatTableDataSource(log);
+    }));
+    this.subsrciption.add(this.db.getDateUser(this.userId).subscribe((userDate: UserDate[]) => {
+      this.fontColor = this.db.changeFont(userDate[0].thema);
+      this.background = this.db.changeBackground(userDate[0].thema);
+    }));
   }
-  applyFilter(filterValue: string) {
+  public applyFilter(filterValue: string): void {
     this.dataLogs.filter = filterValue.trim().toLowerCase();
   }
-  sortO=true ;
-  sortByAction(){
-    this.dataLogs=new MatTableDataSource(this.logs)
-    if(this.sortO){
-    this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.type<b.type?-1:1))
-    this.sortO=false;
-    }
-    else{
-    this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.type>b.type?-1:1))
-    this.sortO=true; 
-    }
+  public sortByType(): void {
+    this.imgSort[1] = "";
+    this.imgSort[2] = "";
+    this.sort[1] = true;
+    this.sort[2] = true;
+    this.subsrciption.add(this.db.sortLogByType(this.userId).subscribe((log: Log[]) => {
+      if (this.sort[0]) {
+        this.imgSort[0] = "assets/1.png";
+        this.dataLogs = new MatTableDataSource(log);
+        this.sort[0] = false;
+      }
+      else {
+        this.imgSort[0] = "assets/2.png";
+        this.dataLogs = new MatTableDataSource(log.reverse());
+        this.sort[0] = true;
+      }
+    }));
   }
-  sortDesc=true
-  sortByDescription(){
-    this.dataLogs=new MatTableDataSource(this.logs)
-    if(this.sortDesc){
-    this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.description<b.description?-1:1))
-    this.sortDesc=false;
-    } else {
-      this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.description>b.description?-1:1))
-      this.sortDesc=true;
-    }
+  public sortByDate(): void {
+    this.imgSort[0] = "";
+    this.imgSort[2] = "";
+    this.sort[0] = true;
+    this.sort[2] = true;
+    this.subsrciption.add(this.db.sortLogByDate(this.userId).subscribe((log: Log[]) => {
+      if (this.sort[1]) {
+        this.imgSort[1] = "assets/1.png";
+        this.dataLogs = new MatTableDataSource(log);
+        this.sort[1] = false;
+      }
+      else {
+        this.imgSort[1] = "assets/2.png";
+        this.dataLogs = new MatTableDataSource(log.reverse());
+        this.sort[1] = true;
+      }
+    }));
   }
-  sortD=true
-  sortByDate(){
-    this.dataLogs=new MatTableDataSource(this.logs)
-    if(this.sortD){
-      this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.data<b.data?-1:1))
-      this.sortD=false;
-    } else{
-      this.dataLogs= new MatTableDataSource(this.logs.sort((a,b)=>a.data>b.data?-1:1))
-      this.sortD=true;
-    }
+  public sortByDescription(): void {
+    this.imgSort[0] = "";
+    this.imgSort[1] = "";
+    this.sort[0] = true;
+    this.sort[1] = true;
+    this.subsrciption.add(this.db.sortLogByDescription(this.userId).subscribe((log: Log[]) => {
+      if (this.sort[2]) {
+        this.imgSort[2] = "assets/1.png";
+        this.dataLogs = new MatTableDataSource(log);
+        this.sort[2] = false;
+      }
+      else {
+        this.imgSort[2] = "assets/2.png";
+        this.dataLogs = new MatTableDataSource(log.reverse());
+        this.sort[2] = true;
+      }
+    }));
   }
- 
+
+
+  public ngOnDestroy(): void {
+    this.subsrciption.unsubscribe();
+  }
 }

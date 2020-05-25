@@ -1,4 +1,4 @@
-<div class="mainContent" *ngFor="let item of userInfo" [style.background]="changeBackground()" [style.color]="changeFont()">
+<div class="mainContent" [style.background]="background" [style.color]="fontColor">
     <app-menu></app-menu>
     <h1>Welcome to logs!</h1>
     <mat-form-field class="backgroundInput">
@@ -7,17 +7,42 @@
     <p></p>
     <div class="tableClass">
         <table mat-table [dataSource]="dataLogs" class="mat-elevation-z8">
-            <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> <button [style.background]="changeBackground()" [style.color]="changeFont()" class="button" (click)="sortByAction()">Action</button> </th>
-                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> {{element.type}} </td>
+            <ng-container matColumnDef="type">
+                <th class="titleType" mat-header-cell *matHeaderCellDef [style.background]="background" [style.color]="fontColor">
+
+                    <button [style.background]="background" [style.color]="fontColor" class="button" (click)="sortByType()"> 
+                        <mat-grid-list cols="2">
+                       <mat-grid-tile>Type</mat-grid-tile>  
+                           <mat-grid-tile> <img *ngIf="imgSort[0]" src={{imgSort[0]}}></mat-grid-tile>
+                           
+                          </mat-grid-list>
+                       </button>
+                </th>
+                <td mat-cell *matCellDef="let element" [style.background]="background" [style.color]="fontColor"> {{element.type}} </td>
             </ng-container>
             <ng-container matColumnDef="data">
-                <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> <button [style.background]="changeBackground()" [style.color]="changeFont()" class="button" (click)="sortByDate()">Date</button> </th>
-                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> {{element.data}} </td>
+                <th class="titleData" mat-header-cell *matHeaderCellDef [style.background]="background" [style.color]="fontColor">
+                    <button [style.background]="background" [style.color]="fontColor" class="button" (click)="sortByDate()">
+                        <mat-grid-list cols="2">
+                           <mat-grid-tile>Date</mat-grid-tile> 
+                             <mat-grid-tile> <img *ngIf="imgSort[1]" src={{imgSort[1]}}></mat-grid-tile>
+                          
+                          </mat-grid-list>   
+                        </button>
+                </th>
+                <td mat-cell *matCellDef="let element" [style.background]="background" [style.color]="fontColor"> {{element.data}} </td>
             </ng-container>
             <ng-container matColumnDef="description">
-                <th mat-header-cell *matHeaderCellDef [style.background]="changeBackground()" [style.color]="changeFont()"> <button [style.background]="changeBackground()" [style.color]="changeFont()" class="button" (click)="sortByDescription()">Description</button> </th>
-                <td mat-cell *matCellDef="let element" [style.background]="changeBackground()" [style.color]="changeFont()"> {{element.description}} </td>
+                <th class="titleDesc" mat-header-cell *matHeaderCellDef [style.background]="background" [style.color]="fontColor">
+                    <button [style.background]="background" [style.color]="fontColor" class="button" (click)="sortByDescription()">
+                        <mat-grid-list cols="2">
+                         <mat-grid-tile>Description</mat-grid-tile>  
+                        <mat-grid-tile> <img *ngIf="imgSort[2]" src={{imgSort[2]}}></mat-grid-tile>
+                        
+                          </mat-grid-list>
+                        </button>
+                </th>
+                <td mat-cell *matCellDef="let element" [style.background]="background" [style.color]="fontColor"> {{element.description}} </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
