@@ -1,39 +1,40 @@
 export class Invities {
-    private userId: string;
-    private friendsEmail: string;
-    private friendsId: string;
-    private accept: boolean;
+    private _userId: string;
+    private _friendsEmail: string;
+    private _friendsId: string;
+    private _accept: boolean;
 
-    constructor(userId:string,friendsEmail:string,friendsId:string,accept:boolean){
-        this.userId=userId;
-        this.friendsEmail=friendsEmail;
-        this.friendsId=friendsId;
-        this.accept=accept;
+    constructor(userId: string, friendsEmail: string, friendsId: string, accept: boolean) {
+        this.userId = userId;
+        this.friendsEmail = friendsEmail;
+        this.friendsId = friendsId;
+        this.accept = accept;
     }
-
-    public getUserId():string{
-        return this.userId;
+    public get userId(): string {
+        return this._userId;
     }
-    public getFriendsEmail():string{
-        return this.friendsEmail;
-    }
-    public getFriendsId():string{
-        return this.friendsId;
-    }
-    public getAccept():boolean{
-        return this.accept;
+    public set userId(value: string) {
+        this._userId = value;
     }
 
-    public setUserId(userId:string):void{
-        this.userId=userId;
+    public get friendsEmail(): string {
+        return this._friendsEmail;
     }
-    public setFriendsEmail(friendsEmail:string):void{
-        this.friendsEmail=friendsEmail;
+    public set friendsEmail(value: string) {
+        this._friendsEmail = value;
     }
-    public setFriendsId(friendsId:string):void{
-        this.friendsId=friendsId;
+
+    public get friendsId(): string {
+        return this._friendsId;
     }
-    public setAccept(accept:boolean):void{
-        this.accept=accept;
+    public set friendsId(value: string) {
+        this._friendsId = value;
+    }
+
+    public get accept(): boolean {
+        return this._accept;
+    }
+    public set accept(value: boolean) {
+        this._accept = value;
     }
 }

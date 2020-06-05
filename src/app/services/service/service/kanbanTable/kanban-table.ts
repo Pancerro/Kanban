@@ -3,7 +3,6 @@ import {TableTitle} from '../../../../class/tableTitle/table-title';
 import {NumberSeeTable} from '../../../../class/numberSeeTable/number-see-table';
 import {Project} from '../../../../class/project/project';
 import {Observable} from 'rxjs';
-import { AngularFireDatabase } from 'angularfire2/database';
 
 export interface KanbanTable {
   writeUserTable(kanban:string,task: Task): void;

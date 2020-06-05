@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/database/database.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -6,211 +6,195 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { EditCategoryComponent } from 'src/app/modal/edit-category/edit-category.component';
 import { AddCategoryComponent } from 'src/app/modal/add-category/add-category.component';
 import { Log } from 'src/app/class/log/log';
-import { Category as Cg } from 'src/app/class/category/category';
+import { Category } from 'src/app/class/category/category';
 import { UserDate } from 'src/app/class/userDate/user-date';
-export interface Category {
-  category: string;
-  color: string;
-}
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  userInfo = [];
-  fontColor: string;
-  background: string;
-  info: string;
-  infoEmail: string;
-  userId: string;
-  newCategory: string;
-  color: string;
-  category: Category[];
-  displayedColumns: string[] = ['category', 'color', 'delete', 'edit'];
-  dataLogs: MatTableDataSource<Category>;
-  hide: boolean = true;
-  verifyEmail = this.auth.getUser().emailVerified;
-  checkPass: boolean = false;
-  word: string;
+  public userInfo: UserDate[] = [];
+  public fontColor: string;
+  public background: string;
+  public displayedColumns: string[] = ['category', 'color', 'delete', 'edit'];
+  public dataCategory: MatTableDataSource<Category>;
+  public verifyEmail: boolean;
+  public hide: boolean = true;
+  public passInfo: string;
+  public emailInfo: string;
+  private userId: string;
+  private category: Category[];
+  private checkPass: boolean = false;
   constructor(
     private auth: AuthService,
+    private titleService: Title,
     private db: DataService,
-    public dialog: MatDialog,
-    private router: Router) {
+    private router: Router,
+    public dialog: MatDialog) {
     this.userId = auth.getUser().uid;
+    this.verifyEmail = auth.getUser().emailVerified;
   }
-  ngOnInit(): void {
+  public ngOnInit(): void {
     localStorage.setItem("menu", "UserSettings");
-    this.db.getDateUser(this.userId).subscribe(res => {
-      this.userInfo = res;
+    this.titleService.setTitle("UserSettings");
+    this.db.getDateUser(this.userId).subscribe((userDate: UserDate[]) => {
+      this.userInfo = userDate;
+      this.fontColor = this.db.changeFont(userDate[0].thema);
+      this.background = this.db.changeBackground(userDate[0].thema);
     });
-    this.db.getCategory(this.userId).subscribe(res => {
-      this.category = res;
-      this.dataLogs = new MatTableDataSource(this.category);
+    this.db.getCategory(this.userId).subscribe((category: Category[]) => {
+      this.dataCategory = new MatTableDataSource(category);
+      this.category = category;
     });
   }
-  sendRepeatVerificationEmail(): void {
-    this.auth.sendVerificationMail();
-    this.db.logSave(new Log(this.userId, "reVerifacationEmail", "Email", "Send"));
+  public sendRepeatVerificationEmail(): void {
+    this.auth.sendVerificationMail().then(() => {
+      this.db.logSave(new Log(this.userId, "reVerifacationEmail", "Email", "Send"));
+    });
   }
-  changeFont(): string {
-    if (this.userInfo[0].thema == "gray") {
-      this.fontColor = "white";
-      return this.fontColor;
-    }
-    if (this.userInfo[0].thema == "black") {
-      this.fontColor = "white";
-      return this.fontColor;
-    }
-  }
-  changeBackground(): string {
-    if (this.userInfo[0].thema == "gray") {
-      this.background = "gray";
-      return this.background;
-    }
-    if (this.userInfo[0].thema == "black") {
-      this.background = "black";
-      return this.background;
-    }
-    if (this.userInfo[0].thema == "white") {
-      this.background = "white";
-      return this.background;
-    }
-  }
-  updateEmail(updateEmail): void {
+  public updateEmail(updateEmail: { invalid: any; oldEmail: string; newEmail: string; newRepeatEmail: string; }): void {
     if (updateEmail.invalid) window.alert("Please try again");
     else {
-      if (this.matchingEmail(updateEmail.value.oldEmail, this.userInfo[0].email)) {
-        if (this.matchingEmail(updateEmail.value.newEmail, updateEmail.value.oldEmail)) {
-          this.infoEmail = "The old email is the same as the new email"
-          this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email Failed" + this.infoEmail))
+      if (this.matchingEmail(updateEmail.oldEmail, this.userInfo[0].email)) {
+        if (this.matchingEmail(updateEmail.newEmail, updateEmail.oldEmail)) {
+          this.emailInfo = "The old email is the same as the new email"
+          this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email Failed" + this.emailInfo))
         }
         else {
-          if (this.matchingEmail(updateEmail.value.newEmail, updateEmail.value.newRepeatEmail)) {
-            this.auth.updateEmail(updateEmail.value.newEmail).then(() => {
+          if (this.matchingEmail(updateEmail.newEmail, updateEmail.newRepeatEmail)) {
+            this.auth.updateEmail(updateEmail.newEmail).then(() => {
               this.auth.authState$.subscribe(user => {
-                this.db.updateEmail(new UserDate(this.userId,user.email,null,null))
+                this.db.updateEmail(new UserDate(this.userId, user.email, null, null))
                 this.sendRepeatVerificationEmail();
-                if (this.matchingEmail(updateEmail.value.newEmail, user.email)) {
-                  this.infoEmail = "email successfuly updated";
-                  this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email success: " + updateEmail.value.newEmail))
+                if (this.matchingEmail(updateEmail.newEmail, user.email)) {
+                  this.emailInfo = "email successfuly updated";
+                  this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email success: " + updateEmail.newEmail))
                 }
                 else {
-                  this.infoEmail = "email dont updated";
-                  this.db.logSave(new Log(this.userId, "LogUpdateEmail", "update Email", "update Email failed: " + this.infoEmail))
+                  this.emailInfo = "email dont updated";
+                  this.db.logSave(new Log(this.userId, "LogUpdateEmail", "update Email", "update Email failed: " + this.emailInfo))
                 }
               });
             })
-          } else this.infoEmail = 'Email do not match.Try to again!';
+          } else this.emailInfo = 'Email do not match.Try to again!';
         }
       } else {
-        this.infoEmail = "Bad old email";
-        this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email failed: " + this.infoEmail))
+        this.emailInfo = "Bad old email";
+        this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email failed: " + this.emailInfo))
       }
     }
   }
-  updatePassword(updatePassword): void {
+  public updatePassword(updatePassword: { invalid: any; oldPassword: string; newPassword: string; newRepeatPassword: string; }): void {
     this.checkPass = false;
     if (updatePassword.invalid) window.alert("Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers")
     else {
-      this.auth.login(this.userInfo[0].email, updatePassword.value.oldPassword).then(() => {
-        if (this.matchingPasswords(updatePassword.value.newPassword, updatePassword.value.oldPassword)) {
-          this.info = "The old password is the same as the new password "
-          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed" + this.info)
+      this.auth.login(this.userInfo[0].email, updatePassword.oldPassword).then(() => {
+        if (this.matchingPasswords(updatePassword.newPassword, updatePassword.oldPassword)) {
+          this.passInfo = "The old password is the same as the new password "
+          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed" + this.passInfo)
           )
         }
         else {
-          if (this.matchingPasswords(updatePassword.value.newPassword, updatePassword.value.newRepeatPassword)) {
+          if (this.matchingPasswords(updatePassword.newPassword, updatePassword.newRepeatPassword)) {
             this.checkPass = true;
-            this.auth.updatePassowrd(updatePassword.value.newPassword);
+            this.auth.updatePassowrd(updatePassword.newPassword);
             this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "success"))
-            if (this.checkPass) this.info = "password successfuly changed";
-            else this.info = "Operation failed";
+            if (this.checkPass) this.passInfo = "password successfuly changed";
+            else this.passInfo = "Operation failed";
           }
         }
       }).catch(err => {
         if (err) {
-          this.info = "Bad old password"
-          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed:" + this.info))
+          this.passInfo = "Bad old password"
+          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed:" + this.passInfo))
         }
       })
     }
   }
-  updateThema(updateThema): void {
-    if (updateThema.invalid) window.alert("Please try again");
-    else {
-      this.db.updateThema(new UserDate(this.userId,null,updateThema.value.thema,null));
-      this.db.logSave(new Log(this.userId, "logUpdateThema", "update thema", "update thema: " + updateThema.value.thema))
-    }
-  }
-  matchingPasswords(repeatPassword: string, password: string): boolean {
+  private matchingPasswords(repeatPassword: string, password: string): boolean {
     if (repeatPassword.valueOf() == password.valueOf()) return true;
     else {
-      this.info = 'Passwords do not match.Try to again!';
+      this.passInfo = 'Passwords do not match.Try to again!';
       return false;
     }
   }
-  matchingEmail(repeatEmail: string, email: string): boolean {
+  private matchingEmail(repeatEmail: string, email: string): boolean {
     if (repeatEmail.valueOf() == email.valueOf()) return true;
+    else return false;
+  }
+  public updateThema(updateThema: { invalid: any; thema: string; }): void {
+    if (updateThema.invalid) window.alert("Please try again");
     else {
-      return false;
+      this.db.updateThema(new UserDate(this.userId, null, updateThema.thema, null));
+      this.db.logSave(new Log(this.userId, "logUpdateThema", "update thema", "update thema: " + updateThema.thema))
     }
   }
-  applyFilter(filterValue: string): void {
-    this.dataLogs.filter = filterValue.trim().toLowerCase();
+  public applyFilter(filterValue: string): void {
+    this.dataCategory.filter = filterValue.trim().toLowerCase();
   }
-  deleteAccount(): void {
-    localStorage.removeItem("lastTable");
-    this.router.navigate(['/welcome-page'])
-      .then(() => this.db.remove(this.db.replece(this.userInfo[0].email)))
-      .then(() => this.db.deleteUser(this.userId))
-      .then(() => this.auth.deleteUser())
 
-  }
-  deleteCategory(removeCategory): void {
-    this.db.removeCategory(new Cg(this.userId,removeCategory,null));
+  public deleteCategory(removeCategory: string): void {
+    this.db.removeCategory(new Category(this.userId, removeCategory, null));
     this.db.logSave(new Log(this.userId, "logRemoveCategory", "remove category", "remove category: " + removeCategory))
   }
-  editCategory(category: string, color: string): void {
+  public editCategory(category: string, color: string): void {
     const dialogRef = this.dialog.open(EditCategoryComponent, {
       width: '250px',
       data: { category: category, color: color }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        if (result.invalid) {
+    dialogRef.afterClosed().subscribe(editCategory => {
+      if (editCategory != undefined) {
+        if (editCategory.invalid) {
           window.alert("Please correct all errors and resubmit update category");
           this.db.logSave(new Log(this.userId, "logEditCategoryFailed", "edit category", "edit category: " + category + " failed"))
         }
         else {
-          this.newCategory = result.value.category.category;
-          this.color = result.value.category.color;
-          this.db.removeCategory(new Cg(this.userId,category,null));
-          this.db.writeCategory(new Cg(this.userId, this.newCategory, this.color));
-          this.db.logSave(new Log(this.userId, "logEditCategory", "edit category", "edit category: " + category + " success"))
+          this.db.removeCategory(new Category(this.userId, category, null));
+          this.db.writeCategory(new Category(this.userId, editCategory.category, editCategory.color));
+          this.db.logSave(new Log(this.userId, "logEditCategory", "edit category", "edit category: " + category + " success"));
         }
       }
     }
     );
   }
-  addCategory(): void {
+  public addCategory(): void {
     const dialogRef = this.dialog.open(AddCategoryComponent, {
-      width: '250px',
+      width: '250px'
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        if (result.invalid) {
+    dialogRef.afterClosed().subscribe(newCategory => {
+      if (newCategory != undefined) {
+        if (newCategory.invalid) {
           window.alert("Please correct all errors and resubmit add category");
-          this.db.logSave(new Log(this.userId, "logAddCategoryFailed", "add category", "add category failed"))
+          this.db.logSave(new Log(this.userId, "logAddCategoryFailed", "add category", "add category failed"));
         }
         else {
-          this.newCategory = result.value.category.category;
-          this.color = result.value.category.color;
-          this.db.writeCategory(new Cg(this.userId, this.newCategory, this.color))
-          this.db.logSave(new Log(this.userId, "logAddCategory", "add category", "add catego" + this.newCategory + "success"))
+          if (this.checkIfHaveCategory(newCategory.category)) {
+            window.alert("The category is already there");
+            this.db.logSave(new Log(this.userId, "logAddCategory", "add category", "add category " + newCategory.category + " failed"));
+          }
+          else {
+            this.db.writeCategory(new Category(this.userId, newCategory.category, newCategory.color));
+            this.db.logSave(new Log(this.userId, "logAddCategory", "add category", "add category " + newCategory.category + " success"));
+          }
         }
       }
     });
+  }
+  private checkIfHaveCategory(nameCategory: string): boolean {
+    for (let oldCategory of this.category) {
+      if (oldCategory.category == nameCategory) {
+        return true;
+      }
+    }
+    return false;
+  }
+  public deleteAccount(): void {
+    localStorage.removeItem("lastTable");
+    this.router.navigate(['/welcome-page'])
+      .then(() => this.db.remove(this.db.replece(this.userInfo[0].email)))
+      .then(() => this.db.deleteUser(this.userId))
+      .then(() => this.auth.deleteUser())
   }
 }

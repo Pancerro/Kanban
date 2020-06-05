@@ -5,9 +5,13 @@
     text-align: center;
 }
 
-.form {
-    background: white;
-    width: auto;
+.mat-input-element {
+    color: blue;
+}
+
+::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: blue !important;
 }
 
 .tableClass {
@@ -47,6 +51,4 @@ table {
 
 .button {
     background-color: pink;
-    width: 9%;
-    height: 20%;
 }

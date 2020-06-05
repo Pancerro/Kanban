@@ -1,31 +1,31 @@
 export class ShareFor {
-    private friendsId: string;
-    private userId: string;
-    private projectName: string;
+    private _friendsId: string;
+    private _userId: string;
+    private _projectName: string;
 
-    constructor(friendsId:string,userId:string,projectName:string){
-        this.friendsId=friendsId;
-        this.userId=userId;
-        this.projectName=projectName;
+    constructor(friendsId: string, userId: string, projectName: string) {
+        this.friendsId = friendsId;
+        this.userId = userId;
+        this.projectName = projectName;
     }
-
-    public getFriendsId():string{
-        return this.friendsId;
+    public get friendsId(): string {
+        return this._friendsId;
     }
-    public getUserId():string{
-        return this.userId;
-    }
-    public getProjectName():string{
-        return this.projectName;
+    public set friendsId(value: string) {
+        this._friendsId = value;
     }
 
-    public setFriendsId(friendsId:string):void{
-        this.friendsId=friendsId;
+    public get userId(): string {
+        return this._userId;
     }
-    public setUserId(userId:string):void{
-        this.userId=userId;
+    public set userId(value: string) {
+        this._userId = value;
     }
-    public setProjectName(projectName:string):void{
-        this.projectName=projectName;
+
+    public get projectName(): string {
+        return this._projectName;
+    }
+    public set projectName(value: string) {
+        this._projectName = value;
     }
 }

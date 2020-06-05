@@ -1,38 +1,40 @@
 export class UserDate {
-    private userId: string;
-    private email: string;
-    public thema: string;
-    private google:boolean;
+    private _userId: string;
+    private _email: string;
+    private _thema: string;
+    private _google: boolean;
 
-    constructor(userId:string,email:string,thema:string,google:boolean){
-        this.userId=userId;
-        this.email=email;
-        this.thema=thema;
-        this.google=google;
+    constructor(userId: string, email: string, thema: string, google: boolean) {
+        this.userId = userId;
+        this.email = email;
+        this.thema = thema;
+        this.google = google;
+    }
+    public get userId(): string {
+        return this._userId;
+    }
+    public set userId(value: string) {
+        this._userId = value;
     }
 
-    public getUserId():string{
-        return this.userId;
+    public get email(): string {
+        return this._email;
     }
-    public getEmail():string{
-        return this.email;
+    public set email(value: string) {
+        this._email = value;
     }
-    public getThema():string{
-        return this.thema;
+
+    public get thema(): string {
+        return this._thema;
     }
-    public getGoogle():boolean{
-        return this.google;
+    public set thema(value: string) {
+        this._thema = value;
     }
-    public setUserId(userId:string):void{
-        this.userId=userId;
+
+    public get google(): boolean {
+        return this._google;
     }
-    public setEmail(email:string):void{
-        this.email=email;
-    }
-    public setThema(thema:string):void{
-        this.thema=thema;
-    }
-    public setGoogle(google:boolean):void{
-        this.google=google;
+    public set google(value: boolean) {
+        this._google = value;
     }
 }

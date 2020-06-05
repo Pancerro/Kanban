@@ -1,31 +1,32 @@
 export class TableTitle {
-    private userId: string;
-    private tableChild: string;
-    private title: string;
+    private _userId: string;
+    private _tableChild: string;
+    private _title: string;
 
-    constructor(userId:string,tableChild:string,title:string){
-        this.userId=userId;
-        this.tableChild=tableChild;
-        this.title=title;
+    constructor(userId: string, tableChild: string, title: string) {
+        this.userId = userId;
+        this.tableChild = tableChild;
+        this.title = title;
     }
-
-    public getUserId():string{
-        return this.userId;
+    public get userId(): string {
+        return this._userId;
     }
-    public getTableChild():string{
-        return this.tableChild;
-    }
-    public getTitle():string{
-        return this.title;
+    public set userId(value: string) {
+        this._userId = value;
     }
 
-    public setUserId(userId:string):void{
-        this.userId=userId;
+    public get tableChild(): string {
+        return this._tableChild;
     }
-    public setTableChild(tableChild:string):void{
-        this.tableChild=tableChild;
+    public set tableChild(value: string) {
+        this._tableChild = value;
     }
-    public setTitle(title:string):void{
-        this.title=title;
+
+    public get title(): string {
+        return this._title;
     }
+    public set title(value: string) {
+        this._title = value;
+    }
+
 }

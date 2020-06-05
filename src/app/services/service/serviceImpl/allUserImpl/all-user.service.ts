@@ -13,10 +13,10 @@ export class AllUserService implements AllUser {
   constructor(private db: AngularFireDatabase) { }
 
   public writeUser(user: au): void {
-    firebase.database().ref('users/friends/' + user.getEmail()).set({
-      email: user.getEmail(),
-      userId: user.getUserId(),
-      online: user.getOnline()
+    firebase.database().ref('users/friends/' + user.email).set({
+      email: user.email,
+      userId: user.userId,
+      online: user.online
     })
   }
   public getAllUser(): Observable<any[]> {
@@ -27,6 +27,6 @@ export class AllUserService implements AllUser {
     return this.db.list('users/friends').remove(email);
   }
   public updateOnline(user: au): Promise<void> {
-    return this.db.object('users/friends/' + user.getEmail()).update({ online: user.getOnline() })
+    return this.db.object('users/friends/' + user.email).update({ online: user.online })
   }
 }

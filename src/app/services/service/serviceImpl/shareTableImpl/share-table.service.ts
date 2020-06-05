@@ -14,10 +14,10 @@ import { Project } from 'src/app/class/project/project';
 export class ShareTableService implements ShareTable {
   constructor(private db: AngularFireDatabase) { }
   public writeShareFriends(kanban: string, shareFriend: ShareFriend): void {
-    firebase.database().ref('users/' + shareFriend.getUserId() + '/' + kanban + '/viewTables/share/' + shareFriend.getFriendsEmail()).set({
-      friendsEmail: shareFriend.getFriendsEmail(),
-      friendsId: shareFriend.getFriendsId(),
-      role: shareFriend.getRole()
+    firebase.database().ref('users/' + shareFriend.userId + '/' + kanban + '/viewTables/share/' + shareFriend.friendsEmail).set({
+      friendsEmail: shareFriend.friendsEmail,
+      friendsId: shareFriend.friendsId,
+      role: shareFriend.role
     });
   }
   public removeShareFriends(kanban: string, userId: string, friendsEmail: string):Promise<void> {
@@ -27,10 +27,10 @@ export class ShareTableService implements ShareTable {
     return this.db.list('users/' + userId + '/' + kanban + '/viewTables/share/').valueChanges();
   }
   public writeDelete(kanban: string, stopShareUser: StopShareUser):void {
-    firebase.database().ref('users/' + stopShareUser.getUserId() + '/' + kanban + '/viewTables/delete/' + stopShareUser.getFriendsEmail).set({
-      friendsEmail: stopShareUser.getFriendsEmail(),
-      friendsId: stopShareUser.getFriendsEmail(),
-      role: stopShareUser.getRole()
+    firebase.database().ref('users/' + stopShareUser.userId + '/' + kanban + '/viewTables/delete/' + stopShareUser.friendsEmail).set({
+      friendsEmail: stopShareUser.friendsEmail,
+      friendsId: stopShareUser.friendsId,
+      role: stopShareUser.role
     });
   }
   public removeDelete(kanban: string, userId: string, friendsEmail: string):Promise<void> {
@@ -42,12 +42,12 @@ export class ShareTableService implements ShareTable {
   }
 
   public updateShare(project:Project):Promise<void> {
-    return this.db.object('users/' + project.getUserId() + '/project/' + project.getProjectName()).update({ share: project.getShare() })
+    return this.db.object('users/' + project.userId + '/project/' + project.projectName).update({ share: project.share })
   }
   public share(shareFor: ShareFor): void {
-    firebase.database().ref('users/' + shareFor.getFriendsId() + '/shared/' + shareFor.getProjectName()).set({
-      userId: shareFor.getUserId(),
-      kanban: shareFor.getProjectName()
+    firebase.database().ref('users/' + shareFor.friendsId+ '/shared/' + shareFor.projectName).set({
+      userId: shareFor.userId,
+      kanban: shareFor.projectName
     })
   }
   public removeShare(friendsId: string, kanban: string):Promise<void> {

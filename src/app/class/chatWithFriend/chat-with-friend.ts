@@ -1,60 +1,68 @@
 export class ChatWithFriend {
-    private myId: string;
-    private friendsId: string;
-    private myEmail: string;
-    private friendsEmail: string;
-    private data: string;
-    private message: string;
-    private userName: string;
+    private _myId: string;
+    private _friendsId: string;
+    private _myEmail: string;
+    private _friendsEmail: string;
+    private _data: string;
+    private _message: string;
+    private _userName: string;
 
-    constructor(myId:string,friendsId:string,myEmail:string,friendsEmail:string,data:string,message:string,userName:string){
-        this.myId=myId;
-        this.friendsId=friendsId;
-        this.myEmail=myEmail;
-        this.friendsEmail=friendsEmail;
-        this.data=data;
-        this.message=message;
-        this.userName=userName;
-    }
 
-    public getMyId():string{
-        return this.myId;
+    constructor(myId: string, friendsId: string, myEmail: string, friendsEmail: string, data: string, message: string, userName: string) {
+        this.myId = myId;
+        this.friendsId = friendsId;
+        this.myEmail = myEmail;
+        this.friendsEmail = friendsEmail;
+        this.data = data;
+        this.message = message;
+        this.userName = userName;
     }
-    public getFriendsId():string{
-        return this.friendsId;
+    public get myId(): string {
+        return this._myId;
     }
-    public getMyEmail():string{
-        return this.myEmail;
-    }
-    public getFriendsEmail():string{
-        return this.friendsEmail;
-    }
-    public getData():string{
-        return this.data;
-    }
-    public getMessage():string{
-        return this.message;
-    }
-    public getUserName():string{
-        return this.userName;
+    public set myId(value: string) {
+        this._myId = value;
     }
 
-    public setMyId(myId:string):void{
-        this.myId=myId;
+    public get friendsId(): string {
+        return this._friendsId;
     }
-    public setFriendsId(friendsId:string):void{
-        this.friendsId=friendsId;
+    public set friendsId(value: string) {
+        this._friendsId = value;
     }
-    public setMyEmail(myEmail:string):void{
-        this.myEmail=myEmail;
+
+    public get myEmail(): string {
+        return this._myEmail;
     }
-    public setData(data:string):void{
-        this.data=data;
+    public set myEmail(value: string) {
+        this._myEmail = value;
     }
-    public setMessage(message:string):void{
-        this.message=message;
+
+    public get friendsEmail(): string {
+        return this._friendsEmail;
     }
-    public setUserName(userName:string):void{
-        this.userName=userName;
+    public set friendsEmail(value: string) {
+        this._friendsEmail = value;
+    }
+
+    public get data(): string {
+        return this._data;
+    }
+    public set data(value: string) {
+        this._data = value;
+    }
+
+    public get message(): string {
+        return this._message;
+    }
+    public set message(value: string) {
+        this._message = value;
+    }
+
+    public get userName(): string {
+        return this._userName;
+    }
+    public set userName(value: string) {
+        this._userName = value;
     }
 }

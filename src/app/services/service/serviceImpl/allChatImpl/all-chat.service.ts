@@ -15,18 +15,18 @@ export class AllChatService implements AllChat {
   public writeMessage(chat: ac): void {
     this.random = Math.random().toString();
     this.random = this.random.replace("0.", "chat");
-    chat.setData(firebase.database.ServerValue.TIMESTAMP.toString());
-    firebase.database().ref('users/' + chat.getMyId() + '/chat/' + chat.getProjectName() + '/' + this.random).set({
-      projectName: chat.getProjectName(),
-      email: chat.getEmail(),
-      data: chat.getData(),
-      message: chat.getMessage()
+    chat.data=firebase.database.ServerValue.TIMESTAMP.toString();
+    firebase.database().ref('users/' + chat.myId + '/chat/' + chat.projectName + '/' + this.random).set({
+      projectName: chat.projectName,
+      email: chat.email,
+      data: chat.data,
+      message: chat.message
     })
   }
   public getMessage(project: Project): Observable<any[]> {
-    return this.db.list('users/' + project.getUserId() + '/chat/' + project.getProjectName(), ref => ref.orderByChild('data')).valueChanges();
+    return this.db.list('users/' + project.userId + '/chat/' + project.projectName, ref => ref.orderByChild('data')).valueChanges();
   }
   public deleteChatMesage(project: Project): Promise<void> {
-    return this.db.list('users/' + project.getUserId() + '/chat/').remove(project.getProjectName());
+    return this.db.list('users/' + project.userId + '/chat/').remove(project.projectName);
   }
 }

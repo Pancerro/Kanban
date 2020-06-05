@@ -1,47 +1,50 @@
 export class AllChat {
-    private myId: string;
-    private email: string;
-    private projectName: string;
-    private data: string;
-    private message: string;
+    private _myId: string;
+    private _email: string;
+    private _projectName: string;
+    private _data: string;
+    private _message: string;
 
-    constructor(myId:string,email:string,projectName:string,data:string,message:string){
-        this.myId=myId;
-        this.email=email;
-        this.projectName=projectName;
-        this.data=data;
-        this.message=message;
+    constructor(myId: string, email: string, projectName: string, data: string, message: string) {
+        this.myId = myId;
+        this.email = email;
+        this.projectName = projectName;
+        this.data = data;
+        this.message = message;
     }
-
-    public getMyId():string{
-        return this.myId;
+    public get myId(): string {
+        return this._myId;
     }
-    public getEmail():string{
-        return this.email;
-    }
-    public getProjectName():string{
-        return this.projectName;
-    }
-    public getData():string{
-        return this.data;
-    }
-    public getMessage():string{
-        return this.message;
+    public set myId(value: string) {
+        this._myId = value;
     }
 
-    public setMyId(myId:string):void{
-        this.myId=myId;
+    public get email(): string {
+        return this._email;
     }
-    public setEmail(email:string):void{
-        this.email=email;
+    public set email(value: string) {
+        this._email = value;
     }
-    public setProjectName(projectName:string):void{
-        this.projectName=projectName;
+
+    public get projectName(): string {
+        return this._projectName;
     }
-    public setData(data:string):void{
-        this.data=data;
+    public set projectName(value: string) {
+        this._projectName = value;
     }
-    public setMessage(message:string):void{
-        this.message=message;
+
+    public get data(): string {
+        return this._data;
     }
+    public set data(value: string) {
+        this._data = value;
+    }
+
+    public get message(): string {
+        return this._message;
+    }
+    public set message(value: string) {
+        this._message = value;
+    }
+
 }

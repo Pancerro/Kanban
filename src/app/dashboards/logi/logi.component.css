@@ -5,34 +5,28 @@
     text-align: center;
 }
 
-.backgroundInput {
-    background-color: white;
-    color: black;
+.mat-input-element {
+    color: blue;
 }
 
-.tableClass {
-    margin-left: 40%;
-    margin-right: 40%;
-    width: 20%;
+::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: blue !important;
 }
 
-table {
-    width: 100%;
+th.mat-header-cell {
+    text-align: center;
 }
 
-.mat-form-field {
-    font-size: 14px;
-}
-
-.button {
-    width: 100%;
-    height: 100%;
+button {
+    width: 70%;
     border: none;
     background-color: white;
+    outline: none;
 }
 
-.button:hover {
-    background-color: red;
+button:hover {
+    cursor: pointer;
 }
 
 img {
@@ -40,17 +34,29 @@ img {
     height: 25px;
 }
 
+table {
+    width: 100%;
+    background-color: white;
+    border-top: blue 3px solid;
+    border-bottom: blue 3px solid;
+}
+
+th {
+    border: blue 1px solid;
+}
+
+td {
+    border: blue 1px solid;
+}
+
 .titleType {
-    width: 25%;
-    height: 30px;
+    width: 33%;
 }
 
 .titleData {
-    width: 25%;
-    height: 30px;
+    width: 33%;
 }
 
 .titleDesc {
-    width: 40%;
-    height: 30px;
+    width: 34%;
 }

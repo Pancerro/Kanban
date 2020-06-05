@@ -1,38 +1,41 @@
 export class StopShareUser {
-    private userId: string;
-    private friendsEmail: string;
-    private friendsId: string;
-    private role:string;
+    private _userId: string;
+    private _friendsEmail: string;
+    private _friendsId: string;
+    private _role: string;
 
-    constructor(userId:string,friendsEmail:string,friendsId:string){
-        this.userId=userId;
-        this.friendsEmail=friendsEmail;
-        this.friendsId=friendsId;
-        this.role="delete";
+    constructor(userId: string, friendsEmail: string, friendsId: string) {
+        this.userId = userId;
+        this.friendsEmail = friendsEmail;
+        this.friendsId = friendsId;
+        this.role = "delete";
+    }
+    public get userId(): string {
+        return this._userId;
+    }
+    public set userId(value: string) {
+        this._userId = value;
     }
 
-    public getUserId():string{
-        return this.userId;
+    public get friendsEmail(): string {
+        return this._friendsEmail;
     }
-    public getFriendsEmail():string{
-        return this.friendsEmail;
+    public set friendsEmail(value: string) {
+        this._friendsEmail = value;
     }
-    public getFriendsId():string{
-        return this.friendsId;
+
+    public get friendsId(): string {
+        return this._friendsId;
     }
-    public getRole():string{
-        return this.role;
+    public set friendsId(value: string) {
+        this._friendsId = value;
     }
-    public setUserId(userId:string):void{
-        this.userId=userId;
+
+    public get role(): string {
+        return this._role;
     }
-    public setFriendsEmail(friendsEmail:string):void{
-        this.friendsEmail=friendsEmail;
-    }
-    public setFriendsId(friendsId:string):void{
-        this.friendsId=friendsId;
-    }
-    public setRole():void{
-        this.role="delete";
+    public set role(value: string) {
+        value = "delete";
+        this._role = value;
     }
 }

@@ -1,31 +1,32 @@
 export class NewMessage {
-    private friendsId: string;
-    private myEmail: string;
-    private userName: string;
+    private _friendsId: string;
+    private _myEmail: string;
+    private _userName: string;
 
-    constructor(friendsId:string,myEmail:string,userName:string){
-        this.friendsId=friendsId;
-        this.myEmail=myEmail;
-        this.userName=userName;
+    constructor(friendsId: string, myEmail: string, userName: string) {
+        this.friendsId = friendsId;
+        this.myEmail = myEmail;
+        this.userName = userName;
     }
-
-    public getFriendsId():string{
-        return this.friendsId;
+    public get friendsId(): string {
+        return this._friendsId;
     }
-    public getMyEmail():string{
-        return this.myEmail;
-    }
-    public getUserName():string{
-        return this.userName;
+    public set friendsId(value: string) {
+        this._friendsId = value;
     }
 
-    public setFriendsId(friendsId:string):void{
-        this.friendsId=friendsId;
+    public get myEmail(): string {
+        return this._myEmail;
     }
-    public setMyEmail(myEmail:string):void{
-        this.myEmail=myEmail;
+    public set myEmail(value: string) {
+        this._myEmail = value;
     }
-    public setUserName(userName:string):void{
-        this.userName=userName;
+
+    public get userName(): string {
+        return this._userName;
     }
+    public set userName(value: string) {
+        this._userName = value;
+    }
+
 }

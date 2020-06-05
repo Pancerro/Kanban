@@ -1,48 +1,53 @@
 export class Log {
-    private userId: string;
-    private titleLog: string;
-    private type: string;
-    private description: string;
-    private date:string;
-    private currentDate:Date;
-    constructor(userId: string,titleLog: string,type: string,description: string){
-        this.userId=userId;
-        this.titleLog=titleLog;
-        this.type=type;
-        this.description=description;
+    private _userId: string;
+    private _titleLog: string;
+    private _type: string;
+    private _description: string;
+    private _date: string;
+    private currentDate: Date;
+
+
+    constructor(userId: string, titleLog: string, type: string, description: string) {
+        this.userId = userId;
+        this.titleLog = titleLog;
+        this.type = type;
+        this.description = description;
+    }
+    public get userId(): string {
+        return this._userId;
+    }
+    public set userId(value: string) {
+        this._userId = value;
     }
 
-    public getUserId():string{
-        return this.userId;
+    public get titleLog(): string {
+        return this._titleLog;
     }
-    public getTitleLog():string{
-        return this.titleLog;
+    public set titleLog(value: string) {
+        this._titleLog = value;
     }
-    public getType():string{
-        return this.type;
+
+    public get type(): string {
+        return this._type;
     }
-    public getDescription():string{
-        return this.description;
+    public set type(value: string) {
+        this._type = value;
     }
-    public getDate():string{
+
+    public get description(): string {
+        return this._description;
+    }
+    public set description(value: string) {
+        this._description = value;
+    }
+
+    public get date(): string {
         this.currentDate = new Date;
-        this.date = (this.currentDate.getDate() + '/' + this.dateCompare((this.currentDate.getMonth() + 1)) + (this.currentDate.getMonth() + 1) + '/' + this.currentDate.getFullYear() + ' ' + this.dateCompare(this.currentDate.getHours()) + this.currentDate.getHours() + ':' + this.dateCompare(this.currentDate.getMinutes()) + this.currentDate.getMinutes() + ':' + this.dateCompare(this.currentDate.getSeconds()) + this.currentDate.getSeconds());
-        return this.date;
-    }
-    public setUserId(userId:string):void{
-        this.userId=userId;
-    }
-    public setTitleLog(titleLog:string):void{
-        this.titleLog=titleLog;
-    }
-    public setType(type:string):void{
-        this.type=type;
-    }
-    public setDescription(description:string):void{
-        this.description=description;
+        this._date = (this.currentDate.getDate() + '/' + this.dateCompare((this.currentDate.getMonth() + 1)) + (this.currentDate.getMonth() + 1) + '/' + this.currentDate.getFullYear() + ' ' + this.dateCompare(this.currentDate.getHours()) + this.currentDate.getHours() + ':' + this.dateCompare(this.currentDate.getMinutes()) + this.currentDate.getMinutes() + ':' + this.dateCompare(this.currentDate.getSeconds()) + this.currentDate.getSeconds());
+        return this._date;
     }
     private dateCompare(date: number) {
         if (date < 10) { return 0; }
         return '';
-      }
+    }
 }

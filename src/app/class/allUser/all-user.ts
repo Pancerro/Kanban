@@ -1,31 +1,31 @@
 export class AllUser {
-    private userId: string;
-    private email: string;
-    private online: boolean;
+    private _userId: string;
+    private _email: string;
+    private _online: boolean;
 
-    constructor(userId:string,email:string,online:boolean){
-        this.userId=userId;
-        this.email=email;
-        this.online=online;
+    constructor(userId: string, email: string, online: boolean) {
+        this.userId = userId;
+        this.email = email;
+        this.online = online;
     }
-
-    public getUserId():string{
-        return this.userId;
+    public get userId(): string {
+        return this._userId;
     }
-    public getEmail():string{
-        return this.email;
-    }
-    public getOnline():boolean{
-        return this.online;
+    public set userId(value: string) {
+        this._userId = value;
     }
 
-    public setUserId(userId:string):void{
-        this.userId=userId;
+    public get email(): string {
+        return this._email;
     }
-    public setEmail(email:string):void{
-        this.email=email;
+    public set email(value: string) {
+        this._email = value;
     }
-    public setOnline(online:boolean):void{
-        this.online=online;
+
+    public get online(): boolean {
+        return this._online;
+    }
+    public set online(value: boolean) {
+        this._online = value;
     }
 }

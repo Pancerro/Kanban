@@ -1,31 +1,31 @@
 export class Project {
-    private userId: string;
-    private projectName: string;
-    private share: boolean = false;
+    private _userId: string;
+    private _projectName: string;
+    private _share: boolean
 
-    constructor(userId:string,projectName:string,share:boolean){
-        this.userId=userId;
-        this.projectName=projectName;
-        this.share=share;
+    constructor(userId: string, projectName: string, share: boolean) {
+        this.userId = userId;
+        this.projectName = projectName;
+        this.share = share;
     }
-
-    public getUserId():string{
-        return this.userId;
+    public get userId(): string {
+        return this._userId;
     }
-    public getProjectName():string{
-        return this.projectName;
-    }
-    public getShare():boolean{
-        return this.share;
+    public set userId(value: string) {
+        this._userId = value;
     }
 
-    public setUserId(userId:string):void{
-        this.userId=userId;
+    public get projectName(): string {
+        return this._projectName;
     }
-    public setProjectName(projectName:string):void{
-        this.projectName=projectName;
+    public set projectName(value: string) {
+        this._projectName = value;
     }
-    public setShare(share:boolean):void{
-        this.share=share;
+
+    public get share(): boolean {
+        return this._share;
+    }
+    public set share(value: boolean) {
+        this._share = value;
     }
 }

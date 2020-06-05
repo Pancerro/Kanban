@@ -1,81 +1,86 @@
-import { MatGridTileHeaderCssMatStyler } from '@angular/material';
+
 
 export class Task {
-    private userId: string;
-    private tableParent: string;
-    private tableChild: string;
-    private title: string;
-    private description: string;
-    private priority: string;
-    private color: string;
-    private endDate: string;
-    private user: string;
-
-    constructor(userId:string,tableParent:string,tableChild:string,title:string,description:string,priority:string,color:string,endDate:string,user:string){
-        this.userId=userId;
-        this.tableParent=tableParent;
-        this.tableChild=tableChild;
-        this.title=title;
-        this.description=description;
-        this.priority=priority;
-        this.color=color;
-        this.endDate=endDate;
-        this.user=user;
+    private _userId: string;
+    private _tableParent: string;
+    private _tableChild: string;
+    private _title: string;
+    private _description: string;
+    private _priority: string;
+    private _color: string;
+    private _endDate: string;
+    private _user: string;
+    
+    constructor(userId: string, tableParent: string, tableChild: string, title: string, description: string, priority: string, color: string, endDate: string, user: string) {
+        this.userId = userId;
+        this.tableParent = tableParent;
+        this.tableChild = tableChild;
+        this.title = title;
+        this.description = description;
+        this.priority = priority;
+        this.color = color;
+        this.endDate = endDate;
+        this.user = user;
+    }
+    public get userId(): string {
+        return this._userId;
+    }
+    public set userId(value: string) {
+        this._userId = value;
     }
 
-    public getUserId():string{
-        return this.userId;
+    public get tableParent(): string {
+        return this._tableParent;
     }
-    public getTableParent():string{
-        return this.tableParent
-    }
-    public getTableChild():string{
-        return this.tableChild;
-    }
-    public  getTitle():string{
-        return this.title;
-    }
-    public getDescription():string{
-        return this.description;
-    }
-    public getPriority():string{
-        return this.priority;
-    }
-    public getColor():string{
-        return this.color;
-    }
-    public getEndDate():string{
-        return this.endDate;
-    }
-    public getUser():string{
-        return this.user;
+    public set tableParent(value: string) {
+        this._tableParent = value;
     }
 
-    public setUserId(userId:string):void{
-        this.userId=userId;
+    public get tableChild(): string {
+        return this._tableChild;
     }
-    public setTableParent(tableParent:string):void{
-        this.tableParent=tableParent;
+    public set tableChild(value: string) {
+        this._tableChild = value;
     }
-    public setTableChild(tableChild:string):void{
-        this.tableChild=tableChild;
+
+    public get title(): string {
+        return this._title;
     }
-    public setTitle(title:string):void{
-        this.title=title;
+    public set title(value: string) {
+        this._title = value;
     }
-    public setDescription(description:string):void{
-        this.description=description;
+
+    public get description(): string {
+        return this._description;
     }
-    public setPriority(priority:string):void{
-        this.priority=priority;
+    public set description(value: string) {
+        this._description = value;
     }
-    public setColor(color:string):void{
-        this.color=color;
+
+    public get priority(): string {
+        return this._priority;
     }
-    public setEndDate(endDate:string):void{
-        this.endDate=endDate;
+    public set priority(value: string) {
+        this._priority = value;
     }
-    public setUser(user:string):void{
-        this.user=user;
+    public get color(): string {
+        return this._color;
+    }
+    public set color(value: string) {
+        this._color = value;
+    }
+
+    public get endDate(): string {
+        return this._endDate;
+    }
+    public set endDate(value: string) {
+        this._endDate = value;
+    }
+
+    public get user(): string {
+        return this._user;
+    }
+    public set user(value: string) {
+        this._user = value;
     }
 }

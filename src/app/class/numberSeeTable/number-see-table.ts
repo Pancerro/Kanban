@@ -1,22 +1,23 @@
 export class NumberSeeTable {
-    private userId: string;
-    private number: number;
+    private _userId: string;
+    private _number: number;
 
-    constructor(userId:string,number:number){
-        this.userId=userId;
-        this.number=number;
+    constructor(userId: string, number: number) {
+        this.userId = userId;
+        this.number = number;
     }
 
-    public getUserId():string{
-        return this.userId;
+    public get userId(): string {
+        return this._userId;
     }
-    public getNumber():number{
-        return this.number;
+    public set userId(value: string) {
+        this._userId = value;
     }
-    public setUserId(userId:string):void{
-        this.userId=userId;
+
+    public get number(): number {
+        return this._number;
     }
-    public setNumber(number:number):void{
-        this.number=number;
+    public set number(value: number) {
+        this._number = value;
     }
 }

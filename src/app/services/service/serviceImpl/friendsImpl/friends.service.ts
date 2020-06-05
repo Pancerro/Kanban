@@ -16,35 +16,35 @@ export class FriendsService implements Friends {
   random: string;
   constructor(private db: AngularFireDatabase) { }
   public writeMyFriends(myFriend: MyFriend): void {
-    firebase.database().ref('users/' + myFriend.getUserId() + '/myFriends/' + myFriend.getFriendsEmail()).set({
-      friendsEmail: myFriend.getFriendsEmail(),
-      friendsId: myFriend.getFriendsId(),
-      accept: myFriend.getAccept()
+    firebase.database().ref('users/' + myFriend.userId + '/myFriends/' + myFriend.friendsEmail).set({
+      friendsEmail: myFriend.friendsEmail,
+      friendsId: myFriend.friendsId,
+      accept: myFriend.accept
     })
   }
   public writeMessageToFriends(chatWithFriend: ChatWithFriend): void {
     this.random = Math.random().toString();
     this.random = this.random.replace("0.", "chatWitchFriend");
-    chatWithFriend.setData(firebase.database.ServerValue.TIMESTAMP.toString());
-    firebase.database().ref('users/' + chatWithFriend.getMyId() + '/chat/' + chatWithFriend.getFriendsEmail() + '/' + this.random).set({
-      data: chatWithFriend.getData(),
-      message: chatWithFriend.getMessage(),
-      email: chatWithFriend.getUserName(),
+    chatWithFriend.data=firebase.database.ServerValue.TIMESTAMP.toString();
+    firebase.database().ref('users/' + chatWithFriend.myId + '/chat/' + chatWithFriend.friendsEmail + '/' + this.random).set({
+      data: chatWithFriend.data,
+      message: chatWithFriend.message,
+      email: chatWithFriend.userName,
     })
-    firebase.database().ref('users/' + chatWithFriend.getFriendsEmail() + '/chat/' + chatWithFriend.getMyEmail() + '/' + this.random).set({
-      data: chatWithFriend.getData(),
-      message: chatWithFriend.getMessage(),
-      email: chatWithFriend.getUserName(),
+    firebase.database().ref('users/' + chatWithFriend.friendsEmail + '/chat/' + chatWithFriend.myEmail + '/' + this.random).set({
+      data: chatWithFriend.data,
+      message: chatWithFriend.message,
+      email: chatWithFriend.userName,
     })
-    this.deleteNewMesage(chatWithFriend.getFriendsId(), chatWithFriend.getMyEmail());
-    this.newMessage(new NewMessage(chatWithFriend.getFriendsId(), chatWithFriend.getMyEmail(), chatWithFriend.getUserName()));
+    this.deleteNewMesage(chatWithFriend.friendsId, chatWithFriend.myEmail);
+    this.newMessage(new NewMessage(chatWithFriend.friendsId, chatWithFriend.myEmail, chatWithFriend.userName));
   }
   public getMessageWitchFriend(myId: string, friendsEmail: string):Observable<any[]> {
     return this.db.list('users/' + myId + '/chat/' + friendsEmail, ref => ref.orderByChild('data')).valueChanges()
   }
   public newMessage(newMessage: NewMessage): void {
-    firebase.database().ref('users/' + newMessage.getFriendsId() + '/chatares/' + newMessage.getMyEmail()).set({
-      email: newMessage.getUserName()
+    firebase.database().ref('users/' + newMessage.friendsId + '/chatares/' + newMessage.myEmail).set({
+      email: newMessage.userName
     })
   }
   public deleteNewMesage(friendsId: string, myEmail: string):void {
@@ -54,36 +54,36 @@ export class FriendsService implements Friends {
     return this.db.list('users/' + myId + '/chatares/').valueChanges();
   }
   public deleteAllMessage(invities:Invities, myEmail: string):void {
-    this.db.list('users/' + invities.getUserId() + '/chat/').remove(invities.getFriendsEmail())
-    this.db.list('users/' + invities.getFriendsId() + '/chat/').remove(myEmail)
+    this.db.list('users/' + invities.userId + '/chat/').remove(invities.friendsEmail)
+    this.db.list('users/' + invities.friendsId + '/chat/').remove(myEmail)
   }
-  public updateAccept(friendsId, email: string):Promise<void> {
+  public updateAccept(friendsId:string, email: string):Promise<void> {
     return this.db.object('users/' + friendsId + '/myFriends/' + email).update({ accept: true })
   }
   public sendInvities(invities: Invities): void {
-    firebase.database().ref('users/' + invities.getUserId() + '/invities/' + invities.getFriendsEmail()).set({
-      friendsEmail: invities.getFriendsEmail(),
-      friendsId: invities.getFriendsId(),
-      accept: invities.getAccept()
+    firebase.database().ref('users/' + invities.userId + '/invities/' + invities.friendsEmail).set({
+      friendsEmail: invities.friendsEmail,
+      friendsId: invities.friendsId,
+      accept: invities.accept
     })
   }
   public getInvities(userId: string):Observable<any[]> {
     return this.db.list('users/' + userId + '/invities/').valueChanges();
   }
   public acceptInvities(invities:Invities, myEmail: string):void {
-    this.writeMyFriends(new MyFriend(invities.getUserId(), invities.getFriendsEmail(), invities.getFriendsId(), invities.getAccept()));
-    this.removeInvities(new AllUser(invities.getUserId(), invities.getFriendsEmail(),null));
-    this.updateAccept(invities.getFriendsId(), myEmail);
+    this.writeMyFriends(new MyFriend(invities.userId, invities.friendsEmail, invities.friendsId, invities.accept));
+    this.removeInvities(new AllUser(invities.userId, invities.friendsEmail,null));
+    this.updateAccept(invities.friendsId, myEmail);
   }
   public dontAcceptInvities(invities:Invities, myEmail: string):void {
-    this.removeInvities(new AllUser(invities.getUserId(), invities.getFriendsEmail(),null));
-    this.deleteFriends(new AllUser(invities.getFriendsId(), myEmail,null));
+    this.removeInvities(new AllUser(invities.userId, invities.friendsEmail,null));
+    this.deleteFriends(new AllUser(invities.friendsId, myEmail,null));
   }
   public removeInvities(user:AllUser):Promise<void> {
-    return this.db.list('users/' + user.getUserId() + '/invities/').remove(user.getEmail())
+    return this.db.list('users/' + user.userId + '/invities/').remove(user.email)
   }
   public deleteFriends(user:AllUser):Promise<void> {
-    return this.db.list('users/' + user.getUserId() + '/myFriends/').remove(user.getEmail())
+    return this.db.list('users/' + user.userId + '/myFriends/').remove(user.email)
   }
   public getAllMyFriends(userId: string):Observable<any[]> {
     return this.db.list('users/' + userId + '/myFriends/', ref => ref.orderByChild('friendsEmail')).valueChanges();

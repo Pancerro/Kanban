@@ -2,61 +2,69 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { User, auth } from 'firebase';
 import { Observable } from 'rxjs/index';
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = this.fireAuth.auth.currentUser;
   readonly authState$: Observable<User | null> = this.fireAuth.authState;
-  constructor(private fireAuth: AngularFireAuth) {}
-  getUser(): User | null {
+  constructor(private fireAuth: AngularFireAuth) { }
+  public getUser(): User | null {
     return this.fireAuth.auth.currentUser;
   }
-  login(email: string, password: string) {
+  public login(email: string, password: string): Promise<auth.UserCredential> {
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password);
   }
-  register(email: string, password: string) {
-    return this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
-    .then(() => {
+  public async register(email: string, password: string): Promise<void> {
+    try {
+      await this.fireAuth.auth.createUserWithEmailAndPassword(email, password);
       this.sendVerificationMail();
-    }).catch((error) => {
+    }
+    catch (error) {
       window.alert(error.message);
-    })
+    }
   }
-  sendVerificationMail() {
+  public sendVerificationMail(): Promise<void> {
     return this.fireAuth.auth.currentUser.sendEmailVerification();
   }
-  logout() {
+  public logout(): Promise<void> {
     return this.fireAuth.auth.signOut();
   }
-  resetPassword(email: string){
-    return this.fireAuth.auth.sendPasswordResetEmail(email)
-    .then(()=>window.alert("Check your email!"))
-    .catch((error) => {
+  public async resetPassword(email: string): Promise<void> {
+    try {
+      await this.fireAuth.auth.sendPasswordResetEmail(email);
+      return window.alert("Check your email!");
+    }
+    catch (error) {
       window.alert(error.message);
-    })
+    }
   }
-  googleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
-  }  
-  AuthLogin(provider: auth.AuthProvider) {
+  public googleAuth(): Promise<auth.UserCredential> {
+    return this.authLogin(new auth.GoogleAuthProvider());
+  }
+  public authLogin(provider: auth.AuthProvider): Promise<auth.UserCredential> {
     return this.fireAuth.auth.signInWithPopup(provider)
   }
-  updateEmail(newEmail: string){
-    return this.fireAuth.auth.currentUser.updateEmail(newEmail).catch((error) => {
+  public async updateEmail(newEmail: string): Promise<void> {
+    try {
+      return this.fireAuth.auth.currentUser.updateEmail(newEmail);
+    }
+    catch (error) {
       window.alert(error.message);
-    })
+    }
   }
-  updatePassowrd(newPassword: string){
-    return this.fireAuth.auth.currentUser.updatePassword(newPassword).catch((error) => {
+  public async updatePassowrd(newPassword: string): Promise<void> {
+    try {
+      return this.fireAuth.auth.currentUser.updatePassword(newPassword);
+    }
+    catch (error) {
       window.alert(error.message);
-    });
+    }
   }
-  deleteUser(){
+  public deleteUser(): Promise<void> {
     return this.fireAuth.auth.currentUser.delete();
   }
-  userResetPassword(code: string,password: string){
-    return this.fireAuth.auth.confirmPasswordReset(code,password);
+  public userResetPassword(code: string, password: string): Promise<void> {
+    return this.fireAuth.auth.confirmPasswordReset(code, password);
   }
-  changeEmailVerifity(code: string){
+  public changeEmailVerifity(code: string): Promise<void> {
     return this.fireAuth.auth.applyActionCode(code);
   }
 }

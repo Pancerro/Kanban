@@ -13,15 +13,18 @@ export class CategoryService implements  Category{
   constructor(private db: AngularFireDatabase) { }
 
   public writeCategory(category: Cg): void {
-    firebase.database().ref('users/' + category.getUserId() + '/category/' + category.getCategory()).set({
-      category: category.getCategory(),
-      color: category.getColor(),
+    firebase.database().ref('users/' + category.userId + '/category/' + category.category).set({
+      category: category.category,
+      color: category.color,
     });
   }
   public getCategory(userId: string): Observable<any[]> {
     return this.db.list('users/' + userId + '/category/').valueChanges();
   }
   public removeCategory(removeCategory: Cg):Promise<void>{
-    return this.db.list('users/' + removeCategory.getUserId() + '/category/').remove(removeCategory.getCategory());
+    return this.db.list('users/' + removeCategory.userId + '/category/').remove(removeCategory.category);
+  }
+  public updateCategory(updateCategory:Cg){
+  return this.db.object('users/' + updateCategory.userId + '/category/'+updateCategory.category).update({color:updateCategory.color});
   }
 }

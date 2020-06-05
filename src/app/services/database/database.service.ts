@@ -39,8 +39,8 @@ export class DataService {
     private categoryService: CategoryService,
     private shareTableSerivce: ShareTableService,
     private allChatService: AllChatService,
-    private friendsService:FriendsService,
-    private allUserService:AllUserService
+    private friendsService: FriendsService,
+    private allUserService: AllUserService
 
   ) { }
   //logi - start
@@ -51,13 +51,13 @@ export class DataService {
   public getLogs(userId: string): Observable<any[]> {
     return this.logService.getLogs(userId);
   }
-  public sortLogByType(userId:string): Observable<any[]>{
+  public sortLogByType(userId: string): Observable<any[]> {
     return this.logService.sortLogByType(userId);
   }
-  public sortLogByDescription(userId:string): Observable<any[]>{
+  public sortLogByDescription(userId: string): Observable<any[]> {
     return this.logService.sortLogByDescription(userId);
   }
-  public sortLogByDate(userId:string): Observable<any[]>{
+  public sortLogByDate(userId: string): Observable<any[]> {
     return this.logService.sortLogByDate(userId);
   }
   //logi - koniec
@@ -132,6 +132,9 @@ export class DataService {
   public removeCategory(removeCategory: Category): Promise<void> {
     return this.categoryService.removeCategory(removeCategory);
   }
+  public updateCategory(updateCategory: Category): Promise<void> {
+    return this.categoryService.updateCategory(updateCategory);
+  }
   //category - koniec
   // share table - start
   //dla tego co sie dzieli
@@ -177,10 +180,10 @@ export class DataService {
   public writeMessage(chat: AllChat): void {
     this.allChatService.writeMessage(chat);
   }
-  public getMessage(project:Project):Observable<any[]> {
+  public getMessage(project: Project): Observable<any[]> {
     return this.allChatService.getMessage(project);
   }
-  public deleteChatMesage(project:Project):Promise<void> {
+  public deleteChatMesage(project: Project): Promise<void> {
     return this.allChatService.deleteChatMesage(project)
   }
   // group chat - koniec
@@ -188,30 +191,30 @@ export class DataService {
   // znajomi -- start
   //class myFriends -- zrobione --
   public writeMyFriends(myFriend: MyFriend): void {
-   this.friendsService.writeMyFriends(myFriend);
+    this.friendsService.writeMyFriends(myFriend);
   }
   //class chat with friends -- zrobione --
   public writeMessageToFriends(chatWithFriend: ChatWithFriend): void {
     this.friendsService.writeMessageToFriends(chatWithFriend);
   }
-  public getMessageWitchFriend(myId: string, friendsEmail: string):Observable<any[]> {
-    return this.friendsService.getMessageWitchFriend(myId,friendsEmail);
+  public getMessageWitchFriend(myId: string, friendsEmail: string): Observable<any[]> {
+    return this.friendsService.getMessageWitchFriend(myId, friendsEmail);
   }
   //class newMessage -- zrobione --
   public newMessage(newMessage: NewMessage): void {
-  this.friendsService.newMessage(newMessage);
+    this.friendsService.newMessage(newMessage);
   }
   public deleteNewMesage(friendsId: string, myEmail: string): void {
-   this.friendsService.deleteNewMesage(friendsId,myEmail);
+    this.friendsService.deleteNewMesage(friendsId, myEmail);
   }
-  public getNewMassage(myId: string):Observable<any[]> {
+  public getNewMassage(myId: string): Observable<any[]> {
     return this.friendsService.getNewMassage(myId);
   }
-  public deleteAllMessage(invities:Invities, myEmail: string):void {
-    this.friendsService.deleteAllMessage(invities,myEmail);
+  public deleteAllMessage(invities: Invities, myEmail: string): void {
+    this.friendsService.deleteAllMessage(invities, myEmail);
   }
-  public updateAccept(friendsId:string, email: string):Promise<void> {
-    return this.friendsService.updateAccept(friendsId,email);
+  public updateAccept(friendsId: string, email: string): Promise<void> {
+    return this.friendsService.updateAccept(friendsId, email);
   }
   //class invities -- zrobione --
   public sendInvities(invities: Invities): void {
@@ -220,16 +223,16 @@ export class DataService {
   public getInvities(userId: string): Observable<any[]> {
     return this.friendsService.getInvities(userId);
   }
-  public acceptInvities(invities:Invities, myEmail: string):void {
-    this.friendsService.acceptInvities(invities,myEmail);
+  public acceptInvities(invities: Invities, myEmail: string): void {
+    this.friendsService.acceptInvities(invities, myEmail);
   }
-  public dontAcceptInvities(invities:Invities, myEmail: string):void {
-    this.friendsService.dontAcceptInvities(invities,myEmail);
+  public dontAcceptInvities(invities: Invities, myEmail: string): void {
+    this.friendsService.dontAcceptInvities(invities, myEmail);
   }
-  public removeInvities(user:AllUser): Promise<void> {
+  public removeInvities(user: AllUser): Promise<void> {
     return this.friendsService.removeInvities(user);
   }
-  public deleteFriends(user:AllUser): Promise<void> {
+  public deleteFriends(user: AllUser): Promise<void> {
     return this.friendsService.deleteFriends(user);
   }
   public getAllMyFriends(userId: string): Observable<any[]> {
@@ -240,15 +243,15 @@ export class DataService {
   //all user - start
   //class allUser -- zrobione --
   public writeUser(user: AllUser): void {
-   this.allUserService.writeUser(user);
+    this.allUserService.writeUser(user);
   }
-  public getAllUser():Observable<any[]> {
+  public getAllUser(): Observable<any[]> {
     return this.allUserService.getAllUser();
   }
-  public remove(email: string):Promise<void> {
+  public remove(email: string): Promise<void> {
     return this.allUserService.remove(email);
   }
-  public updateOnline(user:AllUser):Promise<void> {
+  public updateOnline(user: AllUser): Promise<void> {
     return this.allUserService.updateOnline(user);
   }
   //all user - koniec
@@ -264,20 +267,19 @@ export class DataService {
     }
     return this.word;
   }
-  public changeFont(thema:string):string
-  {
-    if(thema=="gray"){
+  public changeFont(thema: string): string {
+    if (thema == "gray") {
       return "white";
     }
-    if(thema=="black"){
+    if (thema == "black") {
       return "white";
     }
   }
-  public changeBackground(thema:string):string{
-    if(thema=="gray"){
+  public changeBackground(thema: string): string {
+    if (thema == "gray") {
       return "gray";
     }
-    if(thema=="black"){
+    if (thema == "black") {
       return "black";
     }
   }

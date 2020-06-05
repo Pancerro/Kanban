@@ -1,8 +1,8 @@
 export class ShareFriend {
-    private userId: string;
-    private friendsEmail: string;
-    private friendsId: string;
-    private role: string
+    private _userId: string;
+    private _friendsEmail: string;
+    private _friendsId: string;
+    private _role: string;
 
     constructor(userId: string, friendsEmail: string, friendsId: string, role: string) {
         this.userId = userId;
@@ -11,31 +11,34 @@ export class ShareFriend {
         this.role = role;
     }
 
-    public getUserId(): string {
-        return this.userId;
+    public get userId(): string {
+        return this._userId;
     }
-    public getFriendsEmail(): string {
-        return this.friendsEmail;
-    }
-    public getFriendsId(): string {
-        return this.friendsId;
-    }
-    public getRole(): string {
-        return this.role;
+    public set userId(value: string) {
+        this._userId = value;
     }
 
-    public setUserId(userId: string): void {
-        this.userId = userId;
+    public get friendsEmail(): string {
+        return this._friendsEmail;
     }
-    public setFriendsEmail(friendsEmail: string): void {
-        this.friendsEmail = friendsEmail;
+    public set friendsEmail(value: string) {
+        this._friendsEmail = value;
     }
-    public setFriendsId(friendsId: string): void {
-        this.friendsId = friendsId
+
+    public get friendsId(): string {
+        return this._friendsId;
     }
-    public setRole(role: string): void {
-        this.role = role;
+    public set friendsId(value: string) {
+        this._friendsId = value;
     }
+
+    public get role(): string {
+        return this._role;
+    }
+    public set role(value: string) {
+        this._role = value;
+    }
+
 
 }
 

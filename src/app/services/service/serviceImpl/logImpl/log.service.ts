@@ -15,11 +15,11 @@ export class LogService implements Log {
   private word: string;
   public logSave(log: Logi): void {
     this.random = Math.random().toString();
-    this.random = this.random.replace('0.', log.getTitleLog());
-    firebase.database().ref('users/' + log.getUserId() + '/logs/' + this.replece(log.getTitleLog())).set({
-      data: log.getDate(),
-      type: log.getType(),
-      description: log.getDescription(),
+    this.random = this.random.replace('0.', log.titleLog);
+    firebase.database().ref('users/' + log.userId + '/logs/' + this.replece(log.titleLog)).set({
+      data: log.date,
+      type: log.type,
+      description: log.description,
     });
   }
   public getLogs(userId: string): Observable<any[]> {

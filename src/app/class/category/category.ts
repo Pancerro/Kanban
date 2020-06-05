@@ -1,30 +1,31 @@
 export class Category {
-    private userId: string;
-    private category: string;
-    private color: string;
+    private _userId: string;
+    private _category: string;
+    private _color: string;
 
-    constructor(userId:string,category:string,color:string){
-        this.userId=userId;
-        this.category=category;
-        this.color=color;
+    constructor(userId: string, category: string, color: string) {
+        this.userId = userId;
+        this.category = category;
+        this.color = color;
+    }
+    public get userId(): string {
+        return this._userId;
+    }
+    public set userId(value: string) {
+        this._userId = value;
     }
 
-    public getUserId():string{
-        return this.userId;
+    public get category(): string {
+        return this._category;
     }
-    public getCategory():string{
-        return this.category;
+    public set category(value: string) {
+        this._category = value;
     }
-    public getColor():string{
-        return this.color;
+
+    public get color(): string {
+        return this._color;
     }
-    public setUserId(userId:string):void{
-        this.userId=userId;
-    }
-    public setCategory(category:string):void{
-        this.category=category;
-    }
-    public setColor(color:string):void{
-        this.color=color;
+    public set color(value: string) {
+        this._color = value;
     }
 }
