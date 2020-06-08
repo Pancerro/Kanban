@@ -85,22 +85,22 @@ export class SettingsComponent implements OnInit {
     else {
       if (this.matchingEmail(updateEmail.oldEmail, this.userInfo[0].email)) {
         if (this.matchingEmail(updateEmail.newEmail, updateEmail.oldEmail)) {
-          this.emailInfo = "The old email is the same as the new email"
-          this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email Failed" + this.emailInfo))
+          this.emailInfo = "The old email is the same as the new email";
+          this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email Failed" + this.emailInfo));
         }
         else {
           if (this.matchingEmail(updateEmail.newEmail, updateEmail.newRepeatEmail)) {
             this.auth.updateEmail(updateEmail.newEmail).then(() => {
               this.auth.authState$.subscribe(user => {
-                this.db.updateEmail(new UserDate(this.userId, user.email, null, null))
+                this.db.updateEmail(new UserDate(this.userId, user.email, null, null));
                 this.sendRepeatVerificationEmail();
                 if (this.matchingEmail(updateEmail.newEmail, user.email)) {
                   this.emailInfo = "email successfuly updated";
-                  this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email success: " + updateEmail.newEmail))
+                  this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email success: " + updateEmail.newEmail));
                 }
                 else {
                   this.emailInfo = "email dont updated";
-                  this.db.logSave(new Log(this.userId, "LogUpdateEmail", "update Email", "update Email failed: " + this.emailInfo))
+                  this.db.logSave(new Log(this.userId, "LogUpdateEmail", "update Email", "update Email failed: " + this.emailInfo));
                 }
               });
             })
@@ -108,33 +108,32 @@ export class SettingsComponent implements OnInit {
         }
       } else {
         this.emailInfo = "Bad old email";
-        this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email failed: " + this.emailInfo))
+        this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email failed: " + this.emailInfo));
       }
     }
   }
   public updatePassword(updatePassword: { invalid: any; oldPassword: string; newPassword: string; newRepeatPassword: string; }): void {
     this.checkPass = false;
-    if (updatePassword.invalid) window.alert("Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers")
+    if (updatePassword.invalid) window.alert("Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers");
     else {
       this.auth.login(this.userInfo[0].email, updatePassword.oldPassword).then(() => {
         if (this.matchingPasswords(updatePassword.newPassword, updatePassword.oldPassword)) {
-          this.passInfo = "The old password is the same as the new password "
-          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed" + this.passInfo)
-          )
+          this.passInfo = "The old password is the same as the new password ";
+          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed" + this.passInfo));
         }
         else {
           if (this.matchingPasswords(updatePassword.newPassword, updatePassword.newRepeatPassword)) {
             this.checkPass = true;
             this.auth.updatePassowrd(updatePassword.newPassword);
-            this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "success"))
+            this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "success"));
             if (this.checkPass) this.passInfo = "password successfuly changed";
             else this.passInfo = "Operation failed";
           }
         }
       }).catch(err => {
         if (err) {
-          this.passInfo = "Bad old password"
-          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed:" + this.passInfo))
+          this.passInfo = "Bad old password";
+          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed:" + this.passInfo));
         }
       })
     }
@@ -154,7 +153,7 @@ export class SettingsComponent implements OnInit {
     if (updateThema.invalid) window.alert("Please try again");
     else {
       this.db.updateThema(new UserDate(this.userId, null, updateThema.thema, null));
-      this.db.logSave(new Log(this.userId, "logUpdateThema", "update thema", "update thema: " + updateThema.thema))
+      this.db.logSave(new Log(this.userId, "logUpdateThema", "update thema", "update thema: " + updateThema.thema));
     }
   }
   public applyFilter(filterValue: string): void {
@@ -163,7 +162,7 @@ export class SettingsComponent implements OnInit {
 
   public deleteCategory(removeCategory: string): void {
     this.db.removeCategory(new Category(this.userId, removeCategory, null));
-    this.db.logSave(new Log(this.userId, "logRemoveCategory", "remove category", "remove category: " + removeCategory))
+    this.db.logSave(new Log(this.userId, "logRemoveCategory", "remove category", "remove category: " + removeCategory));
   }
   public editCategory(category: string, color: string): void {
     const dialogRef = this.dialog.open(EditCategoryComponent, {
@@ -174,7 +173,7 @@ export class SettingsComponent implements OnInit {
       if (editCategory != undefined) {
         if (editCategory.invalid) {
           window.alert("Please correct all errors and resubmit update category");
-          this.db.logSave(new Log(this.userId, "logEditCategoryFailed", "edit category", "edit category: " + category + " failed"))
+          this.db.logSave(new Log(this.userId, "logEditCategoryFailed", "edit category", "edit category: " + category + " failed"));
         }
         else {
           this.db.removeCategory(new Category(this.userId, category, null));
@@ -221,6 +220,6 @@ export class SettingsComponent implements OnInit {
     this.router.navigate(['/welcome-page'])
       .then(() => this.db.remove(this.db.replece(this.userInfo[0].email)))
       .then(() => this.db.deleteUser(this.userId))
-      .then(() => this.auth.deleteUser())
+      .then(() => this.auth.deleteUser());
   }
 }

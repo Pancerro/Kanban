@@ -26,6 +26,33 @@
     position: relative;
 }
 
+@media only screen and (max-width: 550px) {
+    .settings-header {
+        width: 80%;
+    }
+    .settings {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .settings-header {
+        width: 90%;
+    }
+    .settings {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 330px) {
+    .settings-header {
+        width: 100%;
+    }
+    .settings {
+        width: 100%;
+    }
+}
+
 .settings:hover {
     background: rgb(60, 60, 60);
     color: white;
