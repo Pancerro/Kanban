@@ -5,50 +5,107 @@
     text-align: center;
 }
 
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings-header {
+    min-height: 50px;
+    width: 60%;
+    height: auto;
+}
+
+.settings {
+    min-height: 50px;
+    width: 60%;
+    height: auto;
+    border: 1px solid blue;
+    position: relative;
+}
+
+.settings:hover {
+    background: rgb(60, 60, 60);
+    color: white;
+}
+
+.settings-content {
+    margin-left: 10px;
+    float: left;
+    text-align: left;
+}
+
+.settings-content p {
+    opacity: 0.5;
+}
+
+.button-settings {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgb(60, 60, 60);
+    color: white;
+    border: 1px solid blue;
+    border-top: none;
+    border-right: none;
+    cursor: pointer;
+}
+
+.button-settings:hover {
+    background-color: blue;
+    color: white;
+}
+
+.settings-form {
+    padding-top: 90px;
+}
+
 .mat-input-element {
     color: blue;
 }
 
 ::ng-deep.mat-form-field-underline {
-    /*change color of underline*/
     background-color: blue !important;
 }
 
+button {
+    border: none;
+}
+
 .tableClass {
-    margin-left: 40%;
-    margin-right: 40%;
-    width: 20%;
+    display: inline-flex;
+    justify-items: center;
+    margin-bottom: 100px;
 }
 
 table {
-    width: 100%;
+    border: 1px solid blue;
 }
 
-.best {
-    width: 99.9%;
-    height: 10%;
-    border: none;
+th {
+    border: 1px solid blue;
 }
 
-.buttonRemove {
-    color: black;
-    width: 10%;
-    height: 100%;
-    border: none;
-}
-
-.addButton {
-    border: none;
-}
-
-.updateEmail {
-    color: black;
-}
-
-.updatePassword {
-    color: black;
+td {
+    border: 1px solid blue;
 }
 
 .button {
-    background-color: pink;
+    border: 3px solid blue;
+    height: 30px;
+    margin-bottom: 50px;
+    border-radius: 4px;
+}
+
+.button:hover {
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
+
+.button:disabled {
+    background-color: lightgrey;
+    cursor: not-allowed;
 }

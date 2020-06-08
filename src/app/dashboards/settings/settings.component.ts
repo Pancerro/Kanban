@@ -9,12 +9,34 @@ import { Log } from 'src/app/class/log/log';
 import { Category } from 'src/app/class/category/category';
 import { UserDate } from 'src/app/class/userDate/user-date';
 import { Title } from '@angular/platform-browser';
+export class SeeSettings {
+  private _text: string;
+  private _see: boolean;
+  constructor(text: string, see: boolean) {
+    this.text = text;
+    this.see = see;
+  }
+  public get text(): string {
+    return this._text;
+  }
+  public set text(value: string) {
+    this._text = value;
+  }
+
+  public get see(): boolean {
+    return this._see;
+  }
+  public set see(value: boolean) {
+    this._see = value;
+  }
+}
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+  public see: SeeSettings[] = [new SeeSettings("Edit", false), new SeeSettings("Edit", false), new SeeSettings("Edit", false), new SeeSettings("Edit", false), new SeeSettings("Edit", false)];
   public userInfo: UserDate[] = [];
   public fontColor: string;
   public background: string;
@@ -38,7 +60,7 @@ export class SettingsComponent implements OnInit {
   }
   public ngOnInit(): void {
     localStorage.setItem("menu", "UserSettings");
-    this.titleService.setTitle("UserSettings");
+    this.titleService.setTitle("User Settings");
     this.db.getDateUser(this.userId).subscribe((userDate: UserDate[]) => {
       this.userInfo = userDate;
       this.fontColor = this.db.changeFont(userDate[0].thema);
@@ -48,6 +70,10 @@ export class SettingsComponent implements OnInit {
       this.dataCategory = new MatTableDataSource(category);
       this.category = category;
     });
+  }
+  public seeSettings(option: number):void {
+      if (this.see[option].see) this.see[option] = new SeeSettings("Edit", false);
+      else this.see[option] = new SeeSettings("Close", true);
   }
   public sendRepeatVerificationEmail(): void {
     this.auth.sendVerificationMail().then(() => {
