@@ -6,12 +6,11 @@
 }
 
 .mat-input-element {
-    color: blue;
+    color: rgb(60, 60, 60);
 }
 
 ::ng-deep.mat-form-field-underline {
-    /*change color of underline*/
-    background-color: blue !important;
+    background-color: lightgray !important;
 }
 
 th.mat-header-cell {
@@ -37,16 +36,30 @@ img {
 table {
     width: 100%;
     background-color: white;
-    border-top: blue 3px solid;
-    border-bottom: blue 3px solid;
+    border-top: rgb(60, 60, 60) 3px solid;
+    border-bottom: rgb(60, 60, 60) 3px solid;
 }
 
 th {
-    border: blue 1px solid;
+    border: rgb(60, 60, 60) 1px solid;
+}
+
+th:hover {
+    background: rgb(60, 60, 60) !important;
+}
+
+th:hover button {
+    background: rgb(60, 60, 60) !important;
+    color: white;
 }
 
 td {
-    border: blue 1px solid;
+    border: rgb(60, 60, 60) 1px solid;
+}
+
+td:hover {
+    background: rgb(60, 60, 60) !important;
+    color: white;
 }
 
 .titleType {

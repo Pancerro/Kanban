@@ -2,7 +2,7 @@
     <app-menu></app-menu>
     <mat-form-field class="backgroundInput">
         <input matInput (keyup)="applyFilter($event.target.value)">
-        <mat-placeholder style="color:blue">Filter</mat-placeholder>
+        <mat-placeholder style="color:rgb(60, 60, 60)">Filter</mat-placeholder>
     </mat-form-field>
     <p></p>
     <div class="tableClass">
@@ -10,7 +10,7 @@
             <ng-container matColumnDef="type">
                 <th class="titleType" mat-header-cell *matHeaderCellDef [style.background]="background" [style.color]="fontColor">
 
-                    <button [style.background]="background" [style.color]="fontColor" class="button" (click)="sortByType()"> 
+                    <button [style.background]="background" [style.color]="fontColor" (click)="sortByType()"> 
                         <mat-grid-list cols="2">
                        <mat-grid-tile>Type</mat-grid-tile>  
                            <mat-grid-tile> <img *ngIf="imgSort[0]" src={{imgSort[0]}}></mat-grid-tile>
@@ -22,7 +22,7 @@
             </ng-container>
             <ng-container matColumnDef="data">
                 <th class="titleData" mat-header-cell *matHeaderCellDef [style.background]="background" [style.color]="fontColor">
-                    <button [style.background]="background" [style.color]="fontColor" class="button" (click)="sortByDate()">
+                    <button [style.background]="background" [style.color]="fontColor" (click)="sortByDate()">
                         <mat-grid-list cols="2">
                            <mat-grid-tile>Date</mat-grid-tile> 
                              <mat-grid-tile> <img *ngIf="imgSort[1]" src={{imgSort[1]}}></mat-grid-tile>
@@ -33,7 +33,7 @@
             </ng-container>
             <ng-container matColumnDef="description">
                 <th class="titleDesc" mat-header-cell *matHeaderCellDef [style.background]="background" [style.color]="fontColor">
-                    <button [style.background]="background" [style.color]="fontColor" class="button" (click)="sortByDescription()">
+                    <button [style.background]="background" [style.color]="fontColor" (click)="sortByDescription()">
                         <mat-grid-list cols="2">
                          <mat-grid-tile>Desc</mat-grid-tile>  
                         <mat-grid-tile> <img *ngIf="imgSort[2]" src={{imgSort[2]}}></mat-grid-tile>

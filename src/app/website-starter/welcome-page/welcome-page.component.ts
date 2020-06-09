@@ -22,27 +22,29 @@ import { Task } from 'src/app/class/task/task';
 })
 
 export class WelcomePageComponent {
+  private captcha: boolean = false;
+  private numberOfTests: number = 0;
   constructor(public dialog: MatDialog,
     public router: Router,
     public auth: AuthService,
     public db: DataService) { }
-  private captcha: boolean = false;
-  private numberOfTests: number = 0;
-  public info: string;
-  public registerUser(): void {
+
+  public registerUser(): void { 
+    this.clear();
     const dialogRef = this.dialog.open(RegisterComponent, {
       width: '350px',
     });
     dialogRef.afterClosed().subscribe(register => {
+     
       if (register != undefined) {
         if (register.invalid) {
-          this.info = "Please correct all errors and resubmit the form register";
+          document.getElementById("info").innerHTML = "Please correct all errors and resubmit the form register";
         }
         else {
           if (this.matchingPasswords(register.repeatPassword, register.password) == true) {
             this.auth.register(register.email, register.password)
               .then(() => {
-                this.info = "You can login now ";
+                document.getElementById("info").innerHTML = "You can login now ";
                 this.writeInfoUser(this.auth.getUser().uid, register.email, register.thema);
               })
           }
@@ -51,10 +53,12 @@ export class WelcomePageComponent {
     });
   }
   public loginUser(): void {
+    this.clear();
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '300px',
     });
     dialogRef.afterClosed().subscribe(login => {
+      
       if (login != undefined) {
         if (login == false) this.numberOfTests++;
         else {
@@ -70,7 +74,7 @@ export class WelcomePageComponent {
   }
   private loginError(): void {
     this.numberOfTests++;
-    this.info = "Login Failed.Try Again";
+    document.getElementById("info").innerHTML = "Login Failed.Try Again";
   }
   public viewCaptcha(): boolean {
     if (this.numberOfTests >= 3) return true;
@@ -83,7 +87,7 @@ export class WelcomePageComponent {
   private matchingPasswords(repeatPassword: string, password: string): boolean {
     if (repeatPassword.valueOf() == password.valueOf()) return true;
     else {
-      this.info = 'Passwords do not match.Try to register again!';
+      document.getElementById("info").innerHTML = 'Passwords do not match.Try to register again!';
       return false;
     }
   }
@@ -92,7 +96,7 @@ export class WelcomePageComponent {
     this.auth.googleAuth().then(() => {
       this.auth.getUser().email;
       this.db.updateOnline(new AllUser(this.auth.getUser().uid, this.db.replece(this.auth.getUser().email), true));
-      this.db.logSave(new Log(this.auth.getUser().uid, "logLoginWitchGoogle", "lothis.emailg in", "with google"))
+      this.db.logSave(new Log(this.auth.getUser().uid, "logLoginWitchGoogle", "log in", "with google"))
       this.db.getTask(new Task(this.auth.getUser().uid, "table", null, null, null, null, null, null, null)).subscribe(res => {
         if (res.length == 0) {
           this.writeInfoUser(this.auth.getUser().uid, this.auth.getUser().email, "");
@@ -129,5 +133,7 @@ export class WelcomePageComponent {
     this.db.writeKanbanTable(new Project(userId, this.db.kanban, false))
 
   }
-
+  public clear(): void {
+    document.getElementById("info").innerHTML = "";
+  }
 }

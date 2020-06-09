@@ -22,7 +22,7 @@
     min-height: 50px;
     width: 60%;
     height: auto;
-    border: 1px solid blue;
+    border: 1px solid rgb(60, 60, 60);
     position: relative;
 }
 
@@ -55,6 +55,11 @@
 
 .settings:hover {
     background: rgb(60, 60, 60);
+    border: 1px solid black;
+    color: white;
+}
+
+.settings:hover .mat-input-element {
     color: white;
 }
 
@@ -78,15 +83,16 @@
     right: 0;
     background: rgb(60, 60, 60);
     color: white;
-    border: 1px solid blue;
+    border: 1px solid black;
     border-top: none;
     border-right: none;
     cursor: pointer;
 }
 
 .button-settings:hover {
-    background-color: blue;
+    background-color: black;
     color: white;
+    border: 1px solid black;
 }
 
 .settings-form {
@@ -94,11 +100,11 @@
 }
 
 .mat-input-element {
-    color: blue;
+    color: lightgray;
 }
 
 ::ng-deep.mat-form-field-underline {
-    background-color: blue !important;
+    background-color: lightgray !important;
 }
 
 button {
@@ -112,15 +118,15 @@ button {
 }
 
 table {
-    border: 1px solid blue;
+    border: 1px solid rgb(60, 60, 60);
 }
 
 th {
-    border: 1px solid blue;
+    border: 1px solid rgb(60, 60, 60);
 }
 
 td {
-    border: 1px solid blue;
+    border: 1px solid rgb(60, 60, 60);
 }
 
 .reset-button {
@@ -133,14 +139,14 @@ td {
 }
 
 .button {
-    border: 3px solid blue;
+    border: 3px solid black;
     height: 30px;
     margin-bottom: 50px;
     border-radius: 4px;
 }
 
 .button:hover {
-    background-color: blue;
+    background-color: black;
     color: white;
     cursor: pointer;
 }
@@ -148,4 +154,8 @@ td {
 .button:disabled {
     background-color: lightgrey;
     cursor: not-allowed;
+}
+
+th.mat-header-cell {
+    text-align: center;
 }

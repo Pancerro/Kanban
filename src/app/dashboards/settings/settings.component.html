@@ -30,27 +30,27 @@
                     <div>
                         <mat-form-field>
                             <input matInput type="text" required name="oldEmail" ngModel>
-                            <mat-placeholder style="color:blue">Old Email</mat-placeholder>
+                            <mat-placeholder style="color:lightgray;">Old Email</mat-placeholder>
                             <mat-error>Old mail is Mandatory</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <input matInput type="text" required name="newEmail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" ngModel>
-                            <mat-placeholder style="color:blue">New Email</mat-placeholder>
+                            <mat-placeholder style="color:lightgray;">New Email</mat-placeholder>
                             <mat-error>Email is Mandatory</mat-error>
                         </mat-form-field>
                     </div>
                     <div>
                         <mat-form-field>
                             <input matInput type="text" required name="newRepeatEmail" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" ngModel>
-                            <mat-placeholder style="color:blue">New Repeat Email</mat-placeholder>
+                            <mat-placeholder style="color:lightgray; ">New Repeat Email</mat-placeholder>
                             <mat-error>New Repeat Email is Mandatory</mat-error>
                         </mat-form-field>
                     </div>
                     <button type="submit" class="button" [disabled]="emailForm.invalid">Update your email!</button>
                 </form>
-                <p>{{emailInfo}}</p>
+                <p id="emailInfo"></p>
             </div>
 
         </div>
@@ -68,9 +68,9 @@
                         <div>
                             <mat-form-field>
                                 <input matInput [type]="hide ? 'password' : 'text'" required name="oldPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
-                                <mat-placeholder style="color:blue">Old Password</mat-placeholder>
+                                <mat-placeholder style="color:lightgray; ">Old Password</mat-placeholder>
                                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                    <mat-icon style="color:blue">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    <mat-icon style="color:lightgray;">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 </button>
                                 <br>
                                 <br>
@@ -79,20 +79,20 @@
                         <div>
                             <mat-form-field>
                                 <p><input matInput [type]="hide ? 'password' : 'text'" required name="newPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel></p>
-                                <mat-placeholder style="color:blue">New Password</mat-placeholder>
+                                <mat-placeholder style="color:lightgray;">New Password</mat-placeholder>
                                 <mat-error>Wrong New Password </mat-error>
                                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                        <mat-icon style="color:blue">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                        <mat-icon style="color:lightgray; ">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 </button>
                             </mat-form-field>
                         </div>
                         <div>
                             <mat-form-field>
                                 <input matInput [type]="hide ? 'password' : 'text'" required name="newRepeatPassword" ngModel>
-                                <mat-placeholder style="color:blue">New Repeat Password</mat-placeholder>
+                                <mat-placeholder style="color:lightgray; ">New Repeat Password</mat-placeholder>
                                 <mat-error>Wrong New Re-enter Password</mat-error>
                                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                    <mat-icon style="color:blue">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    <mat-icon style="color:lightgray; ">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 </button>
                             </mat-form-field>
                         </div>
@@ -100,7 +100,7 @@
                     </form>
                     <p>
                         Do not you remember the password? </p> <button class="reset-button" (click)="resetPassword()">Reset password</button>
-                    <p>{{passInfo}}</p>
+                    <p id="passInfo"></p>
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
                                     <mat-option style="background-color:gray; color:white;" value="gray">Gray</mat-option>
                                     <mat-option style="background-color:black; color:white;" value="black">Black</mat-option>
                                 </mat-select>
-                                <mat-placeholder style="color:blue">{{background}}</mat-placeholder>
+                                <mat-placeholder style="color:lightgray;">{{background}}</mat-placeholder>
                             </mat-form-field>
                         </div>
                         <button class="button" [disabled]="!themaForm.value.thema" type="submit">Update color scheme!</button>
@@ -139,7 +139,7 @@
                     <hr>
                     <mat-form-field class="form">
                         <input matInput (keyup)="applyFilter($event.target.value)">
-                        <mat-placeholder style="color:blue">Filter your category</mat-placeholder>
+                        <mat-placeholder style="color:lightgray;">Filter your category</mat-placeholder>
                     </mat-form-field>
                     <p>Add category</p>
                     <button mat-stroked-button color="primary" class="addButton" (click)="addCategory()"><mat-icon>add_circle</mat-icon></button>

@@ -44,8 +44,6 @@ export class SettingsComponent implements OnInit {
   public dataCategory: MatTableDataSource<Category>;
   public verifyEmail: boolean;
   public hide: boolean = true;
-  public passInfo: string;
-  public emailInfo: string;
   private userId: string;
   private category: Category[];
   private checkPass: boolean = false;
@@ -85,8 +83,8 @@ export class SettingsComponent implements OnInit {
     else {
       if (this.matchingEmail(updateEmail.oldEmail, this.userInfo[0].email)) {
         if (this.matchingEmail(updateEmail.newEmail, updateEmail.oldEmail)) {
-          this.emailInfo = "The old email is the same as the new email";
-          this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email Failed" + this.emailInfo));
+          document.getElementById("emailInfo").innerHTML = "The old email is the same as the new email";
+          this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email Failed: The old email is the same as the new email"));
         }
         else {
           if (this.matchingEmail(updateEmail.newEmail, updateEmail.newRepeatEmail)) {
@@ -95,20 +93,23 @@ export class SettingsComponent implements OnInit {
                 this.db.updateEmail(new UserDate(this.userId, user.email, null, null));
                 this.sendRepeatVerificationEmail();
                 if (this.matchingEmail(updateEmail.newEmail, user.email)) {
-                  this.emailInfo = "email successfuly updated";
+                  document.getElementById("emailInfo").innerHTML = "email successfuly updated";
                   this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email success: " + updateEmail.newEmail));
                 }
                 else {
-                  this.emailInfo = "email dont updated";
-                  this.db.logSave(new Log(this.userId, "LogUpdateEmail", "update Email", "update Email failed: " + this.emailInfo));
+                  document.getElementById("emailInfo").innerHTML= "email dont updated";
+                  this.db.logSave(new Log(this.userId, "LogUpdateEmail", "update Email", "update Email failed: email dont updated"));
                 }
               });
             })
-          } else this.emailInfo = 'Email do not match.Try to again!';
+          } else {
+           document.getElementById("emailInfo").innerHTML= 'Email do not match.Try to again!';
+           this.db.logSave(new Log(this.userId, "LogUpdateEmail", "update Email", "update Email failed: Email do not match " ));
+          }
         }
       } else {
-        this.emailInfo = "Bad old email";
-        this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email failed: " + this.emailInfo));
+        document.getElementById("emailInfo").innerHTML= "Bad old email";
+        this.db.logSave(new Log(this.userId, "logUpdateEmail", "update Email", "update Email failed: Bad old email" ));
       }
     }
   }
@@ -122,22 +123,22 @@ export class SettingsComponent implements OnInit {
     else {
       this.auth.login(this.userInfo[0].email, updatePassword.oldPassword).then(() => {
         if (this.matchingPasswords(updatePassword.newPassword, updatePassword.oldPassword)) {
-          this.passInfo = "The old password is the same as the new password ";
-          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed" + this.passInfo));
+          document.getElementById("passInfo").innerHTML = "The old password is the same as the new password ";
+          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed: The old password is the same as the new password "));
         }
         else {
           if (this.matchingPasswords(updatePassword.newPassword, updatePassword.newRepeatPassword)) {
             this.checkPass = true;
             this.auth.updatePassowrd(updatePassword.newPassword);
             this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "success"));
-            if (this.checkPass) this.passInfo = "password successfuly changed";
-            else this.passInfo = "Operation failed";
+            if (this.checkPass)  document.getElementById("passInfo").innerHTML = "password successfuly changed";
+            else  document.getElementById("passInfo").innerHTML= "Operation failed";
           }
         }
       }).catch(err => {
         if (err) {
-          this.passInfo = "Bad old password";
-          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed:" + this.passInfo));
+          document.getElementById("passInfo").innerHTML = "Bad old password";
+          this.db.logSave(new Log(this.userId, "logUpdatePassword", "update password", "update password failed: Bad old password"));
         }
       })
     }
@@ -145,7 +146,7 @@ export class SettingsComponent implements OnInit {
   private matchingPasswords(repeatPassword: string, password: string): boolean {
     if (repeatPassword.valueOf() == password.valueOf()) return true;
     else {
-      this.passInfo = 'Passwords do not match.Try to again!';
+      document.getElementById("passInfo").innerHTML= 'Passwords do not match.Try to again!';
       return false;
     }
   }

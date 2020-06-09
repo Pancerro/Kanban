@@ -25,6 +25,11 @@
     background: white;
 }
 
+.kanban-content:hover {
+    background: black;
+    color: white;
+}
+
 @media only screen and (max-width: 750px) {
     .logo {
         width: 100%;
@@ -47,4 +52,14 @@
 .button:hover {
     background: red;
     color: white;
+}
+
+.button:disabled {
+    background-color: lightgrey;
+    cursor: not-allowed;
+}
+
+.info {
+    color: white;
+    opacity: 0.5;
 }

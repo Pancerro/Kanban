@@ -6,39 +6,43 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
-export class ResetPasswordComponent implements OnInit{
-  ngOnInit(){
+export class ResetPasswordComponent implements OnInit {
+  public hide: boolean = true;
+  private mode: string
+  private code: string;
+  public ngOnInit() {
     this.mode = this.activatedActivated.snapshot.queryParams['mode'];
     this.code = this.route.snapshot.queryParams['oobCode'];
   }
-  info:string;
-  hide:boolean = true;
-  emailVerify: boolean=false;
-  mode:string
-  code:string; 
-  constructor( public auth:AuthService,
+  constructor(public auth: AuthService,
     public router: Router,
     public route: ActivatedRoute,
-    public activatedActivated: ActivatedRoute) {}
-  emailVerificate():void{
+    public activatedActivated: ActivatedRoute) { }
+  public emailVerificate(): void {
     this.auth.changeEmailVerifity(this.code);
     this.router.navigate(['/welcome-page']);
   }
-  resetUserPassword(updatePassword):void{
-    if(this.matchingPasswords(updatePassword.value.reset.newPassword,updatePassword.value.reset.newRepeatPassword)){
-      this.auth.userResetPassword(this.code,updatePassword.value.reset.newPassword)
-      .then(() => this.router.navigate(['welcome-page']))
+  public resetUserPassword(updatePassword: { newPassword: string; newRepeatPassword: string; }): void {
+    if (this.matchingPasswords(updatePassword.newPassword, updatePassword.newRepeatPassword)) {
+      this.auth.userResetPassword(this.code, updatePassword.newPassword)
+        .then(() => this.router.navigate(['welcome-page']))
     }
   }
-  matchingPasswords(repeatPassword,password):boolean{
-    if(repeatPassword.valueOf()==password.valueOf()) return true;
+  private matchingPasswords(repeatPassword: string, password: string): boolean {
+    if (repeatPassword.valueOf() == password.valueOf()) return true;
     else {
-      this.info='Passwords do not match.Try to again!';
+      document.getElementById("info").innerHTML = 'Passwords do not match.Try to again!';
       return false;
     }
   }
-  verifyMailOrPasswordReset():boolean{
-    if(this.mode=="verifyEmail") return true;
+  public verifyMailOrPasswordReset(): boolean {
+    if (this.mode == "verifyEmail") return true;
     else return false;
+  }
+  public clear(): void {
+    document.getElementById("info").innerHTML = "";
+  }
+  public return(): void {
+    this.router.navigate(['welcome-page']);
   }
 }
