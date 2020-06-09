@@ -30,7 +30,7 @@ export class LogiComponent implements OnInit {
   }
   public ngOnInit(): void {
     this.titleService.setTitle("Logs");
-    localStorage.setItem("menu", "Logi");
+    localStorage.setItem("menu", "Logs");
     this.subsrciption.add(this.db.getLogs(this.userId).subscribe((log: Log[]) => {
       this.dataLogs = new MatTableDataSource(log);
     }));

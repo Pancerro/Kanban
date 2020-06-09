@@ -1,6 +1,5 @@
-<div class="mainContent" [style.background]="background" [style.color]="fontColor">
+<div class="main-content" [style.background]="background" [style.color]="fontColor">
     <app-menu></app-menu>
-    <h1>Welcome to logs!</h1>
     <mat-form-field class="backgroundInput">
         <input matInput (keyup)="applyFilter($event.target.value)">
         <mat-placeholder style="color:blue">Filter</mat-placeholder>

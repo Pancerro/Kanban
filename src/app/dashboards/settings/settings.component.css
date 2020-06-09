@@ -58,6 +58,10 @@
     color: white;
 }
 
+.settings:hover .reset-button {
+    background: rgb(60, 60, 60);
+}
+
 .settings-content {
     margin-left: 10px;
     float: left;
@@ -117,6 +121,15 @@ th {
 
 td {
     border: 1px solid blue;
+}
+
+.reset-button {
+    color: blue;
+    text-decoration: underline;
+}
+
+.reset-button:hover {
+    cursor: pointer;
 }
 
 .button {

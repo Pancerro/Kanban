@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/database/database.service';
 import { Router } from '@angular/router';
@@ -11,57 +11,39 @@ import { AllUser } from 'src/app/class/allUser/all-user';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent  implements OnInit{
-  ngOnInit(): void {
-   if(localStorage.getItem("menu")=="Logi") this.logClicked=true;
-   if(localStorage.getItem("menu")=="UserSettings") this.userSettingClicked=true;
-   if(localStorage.getItem("menu")=="KanbanTable") this.kanbanClicked=true;
+export class MenuComponent implements OnInit {
+  private userId: string;
+  public header: string = "";
+  public ngOnInit(): void {
+    this.header = localStorage.getItem("menu");
   }
-logClicked:boolean=false;
-kanbanClicked:boolean=false;
-userSettingClicked:boolean=false;
-sharingClicked:boolean=false;
-userId:string;
-word:string;
-constructor(
-  private auth:AuthService,
-  private db:DataService,
-  private router: Router,
-  private titleService: Title
-) {
-    this.userId=auth.getUser().uid;
+  constructor(
+    private auth: AuthService,
+    private db: DataService,
+    private router: Router,
+    private titleService: Title
+  ) {
+    this.userId = auth.getUser().uid;
   }
-  logout():void{
+
+  public logout(): void {
     this.titleService.setTitle("You are logout");
-    this.db.logSave(new Log(this.userId,"logOut","log out","log out"))
-    this.db.updateOnline(new AllUser(this.userId,this.replece(this.auth.getUser().email),false));
+    this.db.logSave(new Log(this.userId, "logOut", "log out", "log out"))
+    this.db.updateOnline(new AllUser(this.userId, this.db.replece(this.auth.getUser().email), false));
     this.auth.logout().then(() => this.router.navigate(['/welcome-page']));
   }
 
-  sharingOption(){
+  public sharingOption(): void {
     this.router.navigate(['/sharing-option']);
   }
-  logs():void{
+  public logs(): void {
     this.router.navigate(['/logi']);
   }
-  settings():void{
+  public settings(): void {
     this.router.navigate(['/settings']);
   }
-  dashboard():void{
+  public dashboard(): void {
     this.router.navigate(['/dashboard']);
   }
 
-  replece(replace:string):string{
-    this.word="";
-    for(let letter of replace)
-    {
-      letter=letter.replace(".","@1@");
-      letter=letter.replace("#","@2@");      
-      letter=letter.replace("$","@3@");
-      letter=letter.replace("[","@4@");
-      letter=letter.replace("]","@5@");
-      this.word=this.word+letter;
-    }
-    return this.word;
-  }
 }

@@ -59,7 +59,7 @@ export class SettingsComponent implements OnInit {
     this.verifyEmail = auth.getUser().emailVerified;
   }
   public ngOnInit(): void {
-    localStorage.setItem("menu", "UserSettings");
+    localStorage.setItem("menu", "User Settings");
     this.titleService.setTitle("User Settings");
     this.db.getDateUser(this.userId).subscribe((userDate: UserDate[]) => {
       this.userInfo = userDate;
@@ -112,6 +112,10 @@ export class SettingsComponent implements OnInit {
       }
     }
   }
+   private matchingEmail(repeatEmail: string, email: string): boolean {
+    if (repeatEmail.valueOf() == email.valueOf()) return true;
+    else return false;
+  }
   public updatePassword(updatePassword: { invalid: any; oldPassword: string; newPassword: string; newRepeatPassword: string; }): void {
     this.checkPass = false;
     if (updatePassword.invalid) window.alert("Passsword must contain at least 8 charactes,including UPPER/lowercase, and numbers");
@@ -145,10 +149,11 @@ export class SettingsComponent implements OnInit {
       return false;
     }
   }
-  private matchingEmail(repeatEmail: string, email: string): boolean {
-    if (repeatEmail.valueOf() == email.valueOf()) return true;
-    else return false;
+  public resetPassword():void{
+    this.auth.resetPassword(this.userInfo[0].email)
+    .catch(() => {window.alert("eh! error, please try to again")});
   }
+ 
   public updateThema(updateThema: { invalid: any; thema: string; }): void {
     if (updateThema.invalid) window.alert("Please try again");
     else {

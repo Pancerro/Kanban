@@ -1,6 +1,5 @@
 <div class="mainContent" *ngFor="let item of userInfo" [style.background]="background" [style.color]="fontColor">
     <app-menu></app-menu>
-    <h1>Welcome to settings!</h1>
     <div class="settings-container">
         <div class="settings-header">
             <div class="settings-content">
@@ -99,6 +98,8 @@
                         </div>
                         <button class="button" [disabled]="passwordForm.invalid" type="submit">Update your password!</button>
                     </form>
+                    <p>
+                        Do not you remember the password? </p> <button class="reset-button" (click)="resetPassword()">Reset password</button>
                     <p>{{passInfo}}</p>
                 </div>
             </div>

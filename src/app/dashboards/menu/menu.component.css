@@ -1,5 +1,31 @@
-.button {
+.menu-container {
+    width: 100%;
+    height: 60px;
+    text-align: left;
+    background: rgb(60, 60, 60);
+    color: white
+}
+
+.menu-button {
+    margin-left: 10px;
+    margin-top: 10px;
+    font-size: 40px;
     width: auto;
-    overflow: hidden;
-    border: 1px blue solid;
+}
+
+.menu-button:hover {
+    color: rgb(194, 167, 167);
+}
+
+.mat-menu-item {
+    color: blue !important;
+}
+
+button.mat-menu-item {
+    width: 260px;
+}
+
+button.mat-menu-item:hover {
+    background: rgb(60, 60, 60);
+    color: white !important;
 }

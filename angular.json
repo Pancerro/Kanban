@@ -18,7 +18,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -42,7 +42,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -124,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "kanban-app"
+  "defaultProject": "kanban-app",
+  "cli": {
+    "analytics": "5bebb370-f8cb-4986-b118-b0d32d50dc6a"
+  }
 }
