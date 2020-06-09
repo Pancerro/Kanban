@@ -1,14 +1,9 @@
-<div class="center">
-    <div class="center" [@itemTaskAnim]>
-        <img src="https://i.imgur.com/ylv2Hdd.png" width="50%" height="50%">
-    </div>
-    <div class="kanban" [@inOutAnimation]>
-    </div>
-    <br>
-    <div [@itemTaskAnim]>
-        <button mat-stroked-button color="primary" (click)="registerUser()">Register User</button>
-        <button mat-stroked-button color="primary" [disabled]="viewCaptcha()" (click)="loginUser()">Login User</button>
-        <button type="button" width="30px" class="buttonGoogle" mat-stroked-button color="primary" (click)="loginWithGoogle()">                  
+<div class="container">
+    <img class="logo" src="/assets/logo.png">
+    <div>
+        <button class="button" mat-stroked-button color="basic" (click)="registerUser()">Register User</button>
+        <button class="button" mat-stroked-button color="basic" [disabled]="viewCaptcha()" (click)="loginUser()">Login User</button>
+        <button class="button" mat-stroked-button color="basic" width="30px" (click)="loginWithGoogle()">                  
             <img width="20px" alt="Google Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
              Login with Google
     </button>
@@ -20,4 +15,21 @@
         </div>
     </div>
     <h1>{{info}}</h1>
+    <div class="kanban-container">
+        <div class="kanban-content">
+            <h1>What is kanban?</h1>
+            <p>Kanban is a visual system for managing work as it moves through a process. Kanban visualizes both the process (the workflow) and the actual work passing through that process. The goal of Kanban is to identify potential bottlenecks in your
+                process and fix them so work can flow through it cost-effectively at an optimal speed or throughput.</p>
+        </div>
+        <div class="kanban-content">
+            <h1>What is kanban?</h1>
+            <p>Kanban is a visual system for managing work as it moves through a process. Kanban visualizes both the process (the workflow) and the actual work passing through that process. The goal of Kanban is to identify potential bottlenecks in your
+                process and fix them so work can flow through it cost-effectively at an optimal speed or throughput.</p>
+        </div>
+        <div class="kanban-content">
+            <h1>What is kanban?</h1>
+            <p>Kanban is a visual system for managing work as it moves through a process. Kanban visualizes both the process (the workflow) and the actual work passing through that process. The goal of Kanban is to identify potential bottlenecks in your
+                process and fix them so work can flow through it cost-effectively at an optimal speed or throughput.</p>
+        </div>
+    </div>
 </div>

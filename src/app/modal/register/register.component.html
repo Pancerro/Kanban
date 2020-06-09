@@ -41,6 +41,6 @@
     </div>
     <div class="result" mat-dialog-actions>
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
-        <button mat-button [disabled]="!captcha || registerForm.invalid" [mat-dialog-close]="registerForm">Register!</button>
+        <button mat-button [disabled]="!captcha || registerForm.invalid" [mat-dialog-close]="registerForm.value.register">Register!</button>
     </div>
 </div>
