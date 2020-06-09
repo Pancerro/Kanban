@@ -1,16 +1,11 @@
-//Install express server
-const express = require('express');
-const path = require('path');
+  const express = require('express');
 
-const app = express();
+  const app = express();
 
-// Serve only the static files form the angularapp directory
-app.use(express.static(__dirname + '/angularapp'));
+  app.use(express.static('./dist/kanban-app'));
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname + '/dist/myWebsite/index.html'));
+  app.get('/*', (req, res) =>
+      res.sendFile('index.html', { root: 'dist/kanban-app/' }),
+  );
 
-});
-
-// Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 8080);
+  app.listen(process.env.PORT || 8080);
