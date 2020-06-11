@@ -5,11 +5,13 @@
             <form #taskForm="ngForm">
                 <div ngModelGroup="task">
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Title" required name="title" ngModel></p>
+                        <p><input matInput type="text" required name="title" ngModel></p>
+                        <mat-placeholder>Title Task</mat-placeholder>
                         <mat-error>Title is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <textarea matInput placeholder="Description" name="description" ngModel cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"></textarea>
+                        <textarea matInput name="description" ngModel cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"></textarea>
+                        <mat-placeholder>Description</mat-placeholder>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Priority </mat-label>
@@ -28,9 +30,9 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>
-                        <input matInput placeholder="End date" name="endDate" ngModel [matDatepickerFilter]="myFilter" [matDatepicker]="picker1">
+                        <input matInput name="endDate" ngModel [matDatepickerFilter]="myFilter" [matDatepicker]="picker1">
+                        <mat-placeholder>End date</mat-placeholder>
                         <mat-datepicker-toggle matSuffix [for]="picker1">
-                            <h1>ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</h1>
                         </mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
@@ -38,7 +40,7 @@
             </form>
         </div>
     </div>
-    <div mat-dialog-actions>
+    <div class="button" mat-dialog-actions>
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
         <button mat-button [mat-dialog-close]="taskForm" [disabled]="taskForm.invalid" cdkFocusInitial>Add Task</button>
     </div>

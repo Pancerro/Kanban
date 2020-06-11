@@ -1,15 +1,14 @@
-import { Component,  Inject } from '@angular/core';
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent  {
-  hide:boolean = true;
-  captcha:boolean=false;
-  red="red";
-  constructor() {}
-  resolved(captchaResponse: boolean):void {
-    this.captcha=captchaResponse;
-  } 
+export class RegisterComponent {
+  public hide: boolean = true;
+  public captcha: boolean = false;
+  constructor() { }
+  public resolved(captchaResponse: boolean): void {
+    this.captcha = captchaResponse;
+  }
 }

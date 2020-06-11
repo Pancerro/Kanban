@@ -2,7 +2,19 @@
     text-align: center;
 }
 
-.result {
-    margin-right: 20%;
-    margin-left: 20%;
+mat-placeholder {
+    color: white;
+}
+
+mat-label {
+    color: white;
+}
+
+::ng-deep.mat-form-field-underline {
+    background-color: lightgray !important;
+}
+
+.button {
+    display: inline-flex;
+    justify-items: center;
 }

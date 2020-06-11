@@ -1,0 +1,8 @@
+.center {
+    text-align: center;
+}
+
+.button {
+    display: inline-flex;
+    justify-items: center;
+}

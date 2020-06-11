@@ -5,18 +5,20 @@
             <form #categoryForm="ngForm">
                 <div ngModelGroup="category">
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Category" [(ngModel)]="data.category" required name="category" ngModel></p>
+                        <p><input matInput type="text" [(ngModel)]="data.category" required name="category" ngModel></p>
+                        <mat-placeholder>Category:</mat-placeholder>
                         <mat-error>Category is Mandatory</mat-error>
                     </mat-form-field>
                     <mat-form-field>
                         <input matInput name="color" [(ngModel)]="data.color" value="{{data.color}}" [style.background]="data.color" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpOKButton]="true" [cpSaveClickOutside]="false" [cpOKButtonClass]="'btn btn-primary btn-xs'"
                             [(colorPicker)]="data.color">
+                        <mat-placeholder>Color:</mat-placeholder>
                     </mat-form-field>
                 </div>
             </form>
         </div>
     </div>
-    <div mat-dialog-actions>
+    <div class="button" mat-dialog-actions>
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
         <button mat-button [mat-dialog-close]="categoryForm.value.category" cdkFocusInitial>Edit Category</button>
     </div>

@@ -186,7 +186,9 @@ export class DashboardsComponent implements OnInit {
   removeFriend(item) {
     const dialogRef = this.dialog.open(DeleteOptionComponent, {
       width: '250px',
-      data: { name: this.inreplece(item.email) }
+      height:'150px',
+      data: { name: this.inreplece(item.email) },
+      panelClass: 'no-padding-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == true) {
@@ -265,7 +267,9 @@ export class DashboardsComponent implements OnInit {
   createNewKanbanTable() {
     const dialogRef = this.dialog.open(CreateNewKanbanComponent, {
       width: '250px',
-      data: { edit: false }
+      height:'250px',
+      data: { edit: false },
+      panelClass: 'no-padding-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
@@ -313,7 +317,9 @@ export class DashboardsComponent implements OnInit {
   removeProject(projectName: string) {
     const dialogRef = this.dialog.open(DeleteOptionComponent, {
       width: '250px',
-      data: { name: projectName }
+      height:'150px',
+      data: { name: projectName },
+      panelClass: 'no-padding-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == true) {
@@ -332,7 +338,9 @@ export class DashboardsComponent implements OnInit {
     this.ngOnInit();
     const dialogRef = this.dialog.open(CreateNewKanbanComponent, {
       width: '250px',
-      data: { projectName: projectName, edit: true }
+      height:'250px',
+      data: { projectName: projectName, edit: true },
+      panelClass: 'no-padding-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
@@ -432,7 +440,9 @@ export class DashboardsComponent implements OnInit {
   deleteShareProject(projectName) {
     const dialogRef = this.dialog.open(DeleteOptionComponent, {
       width: '250px',
-      data: { name: projectName }
+      height:'150px',
+      data: { name: projectName },
+      panelClass: 'no-padding-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == true) {
@@ -763,6 +773,8 @@ export class DashboardsComponent implements OnInit {
     this.db.kanban = this.projectName;
     const dialogRef = this.dialog.open(AddTaskComponent, {
       width: '250px',
+      height: '500px',
+      panelClass: 'no-padding-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
@@ -792,7 +804,9 @@ export class DashboardsComponent implements OnInit {
     this.db.kanban = this.projectName
     const dialogRef = this.dialog.open(EditTaskComponent, {
       width: '350px',
-      data: { title: title, description: description, priority: priority, color: color, endDate: endDate, checkView: this.checkIfView }
+      height: '550px',
+      data: { title: title, description: description, priority: priority, color: color, endDate: endDate, checkView: this.checkIfView() },
+      panelClass: 'no-padding-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
@@ -854,7 +868,9 @@ export class DashboardsComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(EditTableNameComponent, {
       width: '250px',
-      data: { title: this.tableEditTitle, addTable: addTable }
+      height:'230px',
+      data: { title: this.tableEditTitle, addTable: addTable },
+      panelClass: 'no-padding-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {

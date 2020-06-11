@@ -1,45 +1,56 @@
 <div class="center">
-    <h1 mat-dialog-title [attr.color]="red">Register</h1>
+    <h1 mat-dialog-title>Register</h1>
     <div mat-dialog-content>
         <div class="Register">
             <form #registerForm="ngForm">
                 <div ngModelGroup="register">
-                    <mat-form-field>
-                        <p><input matInput type="text" placeholder="Email" name="email" required ngModel></p>
-                        <mat-error>Email is Mandatory</mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" #password="ngModel" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel></p>
-                        <mat-error>Wrong Password - Passsword must contain at least 8 charactes, including UPPER/lowercase and numbers :)</mat-error>
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <div>
+                        <mat-form-field>
+                            <input matInput type="text" name="email" required ngModel>
+                            <mat-placeholder>Email</mat-placeholder>
+                            <mat-error>Email is Mandatory</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <input matInput [type]="hide ? 'password' : 'text'" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel>
+                            <mat-placeholder>Password</mat-placeholder>
+                            <mat-error>Wrong Password - Passsword must contain at least 8 charactes, including UPPER/lowercase and numbers :)</mat-error>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                    </mat-form-field>
+                        </mat-form-field>
+                    </div>
                     <br>
                     <br>
-                    <mat-form-field>
-                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Re-enter Password" required name="repeatPassword" ngModel></p>
-                        <mat-error>Repeat Password is Mandatory</mat-error>
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <div>
+                        <mat-form-field>
+                            <input matInput [type]="hide ? 'password' : 'text'" required name="repeatPassword" ngModel>
+                            <mat-placeholder>Re-enter Password</mat-placeholder>
+                            <mat-error>Repeat Password is Mandatory</mat-error>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Defualt theme: </mat-label>
-                        <mat-select name="thema" ngModel>
-                            <mat-option style="background-color:gray; color:white;" value="gray">Gray</mat-option>
-                            <mat-option style="background-color:white;" value="white">White</mat-option>
-                            <mat-option style="background-color:black; color:white;" value="black">Black</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <mat-label>Defualt theme: </mat-label>
+                            <mat-select name="thema" ngModel>
+                                <mat-option style="background-color:gray; color:white;" value="gray">Gray</mat-option>
+                                <mat-option style="background-color:white;" value="white">White</mat-option>
+                                <mat-option style="background-color:black; color:white;" value="black">Black</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                 </div>
             </form>
         </div>
-        <p>
-            <re-captcha (resolved)="resolved($event)" siteKey="6LfOQ8QUAAAAAE310YWvEdGYeXWAIlq_frghVmRe" required></re-captcha>
-        </p>
+
+        <re-captcha (resolved)="resolved($event)" siteKey="6LfOQ8QUAAAAAE310YWvEdGYeXWAIlq_frghVmRe" required></re-captcha>
+
     </div>
-    <div class="result" mat-dialog-actions>
+    <div class="button" mat-dialog-actions>
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
         <button mat-button [disabled]="!captcha || registerForm.invalid" [mat-dialog-close]="registerForm.value.register">Register!</button>
     </div>

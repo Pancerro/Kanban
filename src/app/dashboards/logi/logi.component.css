@@ -9,10 +9,6 @@
     color: rgb(60, 60, 60);
 }
 
-::ng-deep.mat-form-field-underline {
-    background-color: lightgray !important;
-}
-
 th.mat-header-cell {
     text-align: center;
 }
@@ -72,4 +68,8 @@ td:hover {
 
 .titleDesc {
     width: 34%;
+}
+
+::ng-deep.mat-form-field-underline {
+    background-color: lightgray !important;
 }

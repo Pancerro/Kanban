@@ -9,6 +9,7 @@ import { Log } from 'src/app/class/log/log';
 import { Category } from 'src/app/class/category/category';
 import { UserDate } from 'src/app/class/userDate/user-date';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 export class SeeSettings {
   private _text: string;
   private _see: boolean;
@@ -36,6 +37,7 @@ export class SeeSettings {
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+  private subscription:Subscription = new Subscription();
   public see: SeeSettings[] = [new SeeSettings("Edit", false), new SeeSettings("Edit", false), new SeeSettings("Edit", false), new SeeSettings("Edit", false), new SeeSettings("Edit", false)];
   public userInfo: UserDate[] = [];
   public fontColor: string;
@@ -59,15 +61,15 @@ export class SettingsComponent implements OnInit {
   public ngOnInit(): void {
     localStorage.setItem("menu", "User Settings");
     this.titleService.setTitle("User Settings");
-    this.db.getDateUser(this.userId).subscribe((userDate: UserDate[]) => {
+    this.subscription.add( this.db.getDateUser(this.userId).subscribe((userDate: UserDate[]) => {
       this.userInfo = userDate;
       this.fontColor = this.db.changeFont(userDate[0].thema);
       this.background = this.db.changeBackground(userDate[0].thema);
-    });
-    this.db.getCategory(this.userId).subscribe((category: Category[]) => {
+    }));
+    this.subscription.add(this.db.getCategory(this.userId).subscribe((category: Category[]) => {
       this.dataCategory = new MatTableDataSource(category);
       this.category = category;
-    });
+    }));
   }
   public seeSettings(option: number):void {
       if (this.see[option].see) this.see[option] = new SeeSettings("Edit", false);
@@ -173,7 +175,10 @@ export class SettingsComponent implements OnInit {
   public editCategory(category: string, color: string): void {
     const dialogRef = this.dialog.open(EditCategoryComponent, {
       width: '250px',
-      data: { category: category, color: color }
+      height: '300px',
+      data: { category: category, color: color },
+      panelClass: 'no-padding-dialog'
+
     });
     dialogRef.afterClosed().subscribe(editCategory => {
       if (editCategory != undefined) {
@@ -192,7 +197,9 @@ export class SettingsComponent implements OnInit {
   }
   public addCategory(): void {
     const dialogRef = this.dialog.open(AddCategoryComponent, {
-      width: '250px'
+      width: '250px',
+      height:'300px',
+      panelClass: 'no-padding-dialog'
     });
     dialogRef.afterClosed().subscribe(newCategory => {
       if (newCategory != undefined) {
@@ -227,5 +234,10 @@ export class SettingsComponent implements OnInit {
       .then(() => this.db.remove(this.db.replece(this.userInfo[0].email)))
       .then(() => this.db.deleteUser(this.userId))
       .then(() => this.auth.deleteUser());
+  }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.subscription.unsubscribe();
   }
 }

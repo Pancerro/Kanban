@@ -1,0 +1,16 @@
+.center {
+    text-align: center;
+}
+
+.button {
+    display: inline-flex;
+    justify-items: center;
+}
+
+mat-placeholder {
+    color: white;
+}
+
+::ng-deep.mat-form-field-underline {
+    background-color: lightgray !important;
+}

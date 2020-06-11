@@ -1,3 +1,26 @@
+.center {
+    text-align: center;
+}
+
 .editButton {
     float: right;
+    color: white;
+    border: none;
+}
+
+.button {
+    display: inline-flex;
+    justify-items: center;
+}
+
+mat-placeholder {
+    color: white;
+}
+
+mat-label {
+    color: white;
+}
+
+::ng-deep.mat-form-field-underline {
+    background-color: lightgray !important;
 }

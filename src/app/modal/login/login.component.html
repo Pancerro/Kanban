@@ -4,24 +4,30 @@
         <div class="Login">
             <form #loginForm="ngForm">
                 <div ngModelGroup="login">
-                    <mat-form-field>
-                        <p><input matInput type="text" placeholder="Email" required name="email" ngModel></p>
-                        <mat-error>Email is Mandatory</mat-error>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <p><input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" required name="password" ngModel></p>
-                        <mat-error>Password is Mandatory</mat-error>
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <div>
+                        <mat-form-field>
+                            <p><input matInput type="text" required name="email" ngModel></p>
+                            <mat-placeholder>Email</mat-placeholder>
+                            <mat-error>Email is Mandatory</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field>
+                            <input matInput [type]="hide ? 'password' : 'text'" required name="password" ngModel>
+                            <mat-placeholder>Password</mat-placeholder>
+                            <mat-error>Password is Mandatory</mat-error>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                    </mat-form-field>
+                        </mat-form-field>
+                    </div>
                 </div>
             </form>
-            <p>If you want to reset the password, enter your email and click the password reset button</p>
-            <button mat-stroked-button color="primary" class="buttonGoogle" (click)="resetPassword(loginForm.value.login.email)">Reset password</button>
+            <p>If you want to reset the password, enter<br> your email and click the password reset button</p>
+            <button class="reset-button" (click)="resetPassword(loginForm.value.login.email)">Reset password</button>
         </div>
     </div>
-    <div class="result" mat-dialog-actions>
+    <div class="button" mat-dialog-actions>
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
         <button mat-button [mat-dialog-close]="loginForm.value.login" cdkFocusInitial>Login</button>
     </div>

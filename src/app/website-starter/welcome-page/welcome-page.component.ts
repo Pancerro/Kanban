@@ -5,7 +5,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoginComponent } from 'src/app/modal/login/login.component';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/database/database.service';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { Log } from 'src/app/class/log/log';
 import { MyFriend } from 'src/app/class/myFriend/my-friend';
 import { AllUser } from 'src/app/class/allUser/all-user';
@@ -32,7 +31,11 @@ export class WelcomePageComponent {
   public registerUser(): void { 
     this.clear();
     const dialogRef = this.dialog.open(RegisterComponent, {
-      width: '350px',
+      width: '300px',
+      height:'500px',  
+      backdropClass: 'backdropBackground',
+      panelClass: 'no-padding-dialog'
+      
     });
     dialogRef.afterClosed().subscribe(register => {
      
@@ -56,6 +59,9 @@ export class WelcomePageComponent {
     this.clear();
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '300px',
+      height:'400px', 
+      backdropClass: 'backdropBackground',
+      panelClass: 'no-padding-dialog'
     });
     dialogRef.afterClosed().subscribe(login => {
       

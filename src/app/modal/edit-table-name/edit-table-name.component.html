@@ -6,14 +6,15 @@
             <form #updateTitleForm="ngForm">
                 <div ngModelGroup="titleTable">
                     <mat-form-field>
-                        <p><input matInput type="text" placeholder="Title" [(ngModel)]="data.title" required name="title" ngModel></p>
-                        <mat-error>Title is Mandatory</mat-error>
+                        <p><input matInput type="text" [(ngModel)]="data.title" required name="title" ngModel></p>
+                        <mat-placeholder>Table Title</mat-placeholder>
+                        <mat-error>Title table is Mandatory</mat-error>
                     </mat-form-field>
                 </div>
             </form>
         </div>
     </div>
-    <div mat-dialog-actions>
+    <div mat-dialog-actions class="button">
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
         <button mat-button [mat-dialog-close]="updateTitleForm" [disabled]="updateTitleForm.invalid" *ngIf="!data.addTable" cdkFocusInitial>Update Title</button>
         <button mat-button [mat-dialog-close]="updateTitleForm" [disabled]="updateTitleForm.invalid" *ngIf="data.addTable" cdkFocusInitial>Add table</button>

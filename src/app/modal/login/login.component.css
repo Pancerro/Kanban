@@ -1,13 +1,27 @@
-.buttonGoogle {
-    text-align: center;
-    width: 160px;
-}
-
 .center {
     text-align: center;
 }
 
-.result {
-    margin-right: 20%;
-    margin-left: 20%;
+mat-placeholder {
+    color: white;
+}
+
+::ng-deep.mat-form-field-underline {
+    background-color: lightgray !important;
+}
+
+.button {
+    display: inline-flex;
+    justify-items: center;
+}
+
+.reset-button {
+    border: 1px solid black;
+    height: 30px;
+}
+
+.reset-button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
 }

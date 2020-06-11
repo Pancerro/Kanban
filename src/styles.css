@@ -9,3 +9,18 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.backdropBackground {
+    background-color: rgb(60, 60, 60);
+}
+
+.no-padding-dialog .mat-dialog-container {
+    background-color: rgb(60, 60, 60);
+    color: white;
+    padding: 0;
+    overflow: hidden;
+}
+
+mat-form-field {
+    width: calc(100% - 1.5rem);
+}

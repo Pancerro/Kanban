@@ -7,7 +7,7 @@ import { DashboardsComponent } from 'src/app/dashboards/dashboards/dashboards.co
   templateUrl: './delete-option.component.html',
   styleUrls: ['./delete-option.component.css']
 })
-export class DeleteOptionComponent implements OnInit {
+export class DeleteOptionComponent  {
 
   constructor(
     public dialogRef: MatDialogRef<DashboardsComponent>,
@@ -15,9 +15,6 @@ export class DeleteOptionComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
-  }
-
-  ngOnInit() {
   }
 
 }

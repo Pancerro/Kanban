@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 
@@ -9,12 +8,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  hide:boolean = true;
+  public hide: boolean = true;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data,
-    private auth:AuthService) {} 
-  resetPassword(email:string):void{
+    private auth: AuthService) { }
+  public resetPassword(email: string): void {
     this.auth.resetPassword(email)
-    .catch(() => {window.alert("eh! error, please try to again")})
+      .catch(() => { window.alert("eh! error, please try to again") })
   }
 }
