@@ -2,10 +2,10 @@ export class AllChat {
     private _myId: string;
     private _email: string;
     private _projectName: string;
-    private _data: string;
+    private _data: Object;
     private _message: string;
 
-    constructor(myId: string, email: string, projectName: string, data: string, message: string) {
+    constructor(myId: string, email: string, projectName: string, data: Object, message: string) {
         this.myId = myId;
         this.email = email;
         this.projectName = projectName;
@@ -33,10 +33,10 @@ export class AllChat {
         this._projectName = value;
     }
 
-    public get data(): string {
+    public get data(): Object {
         return this._data;
     }
-    public set data(value: string) {
+    public set data(value: Object) {
         this._data = value;
     }
 

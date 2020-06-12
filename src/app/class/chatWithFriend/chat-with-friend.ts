@@ -3,19 +3,21 @@ export class ChatWithFriend {
     private _friendsId: string;
     private _myEmail: string;
     private _friendsEmail: string;
-    private _data: string;
+    private _data: Object;
     private _message: string;
-    private _userName: string;
+    private _email: string;
 
 
-    constructor(myId: string, friendsId: string, myEmail: string, friendsEmail: string, data: string, message: string, userName: string) {
+
+    constructor(myId: string, friendsId: string, myEmail: string, friendsEmail: string, data: Object, message: string, email: string) {
         this.myId = myId;
         this.friendsId = friendsId;
         this.myEmail = myEmail;
         this.friendsEmail = friendsEmail;
         this.data = data;
         this.message = message;
-        this.userName = userName;
+        this.email=email;
+
     }
     public get myId(): string {
         return this._myId;
@@ -45,10 +47,10 @@ export class ChatWithFriend {
         this._friendsEmail = value;
     }
 
-    public get data(): string {
+    public get data(): Object {
         return this._data;
     }
-    public set data(value: string) {
+    public set data(value: Object) {
         this._data = value;
     }
 
@@ -58,11 +60,10 @@ export class ChatWithFriend {
     public set message(value: string) {
         this._message = value;
     }
-
-    public get userName(): string {
-        return this._userName;
+    public get email(): string {
+        return this._email;
     }
-    public set userName(value: string) {
-        this._userName = value;
+    public set email(value: string) {
+        this._email = value;
     }
 }

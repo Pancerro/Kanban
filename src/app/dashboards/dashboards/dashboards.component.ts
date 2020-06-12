@@ -21,10 +21,6 @@ import { StopShareUser } from 'src/app/class/stopShareUser/stop-share-user';
 import { ShareFor } from 'src/app/class/shareFor/share-for';
 import { ShareFriend } from 'src/app/class/shareFriend/share-friend';
 import { Project } from 'src/app/class/project/project';
-import { Invities } from 'src/app/class/invities/invities';
-import { MyFriend } from 'src/app/class/myFriend/my-friend';
-import { ChatWithFriend } from 'src/app/class/chatWithFriend/chat-with-friend';
-import { AllUser } from 'src/app/class/allUser/all-user';
 
 @Component({
   selector: 'app-dashboards',
@@ -73,21 +69,8 @@ export class DashboardsComponent implements OnInit {
   projectName: string
   allUser = [];
   myFriend = [];
-  myInvities = [];
-  audioNewMessage = new Audio();
   deleteAudio = new Audio();
   scroll: ScrollToBottomDirective;
-  checkLength(email: string) {
-    if (email.length > 20) {
-      return email.substr(0, email.length / 2) + "\n" + email.substr(email.length / 2, email.length);
-    }
-    return email
-  }
-  checkByNewMessage(email) {
-    for (let item of this.newMess) {
-      if (item.email == email) return "(+1)";
-    }
-  }
   shareOption: boolean = false;
   textShareOption: string = "Show";
   shareOptionB() {
@@ -95,12 +78,6 @@ export class DashboardsComponent implements OnInit {
     if (!this.shareOption) this.textShareOption = "Show"
     else this.textShareOption = "Hide"
   }
-  online: boolean = false;
-  textOnline: string = "Show";
-  offline: boolean = false;
-  textOffline: string = "Show";
-  invities: boolean = false;
-  textInvities: string = "Show";
   textShare: string = "Show";
   textShared: string = "Show";
   textChat: string = "Hide";
@@ -122,21 +99,6 @@ export class DashboardsComponent implements OnInit {
     this.sharedButton = !this.sharedButton;
     if (!this.sharedButton) this.textShared = "Show"
     else this.textShared = "Hide"
-  }
-  onlineB() {
-    this.online = !this.online;
-    if (!this.online) this.textOnline = "Show"
-    else this.textOnline = "Hide"
-  }
-  offlineB() {
-    this.offline = !this.offline;
-    if (!this.offline) this.textOffline = "Show"
-    else this.textOffline = "Hide"
-  }
-  invitiesB() {
-    this.invities = !this.invities;
-    if (!this.invities) this.textInvities = "Show"
-    else this.textInvities = "Hide"
   }
   checkRole() {
     for (let item of this.shareFriends) {
@@ -160,58 +122,9 @@ export class DashboardsComponent implements OnInit {
     if (user == "") return ""
     else return this.inreplece(user);
   }
-  dontClose($event) {
-    $event.stopPropagation();
-  }
-  sendMessageForFriend(message: string, formReset, id: string, email: string) {
-    this.db.writeMessageToFriends(new ChatWithFriend(this.userId, id, this.replece(this.userInfo[0].email), email, this.getDate(), message, this.userInfo[0].email))
-    formReset.resetForm();
-  }
-  myMessageWitchFriend = [];
-  getMyFriendMessage(email: string) {
-    this.db.getMessageWitchFriend(this.userId, email).subscribe(res => this.myMessageWitchFriend = res)
-    this.db.deleteNewMesage(this.userId, email);
-  }
-  changeStatus(email) {
-    this.db.updateOnline(new AllUser(null, email, !this.checkStatus(email)));
-  }
-  acceptInv(item) {
-    this.db.acceptInvities(new Invities(this.userId, item.friendsEmail, item.friendsId, null), this.replece(this.userInfo[0].email))
-    this.db.logSave(new Log(this.userId, "inv", "accept", "accept inv for " + item.friendsEmail));
-  }
-  dontAcceptInv(item) {
-    this.db.dontAcceptInvities(new Invities(this.userId, item.friendsEmail, item.friendsId, null), this.replece(this.userInfo[0].email))
-    this.db.logSave(new Log(this.userId, "inv", "dont-accept", "dont-accept inv for " + item.friendsEmail));
-  }
-  removeFriend(item) {
-    const dialogRef = this.dialog.open(DeleteOptionComponent, {
-      width: '250px',
-      height:'150px',
-      data: { name: this.inreplece(item.email) },
-      panelClass: 'no-padding-dialog'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == true) {
-        this.db.deleteFriends(new AllUser(this.userId, item.email, null));
-        this.db.deleteFriends(new AllUser(item.userId, this.replece(this.userInfo[0].email), null));
-        this.db.deleteAllMessage(new Invities(this.userId, item.email, item.userId, null), this.replece(this.userInfo[0].email))
-        this.db.logSave(new Log(this.userId, "delete friend", "delete", "delete" + item.Email));
-      }
-    });
-  }
-  addFriend(result, addForm) {
-    if (this.checkUser(this.replece(result))) {
-      if (!this.checkFriend(this.replece(result))) {
-        if (result != this.userInfo[0].email) {
-          this.db.writeMyFriends(new MyFriend(this.userId, this.replece(result), this.getFriendsId(this.replece(result)), false));
-          this.db.sendInvities(new Invities(this.getFriendsId(this.replece(result)), this.replece(this.userInfo[0].email), this.userId, false));
-          addForm.resetForm();
-          this.db.logSave(new Log(this.userId, "inv", "send", "send inv for " + result));
-        } else window.alert("This is your email")
-      } else window.alert("This user is already your friend")
-    }
-    else window.alert("This email adress is incorrect, or is not in database")
-  }
+
+
+
   checkAccept(email) {
     for (let item of this.myFriend) {
       if (item.friendsEmail == email) {
@@ -221,42 +134,9 @@ export class DashboardsComponent implements OnInit {
     }
     return false;
   }
-  checkUser(email) {
-    for (let item of this.allUser) {
-      if (item.email == email) {
-        return true;
-      }
-    }
-    return false;
-  }
 
-  checkStatus(email) {
-    for (let item of this.allUser) {
 
-      if (item.email == email) {
-        if (item.online) return true;
-        else return false;
-      }
-    }
-    return false;
-  }
-  getFriendsId(email) {
-    for (let item of this.allUser) {
-      if (item.email == email) {
-        return item.userId;
-      }
-    }
-    return null;
-  }
-  checkFriend(email) {
-    for (let item of this.myFriend) {
-      if (item.friendsEmail == email) {
-        if (item.friendsEmail == this.replece(this.userInfo[0].email)) return false
-        return true;
-      }
-    }
-    return false;
-  }
+
   checkIfProjectNameIsNotFree(projectName) {
     for (let item of this.tableNameProject) {
       if (item.projectName == projectName) {
@@ -602,8 +482,6 @@ export class DashboardsComponent implements OnInit {
       this.tableTitle = res;
     });
     if (localStorage.getItem("share")) this.settingShare = true;
-    this.audioNewMessage.src = "assets/2.mp3";
-    this.audioNewMessage.load();
     this.deleteAudio.src = "assets/1.mp3";
     this.deleteAudio.load();
     localStorage.setItem("menu", "KanbanTable");
@@ -660,41 +538,9 @@ export class DashboardsComponent implements OnInit {
       this.myFriend = res;
     })
     this.projectName = this.db.kanban;
-    this.db.getInvities(this.userId).subscribe(res => {
-      this.myInvities = res
-      if (res.length == 0) this.titleService.setTitle(this.inreplece(this.projectName));
-      else this.titleService.setTitle(this.inreplece(this.projectName) + " (" + res.length + ") invitations");
-      if (this.not < res.length) {
-        this.audioNewMessage.play();
-        this.not = res.length - 1;
-      }
-    })
-    this.db.getNewMassage(this.userId).subscribe(res => {
-      this.newMess = res
-      if (res.length > 0) {
-        this.titleService.setTitle("(" + res.length + ") " + this.checkEmail(res[res.length - 1]) + " sent you a message")
-        if (res.length >= this.notMess) {
-          this.audioNewMessage.play()
-          this.notMess = res.length;
-        }
-      } else this.titleService.setTitle(this.inreplece(this.projectName));
-    })
+
   }
-  newNot() {
-    if (this.not > 0 || this.notMess > 0) {
-      return "(+1)";
-    }
-  }
-  newMess = [];
-  not: number = 0;
-  notMess: number = 0;
-  checkEmail(emailItem) {
-    for (let item of this.myFriend) {
-      if (item.friendsEmail == this.replece(emailItem.email)) {
-        return emailItem.email
-      }
-    }
-  }
+ 
 
   constructor(
     private auth: AuthService,

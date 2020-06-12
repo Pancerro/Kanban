@@ -1,12 +1,13 @@
 export class NewMessage {
     private _friendsId: string;
     private _myEmail: string;
-    private _userName: string;
+    private _email: string;
+  
 
-    constructor(friendsId: string, myEmail: string, userName: string) {
+    constructor(friendsId: string, myEmail: string, email: string) {
         this.friendsId = friendsId;
         this.myEmail = myEmail;
-        this.userName = userName;
+        this.email = email;
     }
     public get friendsId(): string {
         return this._friendsId;
@@ -22,11 +23,11 @@ export class NewMessage {
         this._myEmail = value;
     }
 
-    public get userName(): string {
-        return this._userName;
+     public get email(): string {
+        return this._email;
     }
-    public set userName(value: string) {
-        this._userName = value;
+    public set email(value: string) {
+        this._email = value;
     }
 
 }

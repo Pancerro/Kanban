@@ -15,7 +15,7 @@ export class AllChatService implements AllChat {
   public writeMessage(chat: ac): void {
     this.random = Math.random().toString();
     this.random = this.random.replace("0.", "chat");
-    chat.data=firebase.database.ServerValue.TIMESTAMP.toString();
+    chat.data=firebase.database.ServerValue.TIMESTAMP;
     firebase.database().ref('users/' + chat.myId + '/chat/' + chat.projectName + '/' + this.random).set({
       projectName: chat.projectName,
       email: chat.email,

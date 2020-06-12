@@ -267,6 +267,17 @@ export class DataService {
     }
     return this.word;
   }
+  inreplece(replace: string): string {
+    this.word = replace
+    for (let letter of replace) {
+      this.word = this.word.replace("@1@", ".");
+      this.word = this.word.replace("@2@", "#");
+      this.word = this.word.replace("@3@", "$");
+      this.word = this.word.replace("@4@", "]");
+      this.word = this.word.replace("@5@", "[");
+    }
+    return this.word;
+  }
   public changeFont(thema: string): string {
     if (thema == "gray") {
       return "white";

@@ -10,27 +10,7 @@ import { Category } from 'src/app/class/category/category';
 import { UserDate } from 'src/app/class/userDate/user-date';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
-export class SeeSettings {
-  private _text: string;
-  private _see: boolean;
-  constructor(text: string, see: boolean) {
-    this.text = text;
-    this.see = see;
-  }
-  public get text(): string {
-    return this._text;
-  }
-  public set text(value: string) {
-    this._text = value;
-  }
-
-  public get see(): boolean {
-    return this._see;
-  }
-  public set see(value: boolean) {
-    this._see = value;
-  }
-}
+import { Show } from 'src/app/class/show/show';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -38,7 +18,7 @@ export class SeeSettings {
 })
 export class SettingsComponent implements OnInit {
   private subscription:Subscription = new Subscription();
-  public see: SeeSettings[] = [new SeeSettings("Edit", false), new SeeSettings("Edit", false), new SeeSettings("Edit", false), new SeeSettings("Edit", false), new SeeSettings("Edit", false)];
+  public see: Show[] = [new Show("Edit", false), new Show("Edit", false), new Show("Edit", false), new Show("Edit", false), new Show("Edit", false)];
   public userInfo: UserDate[] = [];
   public fontColor: string;
   public background: string;
@@ -72,8 +52,8 @@ export class SettingsComponent implements OnInit {
     }));
   }
   public seeSettings(option: number):void {
-      if (this.see[option].see) this.see[option] = new SeeSettings("Edit", false);
-      else this.see[option] = new SeeSettings("Close", true);
+      if (this.see[option].see) this.see[option] = new Show("Edit", false);
+      else this.see[option] = new Show("Close", true);
   }
   public sendRepeatVerificationEmail(): void {
     this.auth.sendVerificationMail().then(() => {

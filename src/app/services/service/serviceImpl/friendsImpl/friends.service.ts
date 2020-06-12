@@ -25,26 +25,26 @@ export class FriendsService implements Friends {
   public writeMessageToFriends(chatWithFriend: ChatWithFriend): void {
     this.random = Math.random().toString();
     this.random = this.random.replace("0.", "chatWitchFriend");
-    chatWithFriend.data=firebase.database.ServerValue.TIMESTAMP.toString();
+    chatWithFriend.data=firebase.database.ServerValue.TIMESTAMP;
     firebase.database().ref('users/' + chatWithFriend.myId + '/chat/' + chatWithFriend.friendsEmail + '/' + this.random).set({
       data: chatWithFriend.data,
       message: chatWithFriend.message,
-      email: chatWithFriend.userName,
+      email: chatWithFriend.email,
     })
-    firebase.database().ref('users/' + chatWithFriend.friendsEmail + '/chat/' + chatWithFriend.myEmail + '/' + this.random).set({
+    firebase.database().ref('users/' + chatWithFriend.friendsId + '/chat/' + chatWithFriend.myEmail + '/' + this.random).set({
       data: chatWithFriend.data,
       message: chatWithFriend.message,
-      email: chatWithFriend.userName,
+      email: chatWithFriend.email,
     })
     this.deleteNewMesage(chatWithFriend.friendsId, chatWithFriend.myEmail);
-    this.newMessage(new NewMessage(chatWithFriend.friendsId, chatWithFriend.myEmail, chatWithFriend.userName));
+    this.newMessage(new NewMessage(chatWithFriend.friendsId, chatWithFriend.myEmail, chatWithFriend.email));
   }
   public getMessageWitchFriend(myId: string, friendsEmail: string):Observable<any[]> {
     return this.db.list('users/' + myId + '/chat/' + friendsEmail, ref => ref.orderByChild('data')).valueChanges()
   }
   public newMessage(newMessage: NewMessage): void {
     firebase.database().ref('users/' + newMessage.friendsId + '/chatares/' + newMessage.myEmail).set({
-      email: newMessage.userName
+      email: newMessage.email
     })
   }
   public deleteNewMesage(friendsId: string, myEmail: string):void {

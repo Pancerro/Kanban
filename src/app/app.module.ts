@@ -41,6 +41,7 @@ import { DeleteOptionComponent } from './modal/delete-option/delete-option.compo
 import { SharingOptionComponent } from './dashboards/sharing-option/sharing-option.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { ChatComponent } from './dashboards/chat/chat.component';
+import { FriendsChatComponent } from './dashboards/friends-chat/friends-chat.component';
 @NgModule({
   entryComponents: [
     RegisterComponent,
@@ -74,6 +75,7 @@ import { ChatComponent } from './dashboards/chat/chat.component';
     DeleteOptionComponent,
     SharingOptionComponent,
     ChatComponent,
+    FriendsChatComponent,
   ],
   imports: [
     BrowserModule,
