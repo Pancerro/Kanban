@@ -1,126 +1,130 @@
-<img ngxGravatar [email]=email>
-<br>
-<h3><input type="button" class="onlineStatus" *ngIf="checkStatus(rEmail)" (click)="changeStatus(rEmail)">
-    <input type="button" class="offlineStatus" *ngIf="!checkStatus(rEmail)" (click)="changeStatus(rEmail)"> {{email}}
-</h3>
-<h4>My Friends list:</h4>
-<div class="label">
-    <mat-grid-list cols="1" rowHeight="1:0.1">
-        <mat-grid-tile colspan="1">
-            <h4>Online:</h4>
-            <button class="buttonChoice" mat-stroked-button color="primary" (click)="showOption(0)">{{show[0].text}}</button>
-        </mat-grid-tile>
-    </mat-grid-list>
-</div>
-<div *ngIf="show[0].see">
-    <div *ngFor="let item of allUser">
-        <div *ngIf="checkFriend(item.email)">
-            <div *ngIf="checkAccept(item.email)">
-                <p *ngIf="item.online">
-                    <button mat-button class="mess" (click)="getMyFriendMessage(item.email)" [matMenuTriggerFor]="mess">
+<div>
+    <div class="my-user">
+        <img ngxGravatar [email]=email>
+        <br>
+        <h3><input type="button" [ngClass]="checkStatus(rEmail)?'online-status':'offline-status'" (click)="changeStatus(rEmail)"> {{email}}
+        </h3>
+    </div>
+    <h4>My Friends list:</h4>
+    <div class="label">
+        <mat-grid-list cols="1" rowHeight="1:0.1">
+            <mat-grid-tile colspan="1">
+                <h4>Online:</h4>
+                <button class="button-choice" mat-stroked-button color="primary" (click)="showOption(0)">{{show[0].text}}</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    <div *ngIf="show[0].see">
+        <div *ngFor="let item of allUser">
+            <div *ngIf="checkFriend(item.email)">
+                <div *ngIf="checkAccept(item.email)">
+                    <p *ngIf="item.online">
+                        <button mat-button class="mess" (click)="getMyFriendMessage(item.email)" [matMenuTriggerFor]="mess">
                 <mat-grid-list cols="5" rowHeight="1:1">
                     <mat-grid-tile colspan="1"><img ngxGravatar [email]=inreplece(item.email)></mat-grid-tile>
                     <mat-grid-tile colspan="3" class="text"> {{checkLength(inreplece(item.email))}}  {{checkByNewMessage(inreplece(item.email))}} </mat-grid-tile>
-                    <mat-grid-tile colspan="1"> <button mat-stroked-button color="primary" (click)="removeFriend(item)">x</button></mat-grid-tile>
-                    </mat-grid-list>
-                    </button>
-                    <mat-menu #mess="matMenu">
-                        <div (click)="dontClose($event)">
-                            <div class="chatWitchFriend" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-                                <div *ngFor="let mess of myMessageWitchFriend">
-                                    <img ngxGravatar [email]=mess.email> {{mess.email}}
-                                    <p>{{mess.message}}</p>
-                                    <hr>
+                    <mat-grid-tile colspan="1"> <button mat-stroked-button color="primary"  class="button-remove" (click)="removeFriend(item)">x</button></mat-grid-tile>
+                        </mat-grid-list>
+                        </button>
+                        <mat-menu #mess="matMenu">
+                            <div (click)="dontClose($event)">
+                                <div class="chat-witch-friend" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                                    <div *ngFor="let mess of myMessageWitchFriend">
+                                        <img ngxGravatar [email]=mess.email> {{mess.email}}
+                                        <p>{{mess.message}}</p>
+                                        <hr>
+                                    </div>
                                 </div>
-                            </div>
-                            <form (ngSubmit)="sendMessageForFriend(sendMessageForm.value.message,sendMessageForm,item.userId,item.email)" #sendMessageForm="ngForm">
+                                <form (ngSubmit)="sendMessageForFriend(sendMessageForm.value.message,sendMessageForm,item.userId,item.email)" #sendMessageForm="ngForm">
 
-                                <div>
-                                    <mat-form-field>
-                                        <input matInput type="text" placeholder="Message" required name="message" ngModel>
-                                    </mat-form-field>
-                                    <button type="submit" mat-stroked-button color="primary" [disabled]="sendMessageForm.invalid">Send</button></div>
-                            </form>
-                        </div>
-                    </mat-menu>
-                </p>
+                                    <div>
+                                        <mat-form-field>
+                                            <input matInput type="text" placeholder="Message" required name="message" ngModel>
+                                        </mat-form-field>
+                                        <button type="submit" class="send-button" [disabled]="sendMessageForm.invalid">Send</button></div>
+                                </form>
+                            </div>
+                        </mat-menu>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="label">
-    <mat-grid-list cols="1" rowHeight="1:0.1">
-        <mat-grid-tile colspan="1">
-            <h4>Offline:</h4>
-            <button class="buttonChoice" mat-stroked-button color="primary" (click)="showOption(1)">{{show[1].text}}</button>
-        </mat-grid-tile>
-    </mat-grid-list>
-</div>
-<div *ngIf="show[1].see">
-    <div class="offline" *ngFor="let item of allUser">
-        <div *ngIf="checkFriend(item.email)">
-            <div *ngIf="checkAccept(item.email)">
-                <p *ngIf="!item.online">
-                    <button mat-button class="mess" (click)="getMyFriendMessage(item.email)" [matMenuTriggerFor]="mess">
+    <div class="label">
+        <mat-grid-list cols="1" rowHeight="1:0.1">
+            <mat-grid-tile colspan="1">
+                <h4>Offline:</h4>
+                <button class="button-choice" mat-stroked-button color="primary" (click)="showOption(1)">{{show[1].text}}</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    <div *ngIf="show[1].see">
+        <div class="offline" *ngFor="let item of allUser">
+            <div *ngIf="checkFriend(item.email)">
+                <div *ngIf="checkAccept(item.email)">
+                    <p *ngIf="!item.online">
+                        <button mat-button class="mess" (click)="getMyFriendMessage(item.email)" [matMenuTriggerFor]="mess">
                     <mat-grid-list cols="5" rowHeight="1:1">
                         <mat-grid-tile colspan="1"><img ngxGravatar [email]=inreplece(item.email)></mat-grid-tile>
-                        <mat-grid-tile colspan="3">{{inreplece(item.email)}}  {{checkByNewMessage(inreplece(item.email))}}</mat-grid-tile>
-                        <mat-grid-tile colspan="1"> <button mat-stroked-button color="primary" (click)="removeFriend(item)">x</button></mat-grid-tile>
-                    </mat-grid-list>
-                    </button>
-                    <mat-menu #mess="matMenu">
-                        <div (click)="dontClose($event)" class="chatMenu">
-                            <div class="chatWitchFriend" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-                                <div *ngFor="let mess of myMessageWitchFriend">
-                                    <img ngxGravatar [email]=mess.email> {{mess.email}}
-                                    <p>{{mess.message}}</p>
-                                    <hr>
+                        <mat-grid-tile colspan="3"  class="text">{{inreplece(item.email)}}  {{checkByNewMessage(inreplece(item.email))}}</mat-grid-tile>
+                        <mat-grid-tile colspan="1"> <button mat-stroked-button color="primary" class="button-remove" (click)="removeFriend(item)">x</button></mat-grid-tile>
+                        </mat-grid-list>
+                        </button>
+                        <mat-menu #mess="matMenu">
+                            <div (click)="dontClose($event)" class="chatMenu">
+                                <div class="chat-witch-friend" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                                    <div *ngFor="let mess of myMessageWitchFriend">
+                                        <img ngxGravatar [email]=mess.email> {{mess.email}}
+                                        <p>{{mess.message}}</p>
+                                        <hr>
+                                    </div>
                                 </div>
+                                <form (ngSubmit)="sendMessageForFriend(sendMessageForm.value.message,sendMessageForm,item.userId,item.email)" #sendMessageForm="ngForm">
+                                    <div>
+                                        <mat-form-field>
+                                            <input matInput type="text" placeholder="Message" required name="message" ngModel>
+                                        </mat-form-field>
+                                        <button type="submit" mat-stroked-button color="primary" [disabled]="sendMessageForm.invalid">Send</button></div>
+                                </form>
                             </div>
-                            <form (ngSubmit)="sendMessageForFriend(sendMessageForm.value.message,sendMessageForm,item.userId,item.email)" #sendMessageForm="ngForm">
-                                <div>
-                                    <mat-form-field>
-                                        <input matInput type="text" placeholder="Message" required name="message" ngModel>
-                                    </mat-form-field>
-                                    <button type="submit" mat-stroked-button color="primary" [disabled]="sendMessageForm.invalid">Send</button></div>
-                            </form>
-                        </div>
-                    </mat-menu>
+                        </mat-menu>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="label">
-    <mat-grid-list cols="1" rowHeight="1:0.1">
-        <mat-grid-tile colspan="1">
-            <h4>Invities:</h4>
-            <button class="buttonChoice" mat-stroked-button color="primary" (click)="showOption(2)">{{show[2].text}}</button>
-        </mat-grid-tile>
-    </mat-grid-list>
-</div>
-<div *ngIf="show[2].see">
-    <div *ngFor="let item of myInvities">
-        <p>{{inreplece(item.friendsEmail)}}
-            <button mat-stroked-button color="primary" (click)="acceptInv(item)"><mat-icon>done</mat-icon></button>
-            <button mat-stroked-button color="primary" (click)="dontAcceptInv(item)">X</button></p>
+    <div class="label">
+        <mat-grid-list cols="1" rowHeight="1:0.1">
+            <mat-grid-tile colspan="1">
+                <h4>Invities:</h4>
+                <button class="button-choice" mat-stroked-button color="primary" (click)="showOption(2)">{{show[2].text}}</button>
+            </mat-grid-tile>
+        </mat-grid-list>
     </div>
-</div>
-<div class="addFriend">
-    <form (ngSubmit)="addFriend(addFriendForm.value.emailFriend,addFriendForm)" #addFriendForm="ngForm">
+    <div *ngIf="show[2].see">
+        <div *ngFor="let item of myInvities">
+            <p>{{inreplece(item.friendsEmail)}}
+                <button mat-stroked-button color="primary" class="button-choice" (click)="acceptInv(item)"><mat-icon>done</mat-icon></button>
+                <button mat-stroked-button color="primary" class="button-choice" (click)="dontAcceptInv(item)">X</button></p>
+        </div>
+    </div>
+    <div class="addFriend">
+        <form (ngSubmit)="addFriend(addFriendForm.value.emailFriend,addFriendForm)" #addFriendForm="ngForm">
 
-        <mat-form-field>
-            <input matInput type="text" placeholder="Friend's Email Addres" required name="emailFriend" ngModel>
-            <mat-error>Email friend is Mandatory</mat-error>
-        </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" required name="emailFriend" ngModel>
+                <mat-placeholder>Friend's Email Addres</mat-placeholder>
+                <mat-error>Email friend is Mandatory</mat-error>
+            </mat-form-field>
 
-        <button type="submit" mat-stroked-button color="primary" [disabled]="addFriendForm.invalid">Send invite</button>
-    </form>
-</div>
-<h4>Sent Invities:</h4>
-<div *ngFor="let item of allUser">
-    <div *ngIf="checkFriend(item.email)">
-        <div *ngIf="!checkAccept(item.email)">
-            <p> {{inreplece(item.email)}}</p>
+            <button type="submit" class="send-button" [disabled]="addFriendForm.invalid">Send invite</button>
+        </form>
+    </div>
+    <h4>Sent Invities:</h4>
+    <div *ngFor="let item of allUser">
+        <div *ngIf="checkFriend(item.email)">
+            <div *ngIf="!checkAccept(item.email)">
+                <p> {{inreplece(item.email)}}</p>
+            </div>
         </div>
     </div>
 </div>
