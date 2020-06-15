@@ -29,7 +29,6 @@ import { AllUserService } from '../service/serviceImpl/allUserImpl/all-user.serv
   providedIn: 'root'
 })
 export class DataService {
-
   private word: string;
   public kanban = localStorage.getItem("lastTable");
   constructor(

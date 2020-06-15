@@ -28,6 +28,272 @@ import { Project } from 'src/app/class/project/project';
   styleUrls: ['./dashboards.component.css'],
 })
 export class DashboardsComponent implements OnInit {
+  public projectName: string
+  public settingShare: boolean = false;
+  private deleteFromShare: StopShareUser[] = [];
+  public tableNameProject: Project[] = [];
+  public shared: ShareFor[] = [];
+  public shareFriends: ShareFriend[] = [];
+  public tableTitle: TableTitle[] = [];
+  public numbers: NumberSeeTable[] = [];
+  public viewMessage: AllChat[] = [];
+  public table0: string = "table0";
+  public table1: string = "table1";
+  public table2: string = "table2";
+  public table3: string = "table3";
+  public table4: string = "table4";
+  public table5: string = "table5";
+  public table6: string = "table6";
+  public table7: string = "table7";
+  public table8: string = "table8";
+  public table9: string = "table9";
+  private tableEditTitle: string;
+  public tableZero = [];
+  public tableOne = [];
+  public tableTwo = [];
+  public tableThree = [];
+  public tableFour = [];
+  public tableFive = [];
+  public tableSix = [];
+  public tableSeven = [];
+  public tableEight = [];
+  public tableNine = [];
+
+
+  public createNewKanbanTable(): void {
+    const dialogRef = this.dialog.open(CreateNewKanbanComponent, {
+      width: '250px',
+      height: '250px',
+      data: { edit: false },
+      panelClass: 'no-padding-dialog'
+    });
+    dialogRef.afterClosed().subscribe(newProjectName => {
+      if (newProjectName != undefined) {
+        if (newProjectName.invalid) {
+          window.alert("Please correct all errors and resubmit add task");
+          this.db.logSave(new Log(this.auth.getUser().uid, "logAddNewKanbanProjectFailed", "add new kanban project", "add new kanban project failed"));
+        }
+        else {
+          this.db.kanban = newProjectName.name;
+          if (this.checkIfProjectNameIsNotFree(this.db.replece(this.db.kanban))) {
+            window.alert("This name is already taken. Please enter different one");
+          }
+          else {
+            this.db.kanban = this.db.replece(this.db.kanban);
+            this.db.writeKanbanTable(new Project(this.auth.getUser().uid, this.db.kanban, false))
+            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table0", "to do"));
+            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table1", "doing"));
+            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table2", "done"));
+            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table3", "table4"));
+            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table4", "table5"));
+            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table5", "table6"));
+            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table6", "table7"));
+            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table7", "table8"));
+            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table8", "table9"));
+            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table9", "table10"));
+            this.db.writeUserNumber(new NumberSeeTable(this.auth.getUser().uid, 3));
+            this.db.logSave(new Log(this.auth.getUser().uid, "logAddNewKanbanProject", "add new kanban project", "add new kanban project: " + this.db.kanban + " success"));
+            this.db.kanban = localStorage.getItem("lastTable");
+          }
+        }
+      }
+    });
+  }
+
+  private checkIfProjectNameIsNotFree(projectName: string): boolean {
+    for (let project of this.tableNameProject) {
+      if (project.projectName == projectName) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public seeMyProject(projectName: string): void {
+    this.shareFriends = [];
+    this.settingShare = false;
+    this.userId = this.auth.getUser().uid;
+    this.db.kanban = projectName;
+    localStorage.setItem("lastTable", projectName);
+    this.deleteFromShare = [];
+    this.db.logSave(new Log(this.userId, "See project", "see", "See" + projectName));
+    this.ngOnInit();
+  }
+
+  public removeProject(removeProject: string): void {
+    const dialogRef = this.dialog.open(DeleteOptionComponent, {
+      width: '250px',
+      height: '150px',
+      data: { name: removeProject },
+      panelClass: 'no-padding-dialog'
+    });
+    dialogRef.afterClosed().subscribe(deleteOpt => {
+      if (deleteOpt == true) {
+        this.db.logSave(new Log(this.userId, "logRemoveProject", "remove project", "remove project: " + removeProject));
+        this.db.removeKanbanTable(new Project(this.userId, this.db.replece(removeProject), null));
+        this.db.removeKanbanTableFromProject(new Project(this.userId, this.db.replece(removeProject), null));
+        if (removeProject == this.db.kanban) this.seeMyProject("kanban");
+        else this.seeMyProject(this.db.kanban);
+      }
+    });
+  }
+  public editProjectName(editProjectName: string): void {
+    this.db.kanban = editProjectName;
+    this.ngOnInit();
+    const dialogRef = this.dialog.open(CreateNewKanbanComponent, {
+      width: '250px',
+      height: '250px',
+      data: { projectName: editProjectName, edit: true },
+      panelClass: 'no-padding-dialog'
+    });
+    dialogRef.afterClosed().subscribe(editProject => {
+      if (editProject != undefined) {
+        if (editProject.invalid) {
+          this.seeMyProject(localStorage.getItem("lastTable"));
+          window.alert("Please correct all errors and resubmit add task");
+          this.db.logSave(new Log(this.userId, "logEditNameKanbanProjectFailed", "edit name kanban project", "edit name" + editProjectName + "failed"));
+        }
+        else {
+          this.db.kanban = editProject.name;
+          if (this.checkIfProjectNameIsNotFree(this.db.kanban)) {
+            this.seeMyProject(localStorage.getItem("lastTable"));
+            window.alert("Its name dont free! Use next name");
+          }
+          else {
+            this.db.logSave(new Log(this.userId, "logEditKanbanProject", "edit name kanban project", "edit name kanban project: " + this.db.kanban + " success"));
+            this.db.removeKanbanTable(new Project(this.userId, this.db.replece(editProjectName), null));
+            this.db.removeKanbanTableFromProject(new Project(this.userId, this.db.replece(editProjectName), null));
+            localStorage.setItem("lastTable", this.db.kanban);
+            this.db.writeKanbanTable(new Project(this.userId, this.db.replece(this.db.kanban), false));
+            this.db.writeTitleTable(new TableTitle(this.userId, "table0", this.tableTitle[0].title));
+            this.db.writeTitleTable(new TableTitle(this.userId, "table1", this.tableTitle[1].title));
+            this.db.writeTitleTable(new TableTitle(this.userId, "table2", this.tableTitle[2].title));
+            this.db.writeTitleTable(new TableTitle(this.userId, "table3", this.tableTitle[3].title));
+            this.db.writeTitleTable(new TableTitle(this.userId, "table4", this.tableTitle[4].title));
+            this.db.writeTitleTable(new TableTitle(this.userId, "table5", this.tableTitle[5].title));
+            this.db.writeTitleTable(new TableTitle(this.userId, "table6", this.tableTitle[6].title));
+            this.db.writeTitleTable(new TableTitle(this.userId, "table7", this.tableTitle[7].title));
+            this.db.writeTitleTable(new TableTitle(this.userId, "table8", this.tableTitle[8].title));
+            this.db.writeTitleTable(new TableTitle(this.userId, "table9", this.tableTitle[9].title));
+            this.db.writeUserNumber(new NumberSeeTable(this.userId, this.numbers[0].number));
+            this.projectName = this.db.kanban;
+            this.saveChanges();
+            this.ngOnInit();
+            this.seeMyProject(localStorage.getItem("lastTable"));
+          }
+        }
+      } else this.seeMyProject(localStorage.getItem("lastTable"));
+    });
+  }
+  public shareProject(projectName: string): void {
+    this.db.kanban = projectName;
+    this.db.updateShare(new Project(this.auth.getUser().uid, projectName, true));
+    this.db.writeShareFriends(new ShareFriend(this.auth.getUser().uid, this.db.replece(this.userInfo[0].email), this.auth.getUser().uid, "owner"));
+    this.db.getDelete(this.auth.getUser().uid).subscribe((deleteUsers: StopShareUser[]) => {
+      this.deleteFromShare = deleteUsers;
+      for (let deleteUser of deleteUsers) {
+        this.db.removeDelete(this.auth.getUser().uid, deleteUser.friendsEmail);
+      }
+    })
+    this.db.share(new ShareFor(this.auth.getUser().uid, this.userId, projectName));
+    localStorage.setItem("lastTable", "kanban");
+    this.db.kanban = localStorage.getItem("lastTable");
+    this.db.logSave(new Log(this.auth.getUser().uid, "Start share", "share", "Start share project " + projectName));
+    //this.ngOnInit();
+    this.db.writeMessage(new AllChat(this.auth.getUser().uid, this.db.replece(this.userInfo[0].email), projectName, null, "Welcome to chat " + projectName));
+  }
+
+  public seeMyShareProject(shareProjectName: Project): void {
+    this.deleteFromShare = [];
+    this.settingShare = true;
+    this.db.kanban = shareProjectName.projectName;
+    this.userId = shareProjectName.userId;
+    this.db.logSave(new Log(this.userId, "See share project", "see", "see share project " + shareProjectName.projectName));
+    this.sharedInit();
+    this.db.getDelete(this.userId).subscribe((deleteUsers: StopShareUser[]) => this.deleteFromShare = deleteUsers)
+    this.db.getShareFriends(this.userId).subscribe((shareFriends: ShareFriend[]) => this.shareFriends = shareFriends);
+    this.db.getMessage(new Project(this.userId, shareProjectName.projectName, null)).subscribe((chat: AllChat[]) => {
+      this.viewMessage = chat
+    })
+    this.titleService.setTitle(this.projectName);
+  }
+
+  private sharedInit(): void {
+    this.projectName = this.db.kanban;
+    this.db.getTask(new Task(this.userId, this.table0, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+      this.tableZero = tasks;
+    });
+    this.db.getTask(new Task(this.userId, this.table1, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+      this.tableOne = tasks;
+    });
+    this.db.getTask(new Task(this.userId, this.table2, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+      this.tableTwo = tasks;
+    });
+    this.db.getTask(new Task(this.userId, this.table3, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+      this.tableThree = tasks;
+    });
+    this.db.getTask(new Task(this.userId, this.table4, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+      this.tableFour = tasks;
+    });
+    this.db.getTask(new Task(this.userId, this.table5, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+      this.tableFive = tasks;
+    });
+    this.db.getTask(new Task(this.userId, this.table6, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+      this.tableSix = tasks;
+    });
+    this.db.getTask(new Task(this.userId, this.table7, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+      this.tableSeven = tasks;
+    });
+    this.db.getTask(new Task(this.userId, this.table8, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+      this.tableEight = tasks;
+    });
+    this.db.getTask(new Task(this.userId, this.table9, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+      this.tableNine = tasks;
+    });
+    this.db.getUserNumber(this.userId).subscribe((number: NumberSeeTable[]) => {
+      this.numbers = number;
+    });
+  }
+  private delete(): string {
+    for (let user of this.deleteFromShare) {
+      if (this.inreplece(user.friendsEmail) == this.userInfo[0].email) return user.role;
+    }
+    return 'false';
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   openChat(): void {
     this._bottomSheet.open(ChatComponent, {
@@ -43,7 +309,6 @@ export class DashboardsComponent implements OnInit {
     } else window.alert("Sorry, you dont have access to sharing option")
 
   }
-  deleteFromShare = [];
   clear() {
     console.log("clear")
     setInterval(() => {
@@ -51,12 +316,7 @@ export class DashboardsComponent implements OnInit {
     }, 5500);
 
   }
-  delete() {
-    for (let item of this.deleteFromShare) {
-      if (this.inreplece(item.friendsEmail) == this.userInfo[0].email) return item.role;
-    }
-    return false;
-  }
+
   checkIfDelete() {
     if (this.delete() == "delete") {
       this.deleteAudio.play();
@@ -66,7 +326,6 @@ export class DashboardsComponent implements OnInit {
   }
 
   view = "viewer"
-  projectName: string
   allUser = [];
   myFriend = [];
   deleteAudio = new Audio();
@@ -137,131 +396,9 @@ export class DashboardsComponent implements OnInit {
 
 
 
-  checkIfProjectNameIsNotFree(projectName) {
-    for (let item of this.tableNameProject) {
-      if (item.projectName == projectName) {
-        return true
-      }
-    }
-  }
-  createNewKanbanTable() {
-    const dialogRef = this.dialog.open(CreateNewKanbanComponent, {
-      width: '250px',
-      height:'250px',
-      data: { edit: false },
-      panelClass: 'no-padding-dialog'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        if (result.invalid) {
-          window.alert("Please correct all errors and resubmit add task");
-          this.db.logSave(new Log(this.auth.getUser().uid, "logAddNewKanbanProjectFailed", "add new kanban project", "add new kanban project failed"))
-        }
-        else {
-          this.db.kanban = result.value.kanban.name;
-          if (this.checkIfProjectNameIsNotFree(this.replece(this.db.kanban))) {
-            window.alert("This name is already taken. Please enter different one")
-          }
-          else {
-            this.db.kanban = this.replece(this.db.kanban);
-            this.db.writeKanbanTable(new Project(this.auth.getUser().uid, this.db.kanban, false))
-            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table0", "to do"))
-            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table1", "doing"))
-            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table2", "done"))
-            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table3", "table4"));
-            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table4", "table5"));
-            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table5", "table6"));
-            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table6", "table7"));
-            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table7", "table8"));
-            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table8", "table9"));
-            this.db.writeTitleTable(new TableTitle(this.auth.getUser().uid, "table9", "table10"));
-            this.db.writeUserNumber(new NumberSeeTable(this.auth.getUser().uid, 3));
-            this.db.logSave(new Log(this.auth.getUser().uid, "logAddNewKanbanProject", "add new kanban project", "add new kanban project: " + this.db.kanban + " success"))
-            this.db.kanban = localStorage.getItem("lastTable")
-          }
-        }
-      }
-    });
-  }
-  seeMyProject(projectName: string) {
-    this.shareFriends = [];
-    localStorage.setItem("share", "");
-    this.settingShare = false;
-    this.userId = this.auth.getUser().uid;
-    this.db.kanban = projectName;
-    localStorage.setItem("lastTable", projectName);
-    this.deleteFromShare = [];
-    this.db.logSave(new Log(this.userId, "See project", "see", "See" + projectName));
-    this.ngOnInit();
-  }
-  removeProject(projectName: string) {
-    const dialogRef = this.dialog.open(DeleteOptionComponent, {
-      width: '250px',
-      height:'150px',
-      data: { name: projectName },
-      panelClass: 'no-padding-dialog'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == true) {
-        this.db.logSave(new Log(this.userId, "logRemoveProject", "remove project", "remove project: " + projectName))
-        this.db.removeKanbanTable(new Project(this.userId, this.replece(projectName), null));
-        this.db.removeKanbanTableFromProject(new Project(this.userId, this.replece(projectName), null));
-        console.log(projectName)
-        console.log(this.db.kanban)
-        if (projectName == this.db.kanban) this.seeMyProject("kanban")
-        else this.seeMyProject(this.db.kanban)
-      }
-    });
-  }
-  editProjectName(projectName: string) {
-    this.db.kanban = projectName;
-    this.ngOnInit();
-    const dialogRef = this.dialog.open(CreateNewKanbanComponent, {
-      width: '250px',
-      height:'250px',
-      data: { projectName: projectName, edit: true },
-      panelClass: 'no-padding-dialog'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        if (result.invalid) {
-          this.seeMyProject(localStorage.getItem("lastTable"));
-          window.alert("Please correct all errors and resubmit add task");
-          this.db.logSave(new Log(this.userId, "logEditNameKanbanProjectFailed", "edit name kanban project", "edit name kanban project failed"))
-        }
-        else {
-          this.db.kanban = result.value.kanban.name;
-          if (this.checkIfProjectNameIsNotFree(this.db.kanban)) {
-            this.seeMyProject(localStorage.getItem("lastTable"));
-            window.alert("Its name dont free! Use next name")
-          }
-          else {
-            this.db.logSave(new Log(this.userId, "logEditKanbanProject", "edit name kanban project", "edit name kanban project: " + this.db.kanban + " success"))
-            this.db.removeKanbanTable(new Project(this.userId, this.replece(projectName), null));
-            this.db.removeKanbanTableFromProject(new Project(this.userId, this.replece(projectName), null));
-            localStorage.setItem("lastTable", this.db.kanban)
-            this.db.writeKanbanTable(new Project(this.userId, this.replece(this.db.kanban), false))
-            this.db.writeTitleTable(new TableTitle(this.userId, "table0", this.tableTitle[0].title))
-            this.db.writeTitleTable(new TableTitle(this.userId, "table1", this.tableTitle[1].title))
-            this.db.writeTitleTable(new TableTitle(this.userId, "table2", this.tableTitle[2].title))
-            this.db.writeTitleTable(new TableTitle(this.userId, "table3", this.tableTitle[3].title));
-            this.db.writeTitleTable(new TableTitle(this.userId, "table4", this.tableTitle[4].title));
-            this.db.writeTitleTable(new TableTitle(this.userId, "table5", this.tableTitle[5].title));
-            this.db.writeTitleTable(new TableTitle(this.userId, "table6", this.tableTitle[6].title));
-            this.db.writeTitleTable(new TableTitle(this.userId, "table7", this.tableTitle[7].title));
-            this.db.writeTitleTable(new TableTitle(this.userId, "table8", this.tableTitle[8].title));
-            this.db.writeTitleTable(new TableTitle(this.userId, "table9", this.tableTitle[9].title));
-            this.db.writeUserNumber(new NumberSeeTable(this.userId, this.numbers[0].number));
-            this.projectName = this.db.kanban;
-            this.saveChanges();
-            this.ngOnInit();
-            this.seeMyProject(localStorage.getItem("lastTable"));
-          }
-        }
-      } else this.seeMyProject(localStorage.getItem("lastTable"));
-    });
 
-  }
+
+
   checkIfTaskTitleIsNotFree(taskTitle, tableName) {
     switch (tableName) {
       case "table0": for (let item of this.tableZero) { if (item.title == taskTitle) return true; } break;
@@ -276,28 +413,6 @@ export class DashboardsComponent implements OnInit {
       case "table9": for (let item of this.tableNine) { if (item.title == taskTitle) return true; } break;
     }
   }
-  table0: string = "table0";
-  table1: string = "table1";
-  table2: string = "table2";
-  table3: string = "table3";
-  table4: string = "table4";
-  table5: string = "table5";
-  table6: string = "table6";
-  table7: string = "table7";
-  table8: string = "table8";
-  table9: string = "table9";
-  tableEditTitle: string;
-  tableZero = [];
-  tableOne = [];
-  tableTwo = [];
-  tableThree = [];
-  tableFour = [];
-  tableFive = [];
-  tableSix = [];
-  tableSeven = [];
-  tableEight = [];
-  tableNine = [];
-  tableNameProject = [];
   titleTable: string;
   userId: string;
   title: string;
@@ -310,8 +425,6 @@ export class DashboardsComponent implements OnInit {
   fontColor: string;
   background: string;
   word: string;
-  tableTitle = [];
-  numbers = [];
   tabEndDate = [];
   userInfo = [];
 
@@ -320,7 +433,7 @@ export class DashboardsComponent implements OnInit {
   deleteShareProject(projectName) {
     const dialogRef = this.dialog.open(DeleteOptionComponent, {
       width: '250px',
-      height:'150px',
+      height: '150px',
       data: { name: projectName },
       panelClass: 'no-padding-dialog'
     });
@@ -367,23 +480,6 @@ export class DashboardsComponent implements OnInit {
     if (date < 10) { return 0; }
     return '';
   }
-  shareProject(projectName) {
-    this.db.kanban = projectName;
-    this.db.updateShare(new Project(this.userId, projectName, true));
-    this.db.writeShareFriends(new ShareFriend(this.userId, this.replece(this.userInfo[0].email), this.userId, "owner"))
-    this.db.getDelete(this.userId).subscribe(res => {
-      this.deleteFromShare = res;
-      for (let item of this.deleteFromShare) {
-        this.db.removeDelete(this.userId, item.friendsEmail)
-      }
-    })
-    this.db.share(new ShareFor(this.userId, this.userId, projectName));
-    localStorage.setItem("lastTable", "kanban")
-    this.db.kanban = localStorage.getItem("lastTable");
-    this.db.logSave(new Log(this.userId, "Start share", "share", "Start share project " + projectName));
-    this.ngOnInit()
-    this.db.writeMessage(new AllChat(this.userId, this.replece(this.userInfo[0].email), projectName, this.getDate(), "Welcome to chat " + projectName))
-  }
 
   shareTable(item, projectName, role) {
     //edit
@@ -415,23 +511,6 @@ export class DashboardsComponent implements OnInit {
     this.db.kanban = localStorage.getItem("lastTable")
     this.db.logSave(new Log(this.userId, "Stop share project", "share", "Stop share project " + projectName + " for " + friends.friendsEmail));
   }
-  settingShare = false;
-  viewMessage = []
-  seeMyShareProject(item) {
-    this.deleteFromShare = [];
-    this.settingShare = true;
-    this.db.kanban = item.kanban;
-    this.userId = item.userId;
-    this.db.logSave(new Log(this.userId, "See share project", "see", "see share project " + item.kanban));
-    this.sharedInit();
-    this.db.getDelete(this.userId).subscribe(res => this.deleteFromShare = res)
-    this.db.getShareFriends(this.userId).subscribe(res => { this.shareFriends = res });
-    this.db.getMessage(new Project(this.userId, item.kanban, null)).subscribe(res => {
-      this.viewMessage = res
-    })
-    this.titleService.setTitle(this.projectName);
-    window.scrollTo()
-  }
   sendMessage(message, formReset) {
     this.db.kanban = this.projectName;
     this.db.writeMessage(new AllChat(this.userId, this.userInfo[0].email, this.db.kanban, this.getDate(), message))
@@ -439,49 +518,12 @@ export class DashboardsComponent implements OnInit {
     formReset.resetForm();
     this.db.logSave(new Log(this.userId, "Send message", "chat", "send message"));
   }
-  shareFriends = []
-  shared = []
-  sharedInit() {
-    this.projectName = this.db.kanban;
-    this.db.getTask(new Task(this.userId, this.table0, null, null, null, null, null, null, null)).subscribe(res => {
-      this.tableZero = res;
-    });
-    this.db.getTask(new Task(this.userId, this.table1, null, null, null, null, null, null, null)).subscribe(res => {
-      this.tableOne = res;
-    });
-    this.db.getTask(new Task(this.userId, this.table2, null, null, null, null, null, null, null)).subscribe(res => {
-      this.tableTwo = res;
-    });
-    this.db.getTask(new Task(this.userId, this.table3, null, null, null, null, null, null, null)).subscribe(res => {
-      this.tableThree = res;
-    });
-    this.db.getTask(new Task(this.userId, this.table4, null, null, null, null, null, null, null)).subscribe(res => {
-      this.tableFour = res;
-    });
-    this.db.getTask(new Task(this.userId, this.table5, null, null, null, null, null, null, null)).subscribe(res => {
-      this.tableFive = res;
-    });
-    this.db.getTask(new Task(this.userId, this.table6, null, null, null, null, null, null, null)).subscribe(res => {
-      this.tableSix = res;
-    });
-    this.db.getTask(new Task(this.userId, this.table7, null, null, null, null, null, null, null)).subscribe(res => {
-      this.tableSeven = res;
-    });
-    this.db.getTask(new Task(this.userId, this.table8, null, null, null, null, null, null, null)).subscribe(res => {
-      this.tableEight = res;
-    });
-    this.db.getTask(new Task(this.userId, this.table9, null, null, null, null, null, null, null)).subscribe(res => {
-      this.tableNine = res;
-    });
-    this.db.getUserNumber(this.userId).subscribe(res => {
-      this.numbers = res;
-    });
-  }
+
   ngOnInit() {
     this.db.getTask(new Task(this.userId, "table", null, null, null, null, null, null, null)).subscribe(res => {
       this.tableTitle = res;
     });
-    if (localStorage.getItem("share")) this.settingShare = true;
+   // if (localStorage.getItem("share")) this.settingShare = true;
     this.deleteAudio.src = "assets/1.mp3";
     this.deleteAudio.load();
     localStorage.setItem("menu", "KanbanTable");
@@ -540,7 +582,7 @@ export class DashboardsComponent implements OnInit {
     this.projectName = this.db.kanban;
 
   }
- 
+
 
   constructor(
     private auth: AuthService,
@@ -714,7 +756,7 @@ export class DashboardsComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(EditTableNameComponent, {
       width: '250px',
-      height:'230px',
+      height: '230px',
       data: { title: this.tableEditTitle, addTable: addTable },
       panelClass: 'no-padding-dialog'
     });

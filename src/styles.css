@@ -24,3 +24,11 @@ body {
 mat-form-field {
     width: calc(100% - 1.5rem);
 }
+
+::ng-deep.mat-form-field-underline {
+    background-color: lightgray !important;
+}
+
+mat-placeholder {
+    color: lightgray;
+}

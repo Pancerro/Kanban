@@ -3,34 +3,39 @@
         <mat-sidenav-container class="sidenav">
             <mat-sidenav #sidenav class="sidenavleft" [style.background]="changeBackground()" [style.color]="changeFont()">
                 <!-- <p><button mat-stroked-button color="primary" (click)="sidenav.toggle()">Close</button></p>-->
-                <p><button mat-stroked-button color="primary" (click)="createNewKanbanTable()">Create new Kanban Project</button></p>
-                <p>My Kanban Projects: </p>
-                <ol>
-                    <div *ngFor="let item of tableNameProject">
-                        <li *ngIf="!item.share">
-                            <div class="example-box" [style.background]="changeBackground()" [style.color]="changeFont()">
+                <div class="kanban-manegment">
+                    <div class="create-project">
+                        <button mat-stroked-button (click)="createNewKanbanTable()">Create new Kanban Project</button>
+                    </div>
 
-                                <button mat-stroked-button color="primary" class="buttonList" class="buttonList" [style.color]="changeFont()" (click)="seeMyProject(item.projectName)"> {{inreplece(item.projectName)}}</button>
-                                <button mat-button *ngIf="item.projectName!='kanban'" [matMenuTriggerFor]="menu">  <mat-icon aria-label="Menu">menu</mat-icon></button>
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item (click)="removeProject(item.projectName)"><mat-icon>delete</mat-icon>Delete</button>
-                                    <button mat-menu-item (click)="editProjectName(item.projectName)"><mat-icon>edit</mat-icon>Edit</button>
-                                    <button mat-menu-item (click)="shareProject(item.projectName)">Share</button>
-                                </mat-menu>
-                            </div>
-                        </li>
-                    </div>
-                </ol>
-                <p>Shared Kanban Projects: </p>
-                <ol>
-                    <div *ngFor="let item of shared">
-                        <li>
-                            <div class="example-box" [style.background]="changeBackground()" [style.color]="changeFont()">
-                                <button mat-stroked-button color="primary" class="buttonList" class="buttonList" [style.color]="changeFont()" (click)="seeMyShareProject(item)"> {{inreplece(item.kanban)}}</button>
-                            </div>
-                        </li>
-                    </div>
-                </ol>
+                    <p class="create-project">My Kanban Projects: </p>
+                    <ol>
+                        <div *ngFor="let item of tableNameProject">
+                            <li *ngIf="!item.share">
+                                <div class="example-box" [style.background]="changeBackground()" [style.color]="changeFont()">
+
+                                    <button mat-stroked-button color="primary" class="buttonList" [style.color]="changeFont()" (click)="seeMyProject(item.projectName)"> {{inreplece(item.projectName)}}</button>
+                                    <button mat-button *ngIf="item.projectName!='kanban'" [matMenuTriggerFor]="menu">  <mat-icon aria-label="Menu">menu</mat-icon></button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="removeProject(item.projectName)"><mat-icon>delete</mat-icon>Delete</button>
+                                        <button mat-menu-item (click)="editProjectName(item.projectName)"><mat-icon>edit</mat-icon>Edit</button>
+                                        <button mat-menu-item (click)="shareProject(item.projectName)">Share</button>
+                                    </mat-menu>
+                                </div>
+                            </li>
+                        </div>
+                    </ol>
+                    <p class="create-project">Shared Kanban Projects: </p>
+                    <ol>
+                        <div *ngFor="let item of shared">
+                            <li>
+                                <div class="example-box" [style.background]="changeBackground()" [style.color]="changeFont()">
+                                    <button mat-stroked-button color="primary" class="buttonList" [style.color]="changeFont()" (click)="seeMyShareProject(item)"> {{inreplece(item.projectName)}}</button>
+                                </div>
+                            </li>
+                        </div>
+                    </ol>
+                </div>
             </mat-sidenav>
             <mat-sidenav #sidenavright class="sideNavRight" position="end" [style.background]="changeBackground()" [style.color]="changeFont()">
                 <app-friends-chat></app-friends-chat>

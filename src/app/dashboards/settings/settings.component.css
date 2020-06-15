@@ -155,11 +155,3 @@ td {
 th.mat-header-cell {
     text-align: center;
 }
-
-::ng-deep.mat-form-field-underline {
-    background-color: lightgray !important;
-}
-
-mat-placeholder {
-    color: lightgray;
-}

@@ -16,8 +16,8 @@
     </div>
     <div class="button" mat-dialog-actions>
         <button mat-button [mat-dialog-close]="undefined">Cancel</button>
-        <button mat-button [mat-dialog-close]="kanbanForm" *ngIf="!data.edit" [disabled]="kanbanForm.invalid" cdkFocusInitial>Add Project</button>
-        <button mat-button [mat-dialog-close]="kanbanForm" *ngIf="data.edit" [disabled]="kanbanForm.invalid" cdkFocusInitial>Edit Name</button>
+        <button mat-button [mat-dialog-close]="kanbanForm.value.kanban" *ngIf="!data.edit" [disabled]="kanbanForm.invalid" cdkFocusInitial>Add Project</button>
+        <button mat-button [mat-dialog-close]="kanbanForm.value.kanban" *ngIf="data.edit" [disabled]="kanbanForm.invalid" cdkFocusInitial>Edit Name</button>
     </div>
 
 </div>

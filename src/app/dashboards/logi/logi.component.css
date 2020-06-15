@@ -69,7 +69,3 @@ td:hover {
 .titleDesc {
     width: 34%;
 }
-
-::ng-deep.mat-form-field-underline {
-    background-color: lightgray !important;
-}

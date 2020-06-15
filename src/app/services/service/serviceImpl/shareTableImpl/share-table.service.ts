@@ -47,7 +47,7 @@ export class ShareTableService implements ShareTable {
   public share(shareFor: ShareFor): void {
     firebase.database().ref('users/' + shareFor.friendsId+ '/shared/' + shareFor.projectName).set({
       userId: shareFor.userId,
-      kanban: shareFor.projectName
+      projectName: shareFor.projectName
     })
   }
   public removeShare(friendsId: string, kanban: string):Promise<void> {
