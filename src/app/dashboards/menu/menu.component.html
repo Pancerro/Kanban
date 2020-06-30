@@ -4,10 +4,11 @@
         <button mat-menu-item (click)="settings()">USER SETTINGS</button>
         <button mat-menu-item (click)="dashboard()">KANBAN TABLE</button>
         <button mat-menu-item (click)="logout()">LOGOUT</button>
+
     </mat-menu>
     <button mat-icon-button class="menu-button" [matMenuTriggerFor]="appMenu">
     <mat-icon>more_vert</mat-icon>{{header}}
   </button>
-
+    <ng-content></ng-content>
 
 </div>

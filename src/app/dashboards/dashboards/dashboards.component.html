@@ -42,9 +42,11 @@
             </mat-sidenav>
             <mat-sidenav-content [style.background]="changeBackground()" [style.color]="changeFont()">
 
-                <app-menu></app-menu>
-                <button mat-stroked-button color="primary" (click)="sidenav.toggle()">My Kanban Project</button>
-                <button mat-stroked-button color="primary" (click)="sidenavright.toggle()">Friends</button>
+                <app-menu> <button mat-stroked-button color="primary" (click)="sidenav.toggle()">My Kanban Project</button>
+                    <button mat-stroked-button color="primary" (click)="sidenavright.toggle()">Friends</button>
+                </app-menu>
+
+
                 <button *ngIf="false" mat-stroked-button color="primary" (click)="sharingOption()">Sharing options</button>
                 <button *ngIf="false" mat-stroked-button (click)="openChat()">Chat</button>
                 <br>
@@ -142,7 +144,6 @@
                                         <button class="buttonPriority" mat-stroked-button [style.backgroundColor]="item.priority" *ngIf="checkPrio(item.priority)">{{checkPrio(item.priority)}}</button>
                                         <button class="buttonList" mat-stroked-button color="primary" (click)="editTask(item.title,item.description,item.priority,item.color,item.endDate,table0,item.user)">Task title: {{item.title}}</button>
                                         <button class="buttonRemove" [disabled]="checkIfView()" mat-stroked-button color="primary" (click)="removeTask(item.title,table0)"><mat-icon>delete</mat-icon></button>
-
                                         <div *ngIf="settingShare" class="choiceUser">
                                             <form (ngSubmit)="choiceUserForTask(choiceUser.value.user,table0,item.title)" #choiceUser="ngForm">
                                                 <mat-form-field>

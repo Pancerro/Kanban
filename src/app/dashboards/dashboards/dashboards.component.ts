@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DataService } from 'src/app/services/database/database.service';
 import { MatDialog, MatBottomSheet } from '@angular/material';
@@ -21,6 +21,7 @@ import { StopShareUser } from 'src/app/class/stopShareUser/stop-share-user';
 import { ShareFor } from 'src/app/class/shareFor/share-for';
 import { ShareFriend } from 'src/app/class/shareFriend/share-friend';
 import { Project } from 'src/app/class/project/project';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboards',
@@ -28,9 +29,32 @@ import { Project } from 'src/app/class/project/project';
   styleUrls: ['./dashboards.component.css'],
 })
 export class DashboardsComponent implements OnInit {
-  public projectName: string
+
+
+  public openChat(): void {
+    this._bottomSheet.open(ChatComponent, {
+      data: { projectName: this.projectName, userId: this.userId }
+
+    });
+  }
+
+  public sharingOption(): void {
+    if (this.checkIfOwner()) {
+      localStorage.setItem("lastTable", this.projectName);
+      localStorage.setItem("share", "true");
+      this.router.navigate(['/sharing-option/' + this.projectName]);
+    } else window.alert("Sorry, you dont have access to sharing option")
+
+  }
+  public clear(): void {
+    setInterval(() => {
+      window.location.reload();
+    }, 5500);
+
+  }
+
+  public projectName: string;
   public settingShare: boolean = false;
-  private deleteFromShare: StopShareUser[] = [];
   public tableNameProject: Project[] = [];
   public shared: ShareFor[] = [];
   public shareFriends: ShareFriend[] = [];
@@ -47,7 +71,6 @@ export class DashboardsComponent implements OnInit {
   public table7: string = "table7";
   public table8: string = "table8";
   public table9: string = "table9";
-  private tableEditTitle: string;
   public tableZero = [];
   public tableOne = [];
   public tableTwo = [];
@@ -58,8 +81,33 @@ export class DashboardsComponent implements OnInit {
   public tableSeven = [];
   public tableEight = [];
   public tableNine = [];
-
-
+  public myFriend = [];
+  public view = "viewer";
+  public shareOption: boolean = false;
+  public textShareOption: string = "Show";
+  public textShare: string = "Show";
+  public textShared: string = "Show";
+  public textChat: string = "Hide";
+  public chatButton: boolean = true;
+  public shareButton: boolean = false;
+  public sharedButton: boolean = false;
+  public userInfo = [];
+  private allUser = [];
+  private deleteAudio = new Audio();
+  private scroll: ScrollToBottomDirective;
+  private titleTable: string;
+  private userId: string;
+  private endDate: Date;
+  private endData: string;
+  private endDataString: string;
+  private word: string;
+  private tabEndDate = [];
+  private tableEditTitle: string;
+  private deleteFromShare: StopShareUser[] = [];  
+  private subscription: Subscription = new Subscription();
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
   public createNewKanbanTable(): void {
     const dialogRef = this.dialog.open(CreateNewKanbanComponent, {
       width: '250px',
@@ -189,12 +237,12 @@ export class DashboardsComponent implements OnInit {
     this.db.kanban = projectName;
     this.db.updateShare(new Project(this.auth.getUser().uid, projectName, true));
     this.db.writeShareFriends(new ShareFriend(this.auth.getUser().uid, this.db.replece(this.userInfo[0].email), this.auth.getUser().uid, "owner"));
-    this.db.getDelete(this.auth.getUser().uid).subscribe((deleteUsers: StopShareUser[]) => {
+    this.subscription.add(this.db.getDelete(this.auth.getUser().uid).subscribe((deleteUsers: StopShareUser[]) => {
       this.deleteFromShare = deleteUsers;
       for (let deleteUser of deleteUsers) {
         this.db.removeDelete(this.auth.getUser().uid, deleteUser.friendsEmail);
       }
-    })
+    }));
     this.db.share(new ShareFor(this.auth.getUser().uid, this.userId, projectName));
     localStorage.setItem("lastTable", "kanban");
     this.db.kanban = localStorage.getItem("lastTable");
@@ -210,49 +258,49 @@ export class DashboardsComponent implements OnInit {
     this.userId = shareProjectName.userId;
     this.db.logSave(new Log(this.userId, "See share project", "see", "see share project " + shareProjectName.projectName));
     this.sharedInit();
-    this.db.getDelete(this.userId).subscribe((deleteUsers: StopShareUser[]) => this.deleteFromShare = deleteUsers)
+    this.subscription.add(this.db.getDelete(this.userId).subscribe((deleteUsers: StopShareUser[]) => this.deleteFromShare = deleteUsers));
     this.db.getShareFriends(this.userId).subscribe((shareFriends: ShareFriend[]) => this.shareFriends = shareFriends);
     this.db.getMessage(new Project(this.userId, shareProjectName.projectName, null)).subscribe((chat: AllChat[]) => {
-      this.viewMessage = chat
+      this.viewMessage = chat;
     })
     this.titleService.setTitle(this.projectName);
   }
 
   private sharedInit(): void {
     this.projectName = this.db.kanban;
-    this.db.getTask(new Task(this.userId, this.table0, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+    this.subscription.add(this.db.getTask(new Task(this.userId, this.table0, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
       this.tableZero = tasks;
-    });
-    this.db.getTask(new Task(this.userId, this.table1, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+    }));
+    this.subscription.add(this.db.getTask(new Task(this.userId, this.table1, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
       this.tableOne = tasks;
-    });
-    this.db.getTask(new Task(this.userId, this.table2, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+    }));
+    this.subscription.add(this.db.getTask(new Task(this.userId, this.table2, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
       this.tableTwo = tasks;
-    });
-    this.db.getTask(new Task(this.userId, this.table3, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+    }));
+    this.subscription.add(this.db.getTask(new Task(this.userId, this.table3, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
       this.tableThree = tasks;
-    });
-    this.db.getTask(new Task(this.userId, this.table4, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+    }));
+    this.subscription.add(this.db.getTask(new Task(this.userId, this.table4, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
       this.tableFour = tasks;
-    });
-    this.db.getTask(new Task(this.userId, this.table5, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+    }));
+    this.subscription.add(this.db.getTask(new Task(this.userId, this.table5, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
       this.tableFive = tasks;
-    });
-    this.db.getTask(new Task(this.userId, this.table6, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+    }));
+    this.subscription.add(this.db.getTask(new Task(this.userId, this.table6, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
       this.tableSix = tasks;
-    });
-    this.db.getTask(new Task(this.userId, this.table7, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+    }));
+    this.subscription.add(this.db.getTask(new Task(this.userId, this.table7, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
       this.tableSeven = tasks;
-    });
-    this.db.getTask(new Task(this.userId, this.table8, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+    }));
+    this.subscription.add(this.db.getTask(new Task(this.userId, this.table8, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
       this.tableEight = tasks;
-    });
-    this.db.getTask(new Task(this.userId, this.table9, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
+    }));
+    this.subscription.add(this.db.getTask(new Task(this.userId, this.table9, null, null, null, null, null, null, null)).subscribe((tasks: Task[]) => {
       this.tableNine = tasks;
-    });
-    this.db.getUserNumber(this.userId).subscribe((number: NumberSeeTable[]) => {
+    }));
+    this.subscription.add(this.db.getUserNumber(this.userId).subscribe((number: NumberSeeTable[]) => {
       this.numbers = number;
-    });
+    }));
   }
   private delete(): string {
     for (let user of this.deleteFromShare) {
@@ -261,63 +309,7 @@ export class DashboardsComponent implements OnInit {
     return 'false';
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  openChat(): void {
-    this._bottomSheet.open(ChatComponent, {
-      data: { projectName: this.projectName, userId: this.userId }
-    });
-  }
-
-  sharingOption() {
-    if (this.checkIfOwner()) {
-      localStorage.setItem("lastTable", this.projectName);
-      localStorage.setItem("share", "true");
-      this.router.navigate(['/sharing-option/' + this.projectName]);
-    } else window.alert("Sorry, you dont have access to sharing option")
-
-  }
-  clear() {
-    console.log("clear")
-    setInterval(() => {
-      window.location.reload();
-    }, 5500);
-
-  }
-
-  checkIfDelete() {
+  public checkIfDelete(): boolean {
     if (this.delete() == "delete") {
       this.deleteAudio.play();
       return true;
@@ -325,66 +317,52 @@ export class DashboardsComponent implements OnInit {
     else return false;
   }
 
-  view = "viewer"
-  allUser = [];
-  myFriend = [];
-  deleteAudio = new Audio();
-  scroll: ScrollToBottomDirective;
-  shareOption: boolean = false;
-  textShareOption: string = "Show";
-  shareOptionB() {
-    this.shareOption = !this.shareOption;
-    if (!this.shareOption) this.textShareOption = "Show"
-    else this.textShareOption = "Hide"
-  }
-  textShare: string = "Show";
-  textShared: string = "Show";
-  textChat: string = "Hide";
-  chatButton: boolean = true;
-  shareButton: boolean = false;
-  sharedButton: boolean = false;
 
-  chatHide() {
+  public shareOptionB(): void {
+    this.shareOption = !this.shareOption;
+    if (!this.shareOption) this.textShareOption = "Show";
+    else this.textShareOption = "Hide";
+  }
+
+
+  public chatHide(): void {
     this.chatButton = !this.chatButton;
-    if (!this.chatButton) this.textChat = "Show"
-    else this.textChat = "Hide"
+    if (!this.chatButton) this.textChat = "Show";
+    else this.textChat = "Hide";
   }
-  shareHide() {
+  public shareHide(): void {
     this.shareButton = !this.shareButton;
-    if (!this.shareButton) this.textShare = "Show"
-    else this.textShare = "Hide"
+    if (!this.shareButton) this.textShare = "Show";
+    else this.textShare = "Hide";
   }
-  sharedHide() {
+  public sharedHide(): void {
     this.sharedButton = !this.sharedButton;
-    if (!this.sharedButton) this.textShared = "Show"
-    else this.textShared = "Hide"
+    if (!this.sharedButton) this.textShared = "Show";
+    else this.textShared = "Hide";
   }
-  checkRole() {
+  public checkRole() {
     for (let item of this.shareFriends) {
       if (this.inreplece(item.friendsEmail) == this.userInfo[0].email) return item.role;
     }
     return false;
   }
-  checkIfOwner() {
+  public checkIfOwner(): boolean {
     if (this.checkRole() == "owner") return true;
     else return false;
   }
-  checkIfView() {
+  public checkIfView(): boolean {
     if (this.checkRole() == "viewer") return true;
     else return false;
   }
-  choiceUserForTask(user: string, tableParent: string, tableChild: string) {
+  public choiceUserForTask(user: string, tableParent: string, tableChild: string): void {
     this.db.kanban = this.projectName;
-    this.db.updateChoiceUser(new Task(this.userId, tableParent, tableChild, null, null, null, null, null, user))
+    this.db.updateChoiceUser(new Task(this.userId, tableParent, tableChild, null, null, null, null, null, user));
   }
-  choiceText(user: string) {
-    if (user == "") return ""
+  public choiceText(user: string): string {
+    if (user == "") return "";
     else return this.inreplece(user);
   }
-
-
-
-  checkAccept(email) {
+  public checkAccept(email: string): boolean {
     for (let item of this.myFriend) {
       if (item.friendsEmail == email) {
         if (item.accept) return true;
@@ -393,13 +371,7 @@ export class DashboardsComponent implements OnInit {
     }
     return false;
   }
-
-
-
-
-
-
-  checkIfTaskTitleIsNotFree(taskTitle, tableName) {
+  private checkIfTaskTitleIsNotFree(taskTitle: string, tableName: string): boolean {
     switch (tableName) {
       case "table0": for (let item of this.tableZero) { if (item.title == taskTitle) return true; } break;
       case "table1": for (let item of this.tableOne) { if (item.title == taskTitle) return true; } break;
@@ -413,24 +385,11 @@ export class DashboardsComponent implements OnInit {
       case "table9": for (let item of this.tableNine) { if (item.title == taskTitle) return true; } break;
     }
   }
-  titleTable: string;
-  userId: string;
-  title: string;
-  description: string;
-  priority: string;
-  color: string;
-  endDate: Date;
-  endData: string;
-  endDataString: string;
-  fontColor: string;
-  background: string;
-  word: string;
-  tabEndDate = [];
-  userInfo = [];
 
 
 
-  deleteShareProject(projectName) {
+
+  public deleteShareProject(projectName: string): void {
     const dialogRef = this.dialog.open(DeleteOptionComponent, {
       width: '250px',
       height: '150px',
@@ -439,22 +398,22 @@ export class DashboardsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == true) {
-        this.stopShareProject(projectName)
+        this.stopShareProject(projectName);
         this.db.removeKanbanTable(new Project(this.userId, this.replece(projectName), null));
         this.db.removeKanbanTableFromProject(new Project(this.userId, this.replece(projectName), null));
         this.db.logSave(new Log(this.userId, "Delete share project", "Delete", "Delete " + projectName));
         window.location.reload();
-        if (projectName == this.db.kanban) this.seeMyProject("kanban")
+        if (projectName == this.db.kanban) this.seeMyProject("kanban");
       }
     });
   }
 
-  editShareProject(projectName) {// ni dziala
+  public editShareProject(projectName: string): void {
     this.stopShareProject(projectName);
     this.editProjectName(projectName);
     this.shareProject(projectName);
   }
-  stopShareProject(projectName) {
+  public stopShareProject(projectName: string): void {
     this.db.deleteChatMesage(new Project(this.userId, projectName, null));
     this.db.kanban = projectName;
     this.db.getShareFriends(this.userId).subscribe(res => { this.shareFriends = res });
@@ -462,40 +421,29 @@ export class DashboardsComponent implements OnInit {
       if (item.friendsEmail == this.replece(this.userInfo[0].email)) console.log("")
       else this.db.writeDelete(new StopShareUser(this.userId, item.friendsEmail, item.friendsId));
       this.db.removeShare(item.friendsId, projectName);
-      this.db.removeShareFriends(this.userId, item.friendsEmail)
+      this.db.removeShareFriends(this.userId, item.friendsEmail);
       this.db.updateShare(new Project(this.userId, projectName, false));
     }
-    this.db.kanban = localStorage.getItem("lastTable")
+    this.db.kanban = localStorage.getItem("lastTable");
     this.db.logSave(new Log(this.userId, "Stop share", "share", "stop share project " + projectName));
     this.settingShare = false;
   }
-  date: Date;
-  currentDate: string
-  getDate() {
-    this.date = new Date;
-    this.currentDate = (this.date.getDate() + '/' + this.dateCompare((this.date.getMonth() + 1)) + (this.date.getMonth() + 1) + '/' + this.date.getFullYear() + " " + this.dateCompare(this.date.getHours()) + this.date.getHours() + ':' + this.dateCompare(this.date.getMinutes()) + this.date.getMinutes() + ':' + this.dateCompare(this.date.getSeconds()) + this.date.getSeconds() + ':' + this.dateCompare(this.date.getMilliseconds()) + this.date.getMilliseconds());
-    return this.currentDate;
-  }
-  private dateCompare(date: number) {
-    if (date < 10) { return 0; }
-    return '';
-  }
 
-  shareTable(item, projectName, role) {
+
+  public shareTable(item: { friendsEmail: string; friendsId: string; friendsEMail: string; }, projectName: string, role: string): void {
     //edit
-    this.db.kanban = projectName
+    this.db.kanban = projectName;
     this.db.writeShareFriends(new ShareFriend(this.userId, item.friendsEmail, item.friendsId, role));
-    this.db.share(new ShareFor(item.friendsId, this.userId, projectName))
+    this.db.share(new ShareFor(item.friendsId, this.userId, projectName));
     this.db.removeDelete(this.userId, item.friendsEMail);
-    this.db.kanban = localStorage.getItem("lastTable")
+    this.db.kanban = localStorage.getItem("lastTable");
     this.db.logSave(new Log(this.userId, "Start share project", "share", "Start share project " + projectName + " for " + item.friendsEmail));
   }
-  checkShare(email, projectName) {
-
-    this.db.kanban = projectName
+  public checkShare(email: string, projectName: string): boolean {
+    this.db.kanban = projectName;
     for (let item of this.shareFriends) {
       if (item.friendsEmail == email) {
-        this.db.kanban = localStorage.getItem("lastTable")
+        this.db.kanban = localStorage.getItem("lastTable");
         return true;
       }
     }
@@ -503,18 +451,18 @@ export class DashboardsComponent implements OnInit {
     return false;
   }
 
-  stopShare(friends, projectName) {
+  public stopShare(friends: { friendsEmail: string; friendsId: string; }, projectName: string): void {
     this.db.kanban = projectName;
     this.db.removeShareFriends(this.userId, friends.friendsEmail);
-    this.db.writeDelete(new StopShareUser(this.userId, friends.friendsEmail, friends.friendsId))
-    this.db.removeShare(friends.friendsId, projectName)
-    this.db.kanban = localStorage.getItem("lastTable")
+    this.db.writeDelete(new StopShareUser(this.userId, friends.friendsEmail, friends.friendsId));
+    this.db.removeShare(friends.friendsId, projectName);
+    this.db.kanban = localStorage.getItem("lastTable");
     this.db.logSave(new Log(this.userId, "Stop share project", "share", "Stop share project " + projectName + " for " + friends.friendsEmail));
   }
-  sendMessage(message, formReset) {
+  public sendMessage(message: string, formReset: { resetForm: () => void; }): void {
     this.db.kanban = this.projectName;
-    this.db.writeMessage(new AllChat(this.userId, this.userInfo[0].email, this.db.kanban, this.getDate(), message))
-    this.db.getMessage(new Project(this.userId, this.projectName, null)).subscribe(res => this.viewMessage = res)
+    this.db.writeMessage(new AllChat(this.userId, this.userInfo[0].email, this.db.kanban, null, message));
+    this.db.getMessage(new Project(this.userId, this.projectName, null)).subscribe(res => this.viewMessage = res);
     formReset.resetForm();
     this.db.logSave(new Log(this.userId, "Send message", "chat", "send message"));
   }
@@ -523,16 +471,16 @@ export class DashboardsComponent implements OnInit {
     this.db.getTask(new Task(this.userId, "table", null, null, null, null, null, null, null)).subscribe(res => {
       this.tableTitle = res;
     });
-   // if (localStorage.getItem("share")) this.settingShare = true;
+    // if (localStorage.getItem("share")) this.settingShare = true;
     this.deleteAudio.src = "assets/1.mp3";
     this.deleteAudio.load();
     localStorage.setItem("menu", "KanbanTable");
     this.db.getShare(this.userId).subscribe(res => {
-      this.shared = res
+      this.shared = res;
     })
     if (localStorage.getItem("lastTable") == null) {
-      localStorage.setItem("lastTable", "kanban")
-      this.db.kanban = localStorage.getItem("lastTable")
+      localStorage.setItem("lastTable", "kanban");
+      this.db.kanban = localStorage.getItem("lastTable");
     }
     this.db.getTask(new Task(this.userId, this.table0, null, null, null, null, null, null, null)).subscribe(res => {
       this.tableZero = res;
@@ -594,29 +542,9 @@ export class DashboardsComponent implements OnInit {
   ) {
     this.userId = auth.getUser().uid;
   }
-  changeFont(): string {
-    if (this.userInfo[0].thema == "gray") {
-      this.fontColor = "white";
-      return this.fontColor;
-    }
-    if (this.userInfo[0].thema == "black") {
-      this.fontColor = "white";
-      return this.fontColor;
-    }
-  }
-  changeBackground(): string {
-    if (this.userInfo[0].thema == "gray") {
-      this.background = "gray";
-      return this.background;
-    }
-    if (this.userInfo[0].thema == "black") {
-      this.background = "black";
-      return this.background;
-    }
-  }
-  addNewTable(): void {
-    this.db.kanban = this.projectName;
 
+  public addNewTable(): void {
+    this.db.kanban = this.projectName;
     switch (this.numbers[0].number) {
       case 0: this.updateTableTitle(this.table0, true); this.db.logSave(new Log(this.userId, "logAddNewTable", "add new table", this.table0)); break;
       case 1: this.updateTableTitle(this.table1, true); this.db.logSave(new Log(this.userId, "logAddNewTable", "add new table", this.table1)); break;
@@ -630,7 +558,7 @@ export class DashboardsComponent implements OnInit {
       case 9: this.updateTableTitle(this.table9, true); this.db.logSave(new Log(this.userId, "logAddNewTable", "add new table", this.table9)); break;
     }
   }
-  deleteLastTable(): void {
+  public deleteLastTable(): void {
     this.db.kanban = this.projectName;
     this.numbers[0].number--;
     switch (this.numbers[0].number) {
@@ -657,7 +585,7 @@ export class DashboardsComponent implements OnInit {
     }
     this.db.writeUserNumber(new NumberSeeTable(this.userId, this.numbers[0].number))
   }
-  addTask(tableName: string): void {
+  public addTask(tableName: string): void {
     this.db.kanban = this.projectName;
     const dialogRef = this.dialog.open(AddTaskComponent, {
       width: '250px',
@@ -668,28 +596,24 @@ export class DashboardsComponent implements OnInit {
       if (result != undefined) {
         if (result.invalid) {
           window.alert("Please correct all errors and resubmit add task");
-          this.db.logSave(new Log(this.userId, "logAddTaskFailed", "add task", "add task failed"))
+          this.db.logSave(new Log(this.userId, "logAddTaskFailed", "add task", "add task failed"));
         }
         else {
-          this.title = result.value.task.title;
-          this.description = result.value.task.description;
-          this.priority = result.value.task.priority;
-          this.color = result.value.task.color;
           this.endDate = result.value.task.endDate;
           if (this.endDate) this.endData = this.endDate.getDate() + '/' + (this.endDate.getMonth() + 1) + '/' + this.endDate.getFullYear();
-          else this.endData = null;
-          if (this.checkIfTaskTitleIsNotFree(this.title, tableName)) window.alert("This task name is already taken. Please enter different one")
+          else this.endData = null; result.value.task.title
+          if (this.checkIfTaskTitleIsNotFree(result.value.task.title, tableName)) window.alert("This task name is already taken. Please enter different one")
           else {
-            this.db.kanban = this.projectName
-            this.db.writeUserTable(new Task(this.userId, tableName, this.replece(this.title), this.title, this.description, this.priority, this.color, this.endData, ""));
+            this.db.kanban = this.projectName;
+            this.db.writeUserTable(new Task(this.userId, tableName, this.replece(result.value.task.title), result.value.task.title, result.value.task.description, result.value.task.priority, result.value.task.color, result.value.task.endDate, ""));
           }
-          this.db.logSave(new Log(this.userId, "logAddTask", "add task", "add task: " + this.title + " success"))
+          this.db.logSave(new Log(this.userId, "logAddTask", "add task", "add task: " + result.value.task.title + " success"));
         }
       }
     });
   }
-  editTask(title: string, description: string, priority: string, color: string, endDate, tableName: string, user: string): void {
-    this.db.kanban = this.projectName
+  public editTask(title: string, description: string, priority: string, color: string, endDate: string | Date, tableName: string, user: string): void {
+    this.db.kanban = this.projectName;
     const dialogRef = this.dialog.open(EditTaskComponent, {
       width: '350px',
       height: '550px',
@@ -700,13 +624,9 @@ export class DashboardsComponent implements OnInit {
       if (result != undefined) {
         if (result.invalid.title) {
           window.alert("Please correct all errors and resubmit update task");
-          this.db.logSave(new Log(this.userId, "logEditTaskFailed", "edit task", "edit task: " + title + "failed"))
+          this.db.logSave(new Log(this.userId, "logEditTaskFailed", "edit task", "edit task: " + title + "failed"));
         }
         else {
-          this.title = result.value.task.title;
-          this.description = result.value.task.description;
-          this.priority = result.value.task.priority;
-          this.color = result.value.task.color;
           this.endDate = result.value.task.endDate;
           this.endDataString = this.endDate + "";
           if (this.endDataString == "") this.endData = "";
@@ -716,7 +636,7 @@ export class DashboardsComponent implements OnInit {
                 this.endData = "";
               }
               else {
-                this.endDataString = endDate;
+                this.endDataString = endDate.toString();
                 this.tabEndDate = this.endDataString.split("/");
                 this.endData = this.tabEndDate[0] + '/' + this.tabEndDate[1] + '/' + this.tabEndDate[2];
               }
@@ -724,24 +644,24 @@ export class DashboardsComponent implements OnInit {
             else this.endData = this.endDate.getDate() + '/' + (this.endDate.getMonth() + 1) + '/' + this.endDate.getFullYear();
             if (this.endData == "/undefined/undefined") this.endData = "";
           }
-          this.db.kanban = this.projectName
+          this.db.kanban = this.projectName;
           this.db.removeTask(new Task(this.userId, tableName, this.replece(title), null, null, null, null, null, null));
-          this.db.writeUserTable(new Task(this.userId, tableName, this.replece(this.title), this.title, this.description, this.priority, this.color, this.endData, user));
+          this.db.writeUserTable(new Task(this.userId, tableName, this.replece(result.value.task.title), result.value.task.title, result.value.task.description, result.value.task.priority, result.value.task.color, this.endData, user));
           this.db.logSave(new Log(this.userId, "logEditTask", "edit task", "task " + title + " success"))
         }
       }
     });
   }
-  removeTask(removeTask: string, tableName: string): void {
-    this.db.kanban = this.projectName
-    this.db.logSave(new Log(this.userId, "logRemoveTask", "remove task", "remove task: " + removeTask))
+  public removeTask(removeTask: string, tableName: string): void {
+    this.db.kanban = this.projectName;
+    this.db.logSave(new Log(this.userId, "logRemoveTask", "remove task", "remove task: " + removeTask));
     this.db.removeTask(new Task(this.userId, tableName, removeTask, null, null, null, null, null, null));
   }
-  removeAllTask(tableName: string): void {
-    this.db.logSave(new Log(this.userId, "logRemoveAllTask", "remove all task", "remove all task from table: " + tableName))
+  public removeAllTask(tableName: string): void {
+    this.db.logSave(new Log(this.userId, "logRemoveAllTask", "remove all task", "remove all task from table: " + tableName));
     this.db.removeTable(new TableTitle(this.userId, null, tableName));
   }
-  updateTableTitle(title: string, addTable: boolean): void {
+  public updateTableTitle(title: string, addTable: boolean): void {
     switch (title) {
       case "table0": this.tableEditTitle = this.tableTitle[0].title; break;
       case "table1": this.tableEditTitle = this.tableTitle[1].title; break;
@@ -763,7 +683,7 @@ export class DashboardsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
         if (result.invalid) {
-          this.db.logSave(new Log(this.userId, "logUpdateTableTitleFailed", "update table title ", "update table " + title + " failed"))
+          this.db.logSave(new Log(this.userId, "logUpdateTableTitleFailed", "update table title ", "update table " + title + " failed"));
           window.alert("Please correct all errors and resubmit add task");
         }
         else {
@@ -774,7 +694,7 @@ export class DashboardsComponent implements OnInit {
               this.db.writeUserNumber(new NumberSeeTable(this.userId, this.numbers[0].number));
             }
             this.titleTable = result.value.titleTable.title;
-            this.db.logSave(new Log(this.userId, "logUpdateTableTitle", "update Table Title", "update table " + title + " success"))
+            this.db.logSave(new Log(this.userId, "logUpdateTableTitle", "update Table Title", "update table " + title + " success"));
             this.db.writeTitleTable(new TableTitle(this.userId, title, this.titleTable));
 
           }
@@ -782,7 +702,7 @@ export class DashboardsComponent implements OnInit {
       }
     });
   }
-  replece(replace: string): string {
+  public replece(replace: string): string {
     this.word = "";
     for (let letter of replace) {
       letter = letter.replace(".", "@1@");
@@ -795,7 +715,7 @@ export class DashboardsComponent implements OnInit {
     return this.word;
   }
 
-  inreplece(replace: string): string {
+  public inreplece(replace: string): string {
     this.word = replace
     for (let letter of replace) {
       this.word = this.word.replace("@1@", ".");
@@ -806,7 +726,7 @@ export class DashboardsComponent implements OnInit {
     }
     return this.word;
   }
-  drop(event: CdkDragDrop<string[]>) {
+  public drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     }
@@ -815,9 +735,9 @@ export class DashboardsComponent implements OnInit {
       this.saveChanges();
     }
   }
-  saveChanges(): void {
+  private saveChanges(): void {
     this.db.kanban = this.projectName;
-    this.db.logSave(new Log(this.userId, "logSaveChanges", "save changes", "save changes"))
+    this.db.logSave(new Log(this.userId, "logSaveChanges", "save changes", "save changes"));
     this.db.removeTable(new TableTitle(this.userId, null, this.table0));
     this.db.removeTable(new TableTitle(this.userId, null, this.table1));
     this.db.removeTable(new TableTitle(this.userId, null, this.table2));
@@ -869,12 +789,29 @@ export class DashboardsComponent implements OnInit {
       this.db.writeUserTable(new Task(this.userId, this.table9, this.replece(task.title), task.title, task.description, task.priority, task.color, task.endDate, task.user));
     }
   }
-  checkPrio(priority: string): string {
+  public checkPrio(priority: string): string {
     switch (priority) {
       case "red": return "high"; break;
       case "yellow": return "medium"; break;
       case "green": return "low"; break;
       default: return "";
+    }
+  }
+
+  public changeFont(): string {
+    if (this.userInfo[0].thema == "gray") {
+      return "white";
+    }
+    if (this.userInfo[0].thema == "black") {
+      return "white";
+    }
+  }
+  public changeBackground(): string {
+    if (this.userInfo[0].thema == "gray") {
+      return "gray";
+    }
+    if (this.userInfo[0].thema == "black") {
+      return "black";
     }
   }
 }
